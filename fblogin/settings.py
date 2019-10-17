@@ -13,7 +13,7 @@ SECRET_KEY = 'gw-j72sl#jpt80)r3a9*ely$i8xsax_4k!b@ue1@i@5cvq1(+3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['174.138.45.227','127.0.0.1']
+ALLOWED_HOSTS = ['167.99.234.72','127.0.0.1']
 
 
 # Application definition
