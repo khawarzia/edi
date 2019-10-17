@@ -1,0 +1,182 @@
+{% extends 'index.html' %}
+{% load socialaccount %}
+{% block title %}Create an account{% endblock %}
+{% block content %}
+<div id="main-wrap"> 
+                <div id="inner-wrap"> 
+                <div id="page" class="hfeed site">
+                <div id="main" class="wrapper">
+                
+                <div class="page-full-width">
+                <div id="primary" class="site-content">
+                <div id="content" role="main">
+<article>
+        <div class="entry-buddypress-content">
+                <div id="buddypress">
+                        <div class="page" id="register-page">
+                                <form name="signup_form" id="signup_form" class="standard-form" method="post"
+                                        enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <p>Registrarsi a questo sito è facile. Compila i campi di seguito ed entra a far parte di Edizioni Open</p>
+                                        <div class="register-section"
+                                                style="margin-top:20px;margin-bottom:20px;clear:both;">
+                                                <div class="nsl-container nsl-container-block" data-align="center">
+                                                        <div class="nsl-container-buttons"><a
+                                                                        href="{% provider_login_url 'facebook' %}"
+                                                                        rel="nofollow"
+                                                                        aria-label="Accedi con <b>Facebook</b>">
+                                                                        <span
+                                                                                class="nsl-button nsl-button-default nsl-button-facebook"
+                                                                                style="background-color:#4267b2;"><span
+                                                                                        class="nsl-button-svg-container"><svg
+                                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                                <path fill="#fff"
+                                                                                                        d="M22.688 0H1.323C.589 0 0 .589 0 1.322v21.356C0 23.41.59 24 1.323 24h11.505v-9.289H9.693V11.09h3.124V8.422c0-3.1 1.89-4.789 4.658-4.789 1.322 0 2.467.1 2.8.145v3.244h-1.922c-1.5 0-1.801.711-1.801 1.767V11.1h3.59l-.466 3.622h-3.113V24h6.114c.734 0 1.323-.589 1.323-1.322V1.322A1.302 1.302 0 0 0 22.688 0z">
+                                                                                                </path>
+                                                                                        </svg></span><span
+                                                                                        class="nsl-button-label-container">Log in
+                                                                                        with
+                                                                                        <b>Facebook</b></span></span></a>
+                                                        </div>
+                                                </div>
+                                        </div>
+
+
+                                        <div class="register-section" id="basic-details-section">
+                                                <h4>Account Details</h4>
+                                                <label for="signup_username">Username - visible from Anyone
+                                                        (required)</label>
+                                                <input type="text" name="username" id="signup_username" value=""
+                                                        autocomplete="off" autocapitalize="none" required="">
+                                                {% if check == 1 %}
+                                                *Username already exists
+                                                {% endif %}
+                                                <label for="signup_email">Email address (required)</label>
+                                                <input type="email" name="email" id="signup_email" value="" required="">
+                                                <label for="signup_password">Choose a password(required)</label>
+                                                <input type="password" name="password" id="signup_password"
+                                                        value="" class="password-entry" spellcheck="false"
+                                                        autocomplete="off" required="" minlength="8">
+                                                <div id="pass-strength-result"></div>
+                                                <label for="signup_password_confirm">Confirm password
+                                                        (required)</label>
+                                                <input type="password" name="password1"
+                                                        id="signup_password_confirm" value=""
+                                                        class="password-entry-confirm" spellcheck="false"
+                                                        autocomplete="off" required="">
+                                                {% if check == 0 %}
+                                                *Wrong password
+                                                {% endif %}
+                                        </div>
+                                        <div class="register-section" id="profile-details-section">
+                                                <h4>Profile Details</h4>
+                                                <div
+                                                        class="editfield field_1 field_nome-e-cognome required-field visibility-public field_type_textbox">
+                                                        <legend id="field_1-1">
+                                                                Name and surname <span
+                                                                        class="bp-required-field-label">(required)</span>
+                                                        </legend>
+                                                        <input id="field_1" name="first_name" type="text" value=""
+                                                                aria-required="true" required=""
+                                                                aria-labelledby="field_1-1"
+                                                                aria-describedby="field_1-3">
+                                                        <p class="field-visibility-settings-toggle"
+                                                                id="field-visibility-settings-toggle-1">
+                                                                This field may be visible from: <span
+                                                                        class="current-visibility-level">Anyone</span>
+                                                                <a href="#" class="visibility-toggle-link">Change</a>
+                                                        </p>
+                                                        <div class="field-visibility-settings"
+                                                                id="field-visibility-settings-1">
+                                                                <fieldset>
+                                                                        <legend>Who can see this field?</legend>
+                                                                        <div class="radio">
+                                                                                <label for="see-field_1_public">
+                                                                                        <input type="radio"
+                                                                                                id="see-field_1_public"
+                                                                                                name="user_choice"
+                                                                                                value="Anyone"
+                                                                                                checked="checked"
+                                                                                                class="styled"><strong></strong>
+                                                                                        <span
+                                                                                                class="field-visibility-text">Anyone</span>
+                                                                                </label>
+                                                                                <label for="see-field_1_adminsonly">
+                                                                                        <input type="radio"
+                                                                                                id="see-field_1_adminsonly"
+                                                                                                name="user_choice"
+                                                                                                value="OnlyMe"
+                                                                                                class="styled"><strong></strong>
+                                                                                        <span
+                                                                                                class="field-visibility-text">Only
+                                                                                                I</span>
+                                                                                </label>
+                                                                                <label for="see-field_1_loggedin">
+                                                                                        <input type="radio"
+                                                                                                id="see-field_1_loggedin"
+                                                                                                name="user_choice"
+                                                                                                value="AllUsers"
+                                                                                                class="styled"><strong></strong>
+                                                                                        <span
+                                                                                                class="field-visibility-text">All
+                                                                                                users</span>
+                                                                                </label>
+                                                                        </div>
+                                                                </fieldset>
+                                                                <a class="field-visibility-settings-close"
+                                                                        href="#">Close</a>
+                                                        </div>
+                                                        <p class="description"></p>
+                                                </div>
+                                                <div
+                                                        class="editfield field_140 field_paypal optional-field visibility-public alt field_type_url">
+                                                        <legend id="field_140-1">
+                                                                Paypal </legend>
+                                                        <input id="field_140" name="paypalAccount" type="text"
+                                                                inputmode="url" value="" aria-labelledby="field_140-1"
+                                                                aria-describedby="field_140-3">
+                                                        <p class="description" id="field_140-3">Enter the url at the top
+                                                                of your Paypal.me account to receive money (example:
+                                                                http://www.paypal.me/mariorossi)</p>
+                                                        <p class="field-visibility-settings-notoggle"
+                                                                id="field-visibility-settings-toggle-140">
+                                                                This field may be visible from: <span
+                                                                        class="current-visibility-level">Anyone</span>
+                                                        </p>
+                                                        <p class="description">Enter the URL of your account at the top
+                                                                Paypal.me to receive money (example:
+                                                                http://www.paypal.me/mariorossi)</p>
+                                                </div>
+                                                <input type="hidden" name="signup_profile_field_ids"
+                                                        id="signup_profile_field_ids" value="1,140">
+                                        </div>
+                                        <input type="hidden"
+                                                id="ct_checkjs_register_form_59b90e1005a220e2ebc542eb9d950b1e"
+                                                name="ct_checkjs_register_form" value="821254774">
+                                        <div class="submit">
+                                                <p style="font-size:12px; text-align: center;">By clicking on the button
+                                                        Complete Registration <br> declare to Accept <a
+                                                                href="{{pt.terms_of_service}}"
+                                                                target="_blank">Terms and conditions</a> <br>of the
+                                                                service and <a href="{{pt.privacy_policy}}"
+                                                                target="_blank">Privacy policy</a></p>
+                                                <input type="submit" name="signup_submit" id="signup_submit"
+                                                        value="Complete registration">
+                                        </div>
+                                        <input type="hidden" id="_wpnonce" name="_wpnonce" value="c9fc82ffab"><input
+                                                type="hidden" name="_wp_http_referer" value="/registrazione/">
+                                </form>
+                        </div>
+                </div>
+        </div>
+        <footer class="entry-meta">
+        </footer>
+</article>
+                </div>
+        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock content %}

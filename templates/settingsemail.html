@@ -1,0 +1,137 @@
+{% extends 'profile.html' %}
+{% block body %}
+<div class="full-width">
+<div id="item-main-content">
+<div id="item-nav">
+<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+<ul id="nav-bar-filter">
+ <li id="blog-personal-li"><a id="user-blog" href="{% url 'profile' request.user.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
+ <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
+ <li id="notifications-personal-li"><a id="user-notifications" href="#">Notifiche <span class="no-count">0</span></a></li>
+ <li id="messages-personal-li"><a id="user-messages" href="#">Messaggi <span class="no-count">{{messages}}</span></a></li>
+ <li id="xprofile-personal-li"><a id="user-xprofile" href="{% url 'view' request.user.username %}">Profilo</a></li>
+ <li id="settings-personal-li" class="current selected"><a id="user-settings" href="{% url 'setgeneral' %}">Impostazioni</a></li>
+ <li id="members-following-personal-li"><a id="user-members-following" href="#">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="#">Followers <span>{{followers}}</span></a></li>
+ <li id="mycred-history-personal-li"><a id="user-mycred-history" href="#">Punti</a></li>
+</ul>
+</div>
+</div>
+<div id="item-body" role="main" class="clearfix">
+<div class="item-list-tabs no-ajax" id="subnav" aria-label="Member secondary navigation" role="navigation">
+<ul>
+<li id="general-personal-li">
+    <a id="general" href="{% url 'setgeneral' %}">Generale</a>
+</li>
+<li id="notifications-personal-li" class="current selected">
+    <a id="notifications" href="{% url 'setemail' %}">Email</a>
+</li>
+<li id="delete-account-personal-li">
+    <a id="delete-account" href="{% url 'setcancel' %}">Cancella Account</a>
+</li>
+</ul>
+</div>
+<h2 class="bp-screen-reader-text">Notification settings</h2>
+<form method="post" class="standard-form" id="settings-form">{% csrf_token %}
+<p>Invia un avviso via email quando:</p>
+<table class="notification-settings" id="activity-notification-settings">
+<thead>
+<tr>
+<th class="icon">&nbsp;</th>
+<th class="title">Attività</th>
+<th class="yes">Si</th>
+<th class="no">No</th>
+</tr>
+</thead>
+<tbody>
+<tr id="activity-notification-settings-mentions">
+<td>&nbsp;</td>
+<td>Un membro ti ha menzionato in un aggiornamento usando "@{{request.user.username}}"</td>
+{% if a.0 == True %}
+<td class="yes"><input type="radio" name="notifications[notification_activity_new_mention]" id="notification-activity-new-mention-yes" value="yes" checked='checked' /><label for="notification-activity-new-mention-yes" class="bp-screen-reader-text">Si, invia email</label></td>
+<td class="no"><input type="radio" name="notifications[notification_activity_new_mention]" id="notification-activity-new-mention-no" value="no" /><label for="notification-activity-new-mention-no" class="bp-screen-reader-text">No, non inviare email</label></td>
+{% else %}
+<td class="yes"><input type="radio" name="notifications[notification_activity_new_mention]" id="notification-activity-new-mention-yes" value="yes" /><label for="notification-activity-new-mention-yes" class="bp-screen-reader-text">Si, invia email</label></td>
+<td class="no"><input type="radio" name="notifications[notification_activity_new_mention]" id="notification-activity-new-mention-no" value="no" checked='checked' /><label for="notification-activity-new-mention-no" class="bp-screen-reader-text">No, non inviare email</label></td>
+{% endif %}
+</tr>
+<tr id="activity-notification-settings-replies">
+<td>&nbsp;</td>
+<td>Un membro ha risposto ad un aggiornamento o un commento da te pubblicato</td>
+{% if a.1 == True %}
+<td class="yes"><input type="radio" name="notifications[notification_activity_new_reply]" id="notification-activity-new-reply-yes" value="yes" checked='checked' /><label for="notification-activity-new-reply-yes" class="bp-screen-reader-text">Si, invia email</label></td>
+<td class="no"><input type="radio" name="notifications[notification_activity_new_reply]" id="notification-activity-new-reply-no" value="no" /><label for="notification-activity-new-reply-no" class="bp-screen-reader-text">No, non inviare email</label></td>
+{% else %}
+<td class="yes"><input type="radio" name="notifications[notification_activity_new_reply]" id="notification-activity-new-reply-yes" value="yes" /><label for="notification-activity-new-reply-yes" class="bp-screen-reader-text">Si, invia email</label></td>
+<td class="no"><input type="radio" name="notifications[notification_activity_new_reply]" id="notification-activity-new-reply-no" value="no" checked='checked' /><label for="notification-activity-new-reply-no" class="bp-screen-reader-text">No, non inviare email</label></td>
+{% endif %}
+</tr>
+</tbody>
+</table>
+<table class="notification-settings" id="messages-notification-settings">
+<thead>
+<tr>
+<th class="icon"></th>
+<th class="title">Messaggi</th>
+<th class="yes">Si</th>
+<th class="no">No</th>
+</tr>
+</thead>
+<tbody>
+<tr id="messages-notification-settings-new-message">
+<td></td>
+<td>Un membro ti ha inviato un nuovo messaggio</td>
+{% if a.2 == True %}
+<td class="yes"><input type="radio" name="notifications[notification_messages_new_message]" id="notification-messages-new-messages-yes" value="yes" checked='checked' /><label for="notification-messages-new-messages-yes" class="bp-screen-reader-text">Si, invia email</label></td>
+<td class="no"><input type="radio" name="notifications[notification_messages_new_message]" id="notification-messages-new-messages-no" value="no" /><label for="notification-messages-new-messages-no" class="bp-screen-reader-text">No, non inviare email</label></td>
+{% else %}
+<td class="yes"><input type="radio" name="notifications[notification_messages_new_message]" id="notification-messages-new-messages-yes" value="yes" /><label for="notification-messages-new-messages-yes" class="bp-screen-reader-text">Si, invia email</label></td>
+<td class="no"><input type="radio" name="notifications[notification_messages_new_message]" id="notification-messages-new-messages-no" value="no" checked='checked' /><label for="notification-messages-new-messages-no" class="bp-screen-reader-text">No, non inviare email</label></td>
+{% endif %}
+</tr>
+</tbody>
+</table>
+<table class="notification-settings" id="follow-notification-settings">
+<thead>
+<tr>
+<th class="icon"></th>
+<th class="title">Segui</th>
+<th class="yes">Si</th>
+<th class="no">No</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>Un utente ha cominciato a seguirti!</td>
+{% if a.3 == True %}
+<td class="yes"><input type="radio" name="notifications[notification_starts_following]" value="yes" checked='checked' /></td>
+<td class="no"><input type="radio" name="notifications[notification_starts_following]" value="no" /></td>
+{% else %}
+<td class="yes"><input type="radio" name="notifications[notification_starts_following]" value="yes" /></td>
+<td class="no"><input type="radio" name="notifications[notification_starts_following]" value="no" checked='checked' /></td>
+{% endif %}
+</tr>
+</tbody>
+<tr id="groups-notification-settings-leader-publishes-post">
+<td></td>
+<td>Un Autore che segui pubblica un nuovo LibriCK</td>
+{% if a.4 == True %}
+<td class="yes"><input type="radio" name="notifications[notification_leader_publishes_post]" value="yes" checked='checked' /></td>
+<td class="no"><input type="radio" name="notifications[notification_leader_publishes_post]" value="no" /></td>
+{% else %}
+<td class="yes"><input type="radio" name="notifications[notification_leader_publishes_post]" value="yes" /></td>
+<td class="no"><input type="radio" name="notifications[notification_leader_publishes_post]" value="no" checked='checked' /></td>
+{% endif %}
+</tr>
+</table>
+<div class="submit">
+<input type="submit" name="submit" value="Salva modifiche" id="submit" class="auto" />
+</div>
+<input type="hidden" id="_wpnonce" name="_wpnonce" value="f08b292ac3" /><input type="hidden" name="_wp_http_referer" value="/membri/khawarzia/settings/notifications/" />
+</form>
+</div>
+</div>
+
+</div>
+{% endblock %}

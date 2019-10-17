@@ -1,0 +1,54 @@
+{% extends 'profile.html' %}
+{% block body %}
+<div class="full-width">
+<div id="item-main-content">
+<div id="item-nav">
+<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+<ul id="nav-bar-filter">
+ <li id="blog-personal-li"><a id="user-blog" href="{% url 'profile' request.user.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
+ <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
+ <li id="notifications-personal-li"><a id="user-notifications" href="#">Notifiche <span class="no-count">0</span></a></li>
+ <li id="messages-personal-li"><a id="user-messages" href="#">Messaggi <span class="no-count">{{messages}}</span></a></li>
+ <li id="xprofile-personal-li"><a id="user-xprofile" href="{% url 'view' request.user.username %}">Profilo</a></li>
+ <li id="settings-personal-li" class="current selected"><a id="user-settings" href="{% url 'setgeneral' %}">Impostazioni</a></li>
+ <li id="members-following-personal-li"><a id="user-members-following" href="#">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="#">Followers <span>{{followers}}</span></a></li>
+ <li id="mycred-history-personal-li"><a id="user-mycred-history" href="#">Punti</a></li>
+</ul>
+</div>
+</div>
+<div id="item-body" role="main" class="clearfix">
+<div class="item-list-tabs no-ajax" id="subnav" aria-label="Member secondary navigation" role="navigation">
+<ul>
+<li id="general-personal-li" class="current selected">
+    <a id="general" href="{% url 'setgeneral' %}">Generale</a>
+</li>
+<li id="notifications-personal-li">
+    <a id="notifications" href="{% url 'setemail' %}">Email</a>
+</li>
+<li id="delete-account-personal-li">
+    <a id="delete-account" href="{% url 'setcancel' %}">Cancella Account</a>
+</li>
+</ul>
+</div>
+<h2 class="bp-screen-reader-text">Account settings</h2>
+<form method="post" class="standard-form" id="settings-form">{% csrf_token %}
+<label for="pwd">Password attuale <span>(necessaria per l'aggiornamento dell'e-mail o modificare la password corrente)</span></label>
+<input type="password" name="pwd" id="pwd" size="16" value="" class="settings-input small" spellcheck="false" autocomplete="off" required="" /> &nbsp;<a href="{% url 'reset1' %}">Hai perso la password?</a>
+<label for="email">Account Email</label>
+<input type="email" name="email" id="email" value="{{request.user.email}}" class="settings-input" />
+<label for="pass1">Cambia Password <span>(lascia vuoto per non cambiare)</span></label>
+<input type="password" name="pass1" id="pass1" minlength="8" size="16" value="" class="settings-input small password-entry" spellcheck="false" autocomplete="off" />
+<div id="pass-strength-result"></div>
+<label for="pass2">Ripeti Nuova Password</label>
+<input type="password" name="pass2" id="pass2" minlength="8" size="16" value="" class="settings-input small password-entry-confirm" spellcheck="false" autocomplete="off" />
+<div class="submit">
+<input type="submit" name="submit" value="Salva modifiche" id="submit" class="auto" />
+</div>
+<input type="hidden" id="_wpnonce" name="_wpnonce" value="8c49ac6ef2" /><input type="hidden" name="_wp_http_referer" value="/membri/khawarzia/settings/" />
+</form>
+</div>
+</div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'profile.html' %}
+{% block body %}
+<div class="full-width">
+<div id="item-main-content">
+<div id="item-nav">
+<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+<ul id="nav-bar-filter">
+ <li id="blog-personal-li"><a id="user-blog" href="{% url 'profile' request.user.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
+ <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
+ <li id="notifications-personal-li"><a id="user-notifications" href="#">Notifiche <span class="no-count">0</span></a></li>
+ <li id="messages-personal-li"><a id="user-messages" href="#">Messaggi <span class="no-count">{{messages}}</span></a></li>
+ <li id="xprofile-personal-li" class="current selected"><a id="user-xprofile" href="{% url 'view' request.user.username %}">Profilo</a></li>
+ <li id="settings-personal-li"><a id="user-settings" href="{% url 'setgeneral' %}">Impostazioni</a></li>
+ <li id="members-following-personal-li"><a id="user-members-following" href="#">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="#">Followers <span>{{followers}}</span></a></li>
+ <li id="mycred-history-personal-li"><a id="user-mycred-history" href="#">Punti</a></li>
+</ul>
+</div>
+</div>
+<div id="item-body" role="main" class="clearfix">
+<div class="item-list-tabs no-ajax" id="subnav" aria-label="Member secondary navigation" role="navigation">
+<ul>
+    <li id="public-personal-li"><a id="public" href="{% url 'view' request.user.username %}">Visualizza</a></li>
+    <li id="edit-personal-li" class="current selected"><a id="edit" href="{% url 'edit' %}">Modifica</a></li>
+    <li id="change-avatar-personal-li"><a id="change-avatar" href="{% url 'editpic' %}">Modifica la foto del profilo</a></li>
+    <li id="change-cover-image-personal-li"><a id="change-cover-image" href="{% url 'editcover' %}">Cambia immagine copertina</a></li> 
+</ul>
+</div>
+<div class="profile">
+<form method="post" id="profile-edit-form" class="standard-form bio">{% csrf_token %}
+<h4>Modifica Profilo Gruppo 'Bio'</h4>
+<ul class="button-nav">
+<li class="current"><a href="{% url 'edit' %}">Bio</a></li>
+</ul>
+<div class="clear"></div>
+<div class="editfield field_1 field_nome-e-cognome required-field visibility-public field_type_textbox">
+<legend id="field_1-1">
+Nome e Cognome <span class="bp-required-field-label">(obbligatorio)</span> </legend>
+<input id="field_1" name="field_1" type="text" value="{{request.user.first_name}} {{request.user.last_name}}" aria-required="true" required aria-labelledby="field_1-1" aria-describedby="field_1-3">
+<div class="field-visibility-settings-notoggle" id="field-visibility-settings-toggle-1">
+Questo campo può essere visibile da: <span class="current-visibility-level">Chiunque</span> </div>
+</div>
+<div class="editfield field_140 field_paypal optional-field visibility-public alt field_type_url">
+<legend id="field_140-1">
+Paypal </legend>
+<input id="field_140" name="field_140" type="text" inputmode="url" value="{{infor.paypal_url}}" aria-labelledby="field_140-1" aria-describedby="field_140-3">
+<p class="description" id="field_140-3">Inserisci in alto l'url del tuo account Paypal.me per ricevere denaro (esempio: http://www.paypal.me/mariorossi)</p>
+<div class="field-visibility-settings-notoggle" id="field-visibility-settings-toggle-140">
+Questo campo può essere visibile da: <span class="current-visibility-level">Chiunque</span> </div>
+</div>
+<div class="buddyboss-user-social">
+<input type="hidden" name="buddyboss_user_social" value="1">
+</div>
+<div class="submit">
+<input type="submit" name="profile-group-edit-submit" id="profile-group-edit-submit" value="Salva modifiche " />
+</div>
+<input type="hidden" name="field_ids" id="field_ids" value="1,140" />
+<input type="hidden" id="_wpnonce" name="_wpnonce" value="ae4a2903ad" /><input type="hidden" name="_wp_http_referer" value="/membri/khawarzia/profile/edit/group/1/" />
+</form>
+</div>
+</div>
+</div>
+
+</div>
+{% endblock %}

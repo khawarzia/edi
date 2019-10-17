@@ -1,0 +1,51 @@
+{% extends 'profile-no.html' %}
+{% block body %}
+<div class="full-width">
+<div id="item-main-content">
+<div id="item-nav">
+<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+<ul id="nav-bar-filter">
+ <li id="blog-personal-li"><a id="user-blog" href="{% url 'profile' user2.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
+ <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
+ <li id="xprofile-personal-li" class="current selected"><a id="user-xprofile" href="{% url 'view' user2.username %}">Profilo</a></li>
+ <li id="members-following-personal-li"><a id="user-members-following" href="#">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="#">Followers <span>{{followers}}</span></a></li>
+</ul>
+</div>
+</div>
+<div id="item-body" role="main" class="clearfix">
+<div class="item-list-tabs no-ajax" id="subnav" aria-label="Member secondary navigation" role="navigation">
+<ul>
+<li id="public-personal-li" class="current selected">
+    <a id="public" href="#">Visualizza</a></li> </ul>
+</div>
+<div class="profile">
+<div class="bp-widget bio">
+<h2>Bio</h2>
+<table class="profile-fields">
+<tr class="field_1 field_nome-e-cognome required-field visibility-public field_type_textbox">
+<td class="label">Nome e Cognome</td>
+<td class="data"><p><a href="#" rel="nofollow">{{user2.first_name}} {{user2.last_name}}</a></p>
+</td>
+</tr>
+<tr class="field_140 field_paypal optional-field visibility-public alt field_type_url">
+<td class="label">Paypal</td>
+<td class="data"><p><a href="{{infor2.paypal_url}}" rel="nofollow">{{infor2.paypal_url}}</a></p>
+</td>
+</tr>
+</table>
+</div>
+<div class="bp-widget mycred-field">
+<table class="profile-fields">
+<tr id="mycred-users-rank">
+<td class="label">Rank</td>
+<td class="data">
+<div class="mycred-my-rank crediti"><img width="50" height="50" src="https://edizioniopen.it/wp-content/uploads/2016/11/Scrittore.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="scrittore" /></div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

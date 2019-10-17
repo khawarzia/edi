@@ -1,0 +1,6 @@
+django
+django-allauth
+django-sslserver
+pillow
+django-ckeditor
+html2text
