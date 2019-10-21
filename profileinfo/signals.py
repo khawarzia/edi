@@ -9,7 +9,7 @@ def email_send(sender,instance,**kwargs):
     email_add = instance.user.email
     a = EmailMessage(
         subject='LibriCK Approved by Admin',
-        body='Your LibriCK with title : '+str(instance.titledisplay)+' has been approved by the admin.\nView your post now : https://167.99.234.72:8000/post/'+str(instance.titledisplay),
+        body='Your LibriCK with title : '+str(instance.titledisplay)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.titledisplay),
         to = [email_add]
     )
     a.send()
