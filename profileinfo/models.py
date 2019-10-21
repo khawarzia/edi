@@ -26,6 +26,7 @@ class post(models.Model):
     titledisplay = models.CharField(max_length=100,null=True)
     content = RichTextUploadingField(null=True)
     contentdisplay = models.CharField(max_length=30,null=True)
+    amazon_code_feature = RichTextField(blank=True)
     tags = models.CharField(max_length=200,null=True)
     cover = models.ImageField(null=True)
     views = models.IntegerField(default=0)

@@ -123,11 +123,8 @@ def drafts(request):
     objs = post.objects.all()
     a = []
     for i in objs:
-        if i.user == request.user and i.status == 'draft':
+        if i.user == request.user and (i.status == 'draft' and i.approved_by_admin == False):
             a.append(i)
-            i.titledisplay = html2text(i.title)
-            i.contentdisplay = html2text(i.content)[0:100]
-            i.save()
     context['postdata'] = a
     return render(request,template,context)
 
@@ -140,9 +137,6 @@ def insospeso(request):
     for i in objs:
         if i.user == request.user and i.status == 'processing' and i.approved_by_admin == False:
             a.append(i)
-            i.titledisplay = html2text(i.title)
-            i.contentdisplay = html2text(i.content)[0:100]
-            i.save()
     context['postdata'] = a
     return render(request,template,context)
 
@@ -432,6 +426,8 @@ def new_post(request):
                         a.linked_post.add(j)
                     count += 1
             a.link_number = count
+        a.titledisplay = html2text(a.title)
+        a.contentdisplay = html2text(a.content)[0:250]
         a.save()
         return redirect('/membri/'+str(request.user.username))
     else:
@@ -538,9 +534,10 @@ def comment_new(request,title):
         obj2.save()
         a = EmailMessage(
             subject='Commento',
-            body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://174.138.45.227:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
+            body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://127.0.0.1:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
             to=[obj2.user.email]
         )
+        a.send()
         return redirect('/post/'+title)
     
 @login_required(login_url='/loggin')
@@ -575,8 +572,12 @@ def edit_post(request,title):
     template = 'new-post.html'
     context = info(request)
     obj = post.objects.get(titledisplay = title)
+    if obj.user == request.user:
+        pass
+    else:
+        return redirect('/')
     context['post'] = obj
-    context['poststatus'] = 'edit'
+    context['poststatus'] = True
     a = []
     try:
         posts = post.objects.all()
@@ -588,10 +589,11 @@ def edit_post(request,title):
         pass
     context['series'] = a
     if request.method == 'POST':
+        form = contentform(request.POST)
         postdata = request.POST
         a = obj
         a.title = postdata['title']
-        a.content = postdata['main-body']
+        a.content = form.cleaned_data['content']
         a.tags = str(postdata['tags'])
         image = request.FILES['coverimg']
         fs = FileSystemStorage()
@@ -629,8 +631,13 @@ def edit_post(request,title):
                         a.linked_post.add(j)
                     count += 1
             a.link_number = count
+        a.titledisplay = html2text(a.title)
+        a.contentdisplay = html2text(a.content)[0:250]
         a.save()
         return redirect('/membri/'+str(request.user.username))
+    else:
+        form = contentform(instance=obj)
+    context['form'] = form
     return render(request,template,context)
 
 @login_required(login_url='/loggin')
