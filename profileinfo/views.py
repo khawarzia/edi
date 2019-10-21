@@ -534,7 +534,7 @@ def comment_new(request,title):
         obj2.save()
         a = EmailMessage(
             subject='Commento',
-            body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://167.99.234.72:8000/post/'+title+ ' https://167.99.234.72:8000/notifications-unread',
+            body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://67.207.92.234:8000/post/'+title+ ' https://67.207.92.234:8000/notifications-unread',
             to=[obj2.user.email]
         )
         a.send()
