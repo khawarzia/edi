@@ -492,195 +492,7 @@ margin-right: 0!important;
 		(function(){var c=document.body.className;c=c.replace(/no-js/,'js');document.body.className=c;})();
 		$=jQuery.noConflict();
 		//]]></script>
-<div id="wpadminbar" class="nojq nojs">
-<a class="screen-reader-shortcut" href="#wp-toolbar" tabindex="1">Vai alla barra degli strumenti</a>
-<div class="quicklinks" id="wp-toolbar" role="navigation" aria-label="Barra degli strumenti">
-    <ul id='wp-admin-bar-root-default' class="ab-top-menu">
-        <li id='wp-admin-bar-new-content' class="menupop">
-            <a class='ab-item' aria-haspopup="true" href='#'><span class="ab-icon"></span><span class="ab-label">Nuovo</span></a>
-            <div class="ab-sub-wrapper">
-                <ul id='wp-admin-bar-new-content-default' class="ab-submenu">
-                    <li id='wp-admin-bar-new-media'><a class='ab-item' href='#'>Media</a></li>
-                </ul>
-            </div>
-        </li>
-    </ul>
-    <ul id='wp-admin-bar-top-secondary' class="ab-top-secondary ab-top-menu">
-        <li id='wp-admin-bar-my-account' class="menupop with-avatar">
-            <a class='ab-item' aria-haspopup="true" href='{% url "profile" request.user.username %}'>Ciao, <span class="display-name">{{ request.user.first_name }} {{request.user.last_name}}</span><img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-26 photo' height='26' width='26' /></a>
-            <div class="ab-sub-wrapper">
-                <ul id='wp-admin-bar-user-actions' class="ab-submenu">
-                    <li id='wp-admin-bar-user-info'>
-                        <a class='ab-item' tabindex="-1" href='{% url "profile" request.user.username %}'><img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-64 photo' height='64' width='64' /><span class='display-name'>{{request.user.usrname}}</span><span class='username'>{{request.user.username}}</span></a>
-                    </li>
-                    <li id='wp-admin-bar-edit-profile'>
-                        <a class='ab-item' href='#'>Modifica il tuo profilo</a>
-                    </li>
-                    <li id='wp-admin-bar-logout'>
-                        <a class='ab-item' href='{% url "logout" %}'>Esci</a>
-                    </li>
-                </ul>
-                <ul id='wp-admin-bar-my-account-buddypress' class="ab-sub-secondary ab-submenu">
-                    <li id='wp-admin-bar-mycred-account' class="menupop">
-                        <div class="ab-item ab-empty-item" aria-haspopup="true">
-                            <span class="wp-admin-bar-arrow" aria-hidden="true"></span>Balance</div>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-mycred-account-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-mycred-account-balance-mycred-default'>
-                                        <div class="ab-item ab-empty-item">Punti: 0</div>
-                                    </li>
-                                    <li id='wp-admin-bar-mycred-account-history-mycred-default'>
-                                        <a class='ab-item' href='#'>Punti History</a>
-                                    </li>
-                                    <li id='wp-admin-bar-mycred-account-balance-crediti'>
-                                        <div class="ab-item ab-empty-item">Crediti: 0</div>
-                                    </li>
-                                    <li id='wp-admin-bar-mycred-account-history-crediti'>
-                                        <a class='ab-item' href='#'>Crediti History</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-activity' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Bacheca</a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-activity-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-activity-following'>
-                                        <a class='ab-item' href='#'>Following</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-activity-just-me'>
-                                        <a class='ab-item' href='#'>Bacheca</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-activity-news-feed'>
-                                        <a class='ab-item' href='#'>Nuove notizie</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-activity-favorites'>
-                                        <a class='ab-item' href='#'>I miei Mi Piace</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-xprofile' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='{% url "profile" request.user.username %}'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Profilo</a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-xprofile-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-xprofile-public'>
-                                        <a class='ab-item' href='{% url "view" request.user.username %}'>Visualizza</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-xprofile-edit'>
-                                        <a class='ab-item' href='{% url "edit" %}'>Modifica</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-xprofile-change-avatar'>
-                                        <a class='ab-item' href='{% url "editpic" %}'>Cambia Immagine del Profilo</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-xprofile-change-cover-image'>
-                                        <a class='ab-item' href='{% url "editcover" %}'>Cambia immagine copertina</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-notifications' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Notifiche <!--span class="count"></span--></a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-notifications-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-notifications-unread'>
-                                        <a class='ab-item' href='#'>Non letto <!--span class="count"></span--></a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-notifications-read'>
-                                        <a class='ab-item' href='#'>Leggi</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-messages' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Messaggi</a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-messages-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-messages-inbox'>
-                                        <a class='ab-item' href='#'>Posta in Arrivo</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-messages-starred'>
-                                        <a class='ab-item' href='#'>Preferito</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-messages-sentbox'>
-                                        <a class='ab-item' href='#'>Inviati</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-messages-compose'>
-                                        <a class='ab-item' href='#'>Scrivi</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-follow' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Follow</a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-follow-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-follow-following'>
-                                        <a class='ab-item' href='#'>Following</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-follow-followers'>
-                                        <a class='ab-item' href='#'>Followers</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-blog' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>LibriCK</a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-blog-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-blog-posts'>
-                                        <a class='ab-item' href='#'>Pubblicati</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-blog-bookmarks'>
-                                        <a class='ab-item' href='#'>Bookmarks</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-blog-pending'>
-                                        <a class='ab-item' href='#'>In sospeso</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-blog-Bozze'>
-                                        <a class='ab-item' href='#'>Bozze</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-blog-add-new'>
-                                        <a class='ab-item' href='#'>Scrivi</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li id='wp-admin-bar-my-account-settings' class="menupop">
-                            <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Impostazioni</a>
-                            <div class="ab-sub-wrapper">
-                                <ul id='wp-admin-bar-my-account-settings-default' class="ab-submenu">
-                                    <li id='wp-admin-bar-my-account-settings-general'>
-                                        <a class='ab-item' href='#'>Generale</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-settings-notifications'>
-                                        <a class='ab-item' href='#'>Email</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-settings-delete-account'>
-                                        <a class='ab-item' href='#'>Cancella Account</a>
-                                    </li>
-                                    <li id='wp-admin-bar-my-account-settings-profile'>
-                                        <a class='ab-item' href='#'>Profilo</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li id='wp-admin-bar-bp-notifications' class="menupop">
-                <a class='ab-item' aria-haspopup="true" href='#'><span id="ab-pending-notifications" class="pending-count alert"></span></a>
-                <div class="ab-sub-wrapper">
-                    <ul id='wp-admin-bar-bp-notifications-default' class="ab-submenu">
-                        <li id='wp-admin-bar-notification-25659'>
-                            <a class='ab-item' href='#'>No new norifications</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul> 
-    </div>
-    <a class="screen-reader-shortcut" href="{% url 'logout' %}">Esci</a>    
+{% include 'top-nav.html' %}
 </div>
 <div id="scroll-to"></div>
 <header id="masthead" class="site-header" data-infinite="on">
@@ -712,7 +524,8 @@ margin-right: 0!important;
 <div class="header-navigation">
 <div id="header-menu">
 <ul>
-<li id="menu-item-15405" class="mybtn menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-14767 current_page_item menu-item-15405"><a href="{% url 'new-post' %}"><i class="fa fa-file"></i><i class="fa fa-plus"></i> SCRIVI UN LIBRICK</a></li>
+<li id="menu-item-15405" class="mybtn menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-14767 current_page_item menu-item-15405">
+    <a href="{% url 'new-post' %}"><i class="fa fa-file"></i><i class="fa fa-plus"></i> SCRIVI UN LIBRICK</a></li>
 </ul>
 </div>
 <a href="#" class="responsive_btn"><i class="fa fa-align-justify"></i></a>
@@ -758,204 +571,9 @@ margin-right: 0!important;
 </a>
 <div class="pop user-pop-links">
 <div class="pop-inner">
- 
 
-<div id="adminbar-links" class="bp_components">
-<div>
-<div aria-label="Barra degli strumenti">
-    <ul id='wp-admin-bar-root-default' class="ab-top-menu">
-        <li id='wp-admin-bar-new-content' class="menupop">
-            <a class='ab-item' aria-haspopup="true" href='#'><span class="ab-icon"></span><span class="ab-label">Nuovo</span></a>
-            <div class="ab-sub-wrapper">
-                <ul id='wp-admin-bar-new-content-default' class="ab-submenu">
-                    <li id='wp-admin-bar-new-media'>
-                        <a class='ab-item' href='#'>Media</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
-    <ul id='wp-admin-bar-top-secondary'>
-        <li id='wp-admin-bar-my-account' class="menupop with-avatar">
-            <a class='ab-item' aria-haspopup="true" href='{% url "profile" request.user.username %}'>Ciao, <span class="display-name">{{ request.user.username }}</span>
-                <img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-26 photo' height='26' width='26' /></a>
-                <div class="ab-sub-wrapper">
-                    <ul id='wp-admin-bar-user-actions' class="ab-submenu">
-                        <li id='wp-admin-bar-user-info'>
-                            <a class='ab-item' tabindex="-1" href='{% url "profile" request.user.username %}'>
-                                <img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-64 photo' height='64' width='64' /><span class='display-name'>{{request.user.username}}</span><span class='username'>{{request.user.username}}</span></a>
-                            </li>
-                            <li id='wp-admin-bar-edit-profile'>
-                                <a class='ab-item' href='#'>Modifica il tuo profilo</a>
-                            </li>
-                            <li id='wp-admin-bar-logout'>
-                                <a class='ab-item' href='{% url "logout" %}'>Esci</a>
-                            </li>
-                        </ul>
-                        <ul id='wp-admin-bar-my-account-buddypress' class="ab-sub-secondary ab-submenu">
-                            <li id='wp-admin-bar-mycred-account' class="menupop">
-                                <div class="ab-item ab-empty-item" aria-haspopup="true">
-                                    <span class="wp-admin-bar-arrow" aria-hidden="true"></span>Balance</div>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-mycred-account-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-mycred-account-balance-mycred-default'>
-                                                <div class="ab-item ab-empty-item">Punti: 0</div>
-                                            </li>
-                                            <li id='wp-admin-bar-mycred-account-history-mycred-default'>
-                                                <a class='ab-item' href='#'>Punti History</a>
-                                            </li>
-                                            <li id='wp-admin-bar-mycred-account-balance-crediti'>
-                                                <div class="ab-item ab-empty-item">Crediti: 0</div>
-                                            </li>
-                                            <li id='wp-admin-bar-mycred-account-history-crediti'>
-                                                <a class='ab-item' href='#'>Crediti History</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-activity' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Bacheca</a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-activity-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-activity-following'>
-                                                <a class='ab-item' href='#'>Following</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-activity-just-me'>
-                                                <a class='ab-item' href='#'>Bacheca</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-activity-news-feed'>
-                                                <a class='ab-item' href='#'>Nuove notizie</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-activity-favorites'>
-                                                <a class='ab-item' href='#'>I miei Mi Piace</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-xprofile' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='{% url "profile" request.user.username %}'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Profilo</a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-xprofile-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-xprofile-public'>
-                                                <a class='ab-item' href='{% url "view" request.user.username %}'>Visualizza</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-xprofile-edit'>
-                                                <a class='ab-item' href='{% url "edit" %}'>Modifica</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-xprofile-change-avatar'>
-                                                <a class='ab-item' href='{% url "editpic" %}'>Cambia Immagine del Profilo</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-xprofile-change-cover-image'>
-                                                <a class='ab-item' href='{% url "editcover" %}'>Cambia immagine copertina</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-notifications' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Notifiche <!--span class="count"></span--></a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-notifications-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-notifications-unread'>
-                                                <a class='ab-item' href='#'>Non letto <!--span class="count"></span--></a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-notifications-read'>
-                                                <a class='ab-item' href='#'>Leggi</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-messages' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Messaggi</a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-messages-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-messages-inbox'>
-                                                <a class='ab-item' href='#'>Posta in Arrivo</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-messages-starred'>
-                                                <a class='ab-item' href='#'>Preferito</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-messages-sentbox'>
-                                                <a class='ab-item' href='#'>Inviati</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-messages-compose'>
-                                                <a class='ab-item' href='#'>Scrivi</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-follow' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Follow</a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-follow-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-follow-following'>
-                                                <a class='ab-item' href='#'>Following</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-follow-followers'>
-                                                <a class='ab-item' href='#'>Followers</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-blog' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>LibriCK</a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-blog-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-blog-posts'>
-                                                <a class='ab-item' href='#'>Pubblicati</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-blog-bookmarks'>
-                                                <a class='ab-item' href='#'>Bookmarks</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-blog-pending'>
-                                                <a class='ab-item' href='#'>In sospeso</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-blog-Bozze'>
-                                                <a class='ab-item' href='#'>Bozze</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-blog-add-new'>
-                                                <a class='ab-item' href='#'>Scrivi</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li id='wp-admin-bar-my-account-settings' class="menupop">
-                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Impostazioni</a>
-                                    <div class="ab-sub-wrapper">
-                                        <ul id='wp-admin-bar-my-account-settings-default' class="ab-submenu">
-                                            <li id='wp-admin-bar-my-account-settings-general'>
-                                                <a class='ab-item' href='#'>Generale</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-settings-notifications'>
-                                                <a class='ab-item' href='#'>Email</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-settings-delete-account'>
-                                                <a class='ab-item' href='#'>Cancella Account</a>
-                                            </li>
-                                            <li id='wp-admin-bar-my-account-settings-profile'>
-                                                <a class='ab-item' href='#'>Profilo</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li id='wp-admin-bar-bp-notifications' class="menupop">
-                        <a class='ab-item' aria-haspopup="true" href='#'><span id="ab-pending-notifications" class="pending-count alert">0</span></a>
-                        <div class="ab-sub-wrapper">
-                            <ul id='wp-admin-bar-bp-notifications-default' class="ab-submenu">
-                                <li id='wp-admin-bar-notification-25659'>
-                                    <a class='ab-item' href='#'>No new notifications</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-    </div>
-    </div>
-    <span class="logout">
-    <a href="{% url 'logout' %}">Logout</a>
+{% include 'top-nav-mobile.html' %}
+
 </span>
 </div>
 </div>
@@ -1004,87 +622,15 @@ margin-right: 0!important;
 
 <div id="panels" class="">
 
-<div id="left-panel" class="menu-panel">
-<div id="left-panel-inner">
-<div id="scroll-area">
-<div id="nav-menu" class="menu-buddy_panel-container"><ul id="menu-buddy_panel" class="menu"><li id="menu-item-26882" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-26882"><a href="https://edizioniopen.it"><i class="fa fa-heart"></i>Home</a></li>
-<li id="menu-item-33886" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33886"><a><i class="fas fa-pencil-alt"></i>Scrivi</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-32689" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-32689"><a href="#"><i class="fa fa-plus"></i>Nuovo LibriCK</a></li>
-<li id="menu-item-32688" class="bp-menu bp-blog-nav menu-item menu-item-type-custom menu-item-object-custom menu-item-32688"><a href="#">I miei LibriCK</a></li>
-</ul></div>
-</li>
-<li id="menu-item-107410" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-107410"><a><i class="fas fa-book"></i>Leggi</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-163891" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-163891"><a href="#"><i class="fa-play"></i>Serie</a></li>
-<li id="menu-item-108896" class="bp-menu bp-following-nav menu-item menu-item-type-custom menu-item-object-custom menu-item-108896"><a href="#">Autori che seguo</a></li>
-<li id="menu-item-51492" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51492"><a href="#"><i class="far fa-bookmark"></i>LibriCK Preferiti</a></li>
-<li id="menu-item-15481" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15481"><a href="#"><i class="fab fa-slack"></i>Blog</a></li>
-</ul></div>
-</li>
-<li id="menu-item-195659" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-195659"><a href="#"><i class="fas fa-flask"></i>LAB</a></li>
-<li id="menu-item-27750" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-27750"><a><i class="fas fa-bomb"></i>Servizi Gratuiti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-52040" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52040"><a href="#"><i class="fab fa-amazon"></i>Promuovi un libro</a></li>
-<li id="menu-item-27751" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27751"><a href="#"><i class="fab fa-paypal"></i>Ricevi pagamenti</a></li>
-<li id="menu-item-280486" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-280486"><a href="#"><i class="fas fa-bullhorn"></i>Promuovi la tua Serie</a></li>
-<li id="menu-item-134544" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-134544"><a href="#"><i class="fas fa-edit"></i>Revisione LibriCK</a></li>
-</ul></div>
-</li>
-<li id="menu-item-269354" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-269354"><a><i class="fas fa-money-bill-alt"></i>Sconti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-220017" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-220017"><a href="#"><i class="fas fa-book-open"></i>StreetLib</a></li>
-<li id="menu-item-227249" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-227249"><a href="#"><i class="fas fa-video"></i>Booktrailer</a></li>
-</ul></div>
-</li>
-</ul></div>
+{% include 'left-panel.html' %}
 
-<div class="bp_components mobile">
-<div>
-<div aria-label="Barra degli strumenti">
-<ul id='wp-admin-bar-root-default' class="ab-top-menu"><li id='wp-admin-bar-new-content' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/wp-admin/media-new.php'><span class="ab-icon"></span><span class="ab-label">Nuovo</span></a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-new-content-default' class="ab-submenu"><li id='wp-admin-bar-new-media'><a class='ab-item' href='https://edizioniopen.it/wp-admin/media-new.php'>Media</a></li></ul></div></li></ul><ul id='wp-admin-bar-top-secondary'><li id='wp-admin-bar-my-account' class="menupop with-avatar"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/activity/'>Ciao, <span class="display-name">Khawar Zia</span><img alt='' src='//www.gravatar.com/avatar/b5d7e3c9a39ea0f5fd088fcdd1c56563?s=26&#038;r=g&#038;d=monsterid' srcset='//www.gravatar.com/avatar/b5d7e3c9a39ea0f5fd088fcdd1c56563?s=26&#038;r=g&#038;d=monsterid 2x' class='avatar avatar-26 photo' height='26' width='26' /></a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-user-actions' class="ab-submenu"><li id='wp-admin-bar-user-info'><a class='ab-item' tabindex="-1" href='https://edizioniopen.it/membri/khawar/activity/'><img alt='' src='//www.gravatar.com/avatar/b5d7e3c9a39ea0f5fd088fcdd1c56563?s=64&#038;r=g&#038;d=monsterid' srcset='//www.gravatar.com/avatar/b5d7e3c9a39ea0f5fd088fcdd1c56563?s=64&#038;r=g&#038;d=monsterid 2x' class='avatar avatar-64 photo' height='64' width='64' /><span class='display-name'>Khawar Zia</span><span class='username'>khawar</span></a></li><li id='wp-admin-bar-edit-profile'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/profile/edit/'>Modifica il tuo profilo</a></li><li id='wp-admin-bar-logout'><a class='ab-item' href='https://edizioniopen.it/wp-login.php?action=logout&#038;_wpnonce=36c7f20ac9'>Esci</a></li></ul><ul id='wp-admin-bar-my-account-buddypress' class="ab-sub-secondary ab-submenu"><li id='wp-admin-bar-mycred-account' class="menupop"><div class="ab-item ab-empty-item" aria-haspopup="true"><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Balance</div><div class="ab-sub-wrapper"><ul id='wp-admin-bar-mycred-account-default' class="ab-submenu"><li id='wp-admin-bar-mycred-account-balance-mycred-default'><div class="ab-item ab-empty-item">Punti: 0</div></li><li id='wp-admin-bar-mycred-account-history-mycred-default'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/mycred-history/?show-ctype=mycred_default'>Punti History</a></li><li id='wp-admin-bar-mycred-account-balance-crediti'><div class="ab-item ab-empty-item">Crediti: 0</div></li><li id='wp-admin-bar-mycred-account-history-crediti'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/mycred-history/?show-ctype=crediti'>Crediti History</a></li></ul></div></li><li id='wp-admin-bar-my-account-activity' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/activity/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Bacheca</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-activity-default' class="ab-submenu"><li id='wp-admin-bar-my-account-activity-following'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/activity/following/'>Following</a></li><li id='wp-admin-bar-my-account-activity-just-me'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/activity/'>Bacheca</a></li><li id='wp-admin-bar-my-account-activity-news-feed'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/activity/news-feed/'>Nuove notizie</a></li><li id='wp-admin-bar-my-account-activity-favorites'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/activity/favorites/'>I miei Mi Piace</a></li></ul></div></li><li id='wp-admin-bar-my-account-xprofile' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/profile/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Profilo</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-xprofile-default' class="ab-submenu"><li id='wp-admin-bar-my-account-xprofile-public'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/profile/'>Visualizza</a></li><li id='wp-admin-bar-my-account-xprofile-edit'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/profile/edit/'>Modifica</a></li><li id='wp-admin-bar-my-account-xprofile-change-avatar'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/profile/change-avatar/'>Cambia Immagine del Profilo</a></li><li id='wp-admin-bar-my-account-xprofile-change-cover-image'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/profile/change-cover-image/'>Cambia immagine copertina</a></li></ul></div></li><li id='wp-admin-bar-my-account-notifications' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/notifications/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Notifiche</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-notifications-default' class="ab-submenu"><li id='wp-admin-bar-my-account-notifications-unread'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/notifications/'>Non Lette</a></li><li id='wp-admin-bar-my-account-notifications-read'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/notifications/read/'>Leggi</a></li></ul></div></li><li id='wp-admin-bar-my-account-messages' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/messages/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Messaggi</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-messages-default' class="ab-submenu"><li id='wp-admin-bar-my-account-messages-inbox'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/messages/'>Posta in Arrivo</a></li><li id='wp-admin-bar-my-account-messages-starred'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/messages/starred/'>Preferito</a></li><li id='wp-admin-bar-my-account-messages-sentbox'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/messages/sentbox/'>Inviati</a></li><li id='wp-admin-bar-my-account-messages-compose'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/messages/compose/'>Scrivi</a></li></ul></div></li><li id='wp-admin-bar-my-account-follow' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/following/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Follow</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-follow-default' class="ab-submenu"><li id='wp-admin-bar-my-account-follow-following'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/following/'>Following</a></li><li id='wp-admin-bar-my-account-follow-followers'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/followers/'>Followers</a></li></ul></div></li><li id='wp-admin-bar-my-account-blog' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/blog/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>LibriCK</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-blog-default' class="ab-submenu"><li id='wp-admin-bar-my-account-blog-posts'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/blog/'>Pubblicati</a></li><li id='wp-admin-bar-my-account-blog-bookmarks'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/blog/bookmarks'>Bookmarks</a></li><li id='wp-admin-bar-my-account-blog-pending'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/blog/pending'>In sospeso</a></li><li id='wp-admin-bar-my-account-blog-Bozze'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/blog/drafts'>Bozze</a></li><li id='wp-admin-bar-my-account-blog-add-new' class="active"><a class='ab-item' href='https://edizioniopen.it/invia-un-racconto/'>Scrivi</a></li></ul></div></li><li id='wp-admin-bar-my-account-settings' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/settings/'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Impostazioni</a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-my-account-settings-default' class="ab-submenu"><li id='wp-admin-bar-my-account-settings-general'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/settings/'>Generale</a></li><li id='wp-admin-bar-my-account-settings-notifications'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/settings/notifications/'>Email</a></li><li id='wp-admin-bar-my-account-settings-delete-account'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/settings/delete-account/'>Cancella Account</a></li><li id='wp-admin-bar-my-account-settings-profile'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/settings/profile/'>Profilo</a></li></ul></div></li></ul></div></li><li id='wp-admin-bar-bp-notifications' class="menupop"><a class='ab-item' aria-haspopup="true" href='https://edizioniopen.it/membri/khawar/notifications/'><span id="ab-pending-notifications" class="count no-alert">0</span></a><div class="ab-sub-wrapper"><ul id='wp-admin-bar-bp-notifications-default' class="ab-submenu"><li id='wp-admin-bar-no-notifications'><a class='ab-item' href='https://edizioniopen.it/membri/khawar/notifications/'>Nessuna nuova notifica</a></li></ul></div></li></ul> </div>
-</div>
+{% include 'after-left-panel.html' %}
 
-<a href="{% url 'logout' %}" class="logout-link screen-reader-shortcut">Logout</a>
 </div>
 </div>
 </div>
 </div> 
-<div id="mobile-menu" class="menu-panel">
-<div id="mobile-menu-inner" data-titlebar="none">
-<div id="nav-menu" class="menu-buddy_panel-container"><ul id="menu-buddy_panel-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-26882"><a href="https://edizioniopen.it"><i class="fa fa-heart"></i>Home</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-33886"><a><i class="fas fa-pencil-alt"></i>Scrivi</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-32689"><a href="#"><i class="fa fa-plus"></i>Nuovo LibriCK</a></li>
-<li class="bp-menu bp-blog-nav menu-item menu-item-type-custom menu-item-object-custom menu-item-32688"><a href="#">I miei LibriCK</a></li>
-</ul></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-107410"><a><i class="fas fa-book"></i>Leggi</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-163891"><a href="#"><i class="fa-play"></i>Serie</a></li>
-<li class="bp-menu bp-following-nav menu-item menu-item-type-custom menu-item-object-custom menu-item-108896"><a href="#">Autori che seguo</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51492"><a href="#"><i class="far fa-bookmark"></i>LibriCK Preferiti</a></li>
-<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15481"><a href="#"><i class="fab fa-slack"></i>Blog</a></li>
-</ul></div>
-</li>
-<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-195659"><a href="#"><i class="fas fa-flask"></i>LAB</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-27750"><a><i class="fas fa-bomb"></i>Servizi Gratuiti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52040"><a href="#"><i class="fab fa-amazon"></i>Promuovi un libro</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27751"><a href="#"><i class="fab fa-paypal"></i>Ricevi pagamenti</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-280486"><a href="#"><i class="fas fa-bullhorn"></i>Promuovi la tua Serie</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-134544"><a href="#"><i class="fas fa-edit"></i>Revisione LibriCK</a></li>
-</ul></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-269354"><a><i class="fas fa-money-bill-alt"></i>Sconti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-220017"><a href="#"><i class="fas fa-book-open"></i>StreetLib</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-227249"><a href="#"><i class="fas fa-video"></i>Booktrailer</a></li>
-</ul></div>
-</li>
-</ul></div>
-</div>
-</div>  
+{% include 'mobile-menu.html' %}
 <div id="right-panel">
 <div id="right-panel-inner">
 <div id="main-wrap"> 
@@ -1102,7 +648,6 @@ margin-right: 0!important;
 <div class="entry-content">
 <div class="sap-container-wrapper boss-sap-wrapper">
 <div class="sap-container">
-        <form method="POST" id="submit-form" name="submit-form" enctype="multipart/form-data">{% csrf_token %}
 <div class="sap-editor-wrap">
 <div class="sap-post-author-wrap">
 <a href="{% url 'profile' request.user.username %}"><img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-100 photo' height='100' width='100' /></a>
@@ -1160,50 +705,52 @@ function readURL(input) {
 <div id="wpp-series-selector">
 <p class="wpp-title">Questa storia fa parte di una Serie?</p>
 <div id="serie-options" class="wpp-part-serie">
-<select name="post_type" id="post_type">
-<option value="">Non fa parte di una serie</option>
-<option value="new-serie">Fa parte di una nuova serie</option>
-<option value="existing-serie">Fa parte di una serie esistente</option>
+    <form method="POST" id="submit-form" name="submit-form" enctype="multipart/form-data">{% csrf_token %}
+<select name="post_type" id="post_type" class="wpp-selector-dropdown">
+<option value="" {% if poststatus %} {% if post.type_of_post == 'single post' %} selected {% endif %} {% endif %}>Non fa parte di una serie</option>
+<option value="new-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_title == '' %} selected {% endif %} {% endif %}>Fa parte di una nuova serie</option>
+<option value="existing-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_title != '' %} selected {% endif %} {% endif %}>Fa parte di una serie esistente</option>
 </select>
 </div>
 <div id="_new_serie">
 <p class="wpp-title">Crea una nuova Serie:</p>
-<input type="text" class="wpp-input-control" placeholder="Inserisci il titolo" name="_new_serie">
+<input type="text" class="wpp-input-control" placeholder="Inserisci il titolo" name="_new_serie" {% if poststatus %}value="{{post.link_title}}"{% endif %}>
 </div>
 <div id="wpp-avail-serie">
 <p class="wpp-title" >Scegli una Serie esistente</p>
 <select name="post_serie">
     {% for i in series %}
-    <option value="{{i}}">{{i}}</option>
+    <option value="{{i}}" {% if poststatus %} {% if post.link_title == i %} selected {% endif %} {% endif %}>{{i}}</option>
     {% endfor %}
 </select>
 </div>
 </div> 
 <aside class="widget sap-widget sap-tags-widget">
 <h3 class="widgettitle">TAGS</h3>
-<input type="text" class="tags-select selectized" id="input-tags-select" name="tags" tabindex="-1">
+<input type="text" class="tags-select selectized" id="input-tags-select" name="tags" tabindex="-1" value="{% if poststatus %}{{post.tags}}{% endif %}">
 </aside>
 <aside class="widget sap-widget sap-featured-img-widget">
 <h3 class="widgettitle">Immagine di Copertina</h3>
 <input type="hidden" id="featured-img-placeholder-id" value="" />
 <input type="file" name="coverimg" onchange="readURL(this);" required>
 <div id="feaured-img-holder-wrap">
-<img id="blah" src="" />
+<img id="blah" src="{% if poststatus %}{{post.cover}}{% endif %}" />
 </div>
 </aside>
-{%if post.status == 'draft'%}
-<a style="display:none;" class="sap-story-delete sap-story-delete-btn" href="#">Elimina il LibriCK</a> </div>
+{%if post.approved_by_admin == False %}
+<a style="display:none;" class="sap-story-delete sap-story-delete-btn" href="#">Elimina il LibriCK</a> 
 {% endif %}
 </div>
+</div>
 <div class="sap-editor-area-wrapper">
-<textarea class="sap-editable-title" data-disable-toolbar="true" name="title" required></textarea>
+<textarea class="sap-editable-title" data-disable-toolbar="true" name="title" required>{% if poststatus %}{{post.title|safe}}{% endif %}</textarea>
 {{form.media}}
-{{form}}
+{{form.as_p}}
 <br>
 <input type="hidden" name="action" id="action" value="">
 </form>
 </div>
-</div>
+</div>  
 </div>
 <script>
     timer = setInterval(updateDiv,1000);

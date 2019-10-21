@@ -1,0 +1,194 @@
+<div class="bp_components mobile">
+    <div>
+    <div aria-label="Barra degli strumenti">
+    <ul id='wp-admin-bar-root-default' class="ab-top-menu">
+        <li id='wp-admin-bar-new-content' class="menupop">
+            <a class='ab-item' aria-haspopup="true" href='#'><span class="ab-icon"></span><span class="ab-label">Nuovo</span></a>
+            <div class="ab-sub-wrapper">
+                <ul id='wp-admin-bar-new-content-default' class="ab-submenu">
+                    <li id='wp-admin-bar-new-media'>
+                        <a class='ab-item' href='#'>Media</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <ul id='wp-admin-bar-top-secondary'>
+        <li id='wp-admin-bar-my-account' class="menupop with-avatar active">
+            <a class='ab-item' aria-haspopup="true" href='#'>Ciao, <span class="display-name">{{request.user.first_name}} {{request.user.last_name}}</span>
+                <img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-26 photo' height='26' width='26' /></a>
+                <div class="ab-sub-wrapper">
+                    <ul id='wp-admin-bar-user-actions' class="ab-submenu">
+                        <li id='wp-admin-bar-user-info'>
+                            <a class='ab-item' tabindex="-1" href='#'>
+                                <img alt='' src="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %}" srcset="{% if profileurl == 'b' %} {{ user.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl == 'c' %} /static/profile/{{infor.profile}}.jpg {% else %} /media/{{infor.profile_pic}} {% endif %} 2x" class='avatar avatar-64 photo' height='64' width='64' />
+                                <span class='display-name'>{{request.user.first_name}} {{request.user.last_name}}</span><span class='username'>{{request.user.username}}</span></a>
+                            </li>
+                            <li id='wp-admin-bar-edit-profile'>
+                                <a class='ab-item' href='#'>Modifica il tuo profilo</a>
+                            </li>
+                            <li id='wp-admin-bar-logout'>
+                                <a class='ab-item' href='{% url "logout" %}'>Esci</a>
+                            </li>
+                        </ul>
+                        <ul id='wp-admin-bar-my-account-buddypress' class="ab-sub-secondary active ab-submenu">
+                            <li id='wp-admin-bar-mycred-account' class="menupop">
+                                <div class="ab-item ab-empty-item" aria-haspopup="true">
+                                    <span class="wp-admin-bar-arrow" aria-hidden="true"></span>Balance</div>
+                                    <div class="ab-sub-wrapper">
+                                        <ul id='wp-admin-bar-mycred-account-default' class="ab-submenu">
+                                            <li id='wp-admin-bar-mycred-account-balance-mycred-default'>
+                                                <div class="ab-item ab-empty-item">Punti: 0</div>
+                                            </li>
+                                            <li id='wp-admin-bar-mycred-account-history-mycred-default'>
+                                                <a class='ab-item' href='#'>Punti History</a>
+                                            </li>
+                                            <li id='wp-admin-bar-mycred-account-balance-crediti'>
+                                                <div class="ab-item ab-empty-item">Crediti: 0</div>
+                                            </li>
+                                            <li id='wp-admin-bar-mycred-account-history-crediti'>
+                                                <a class='ab-item' href='#'>Crediti History</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id='wp-admin-bar-my-account-activity' class="menupop">
+                                    <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Bacheca</a>
+                                    <div class="ab-sub-wrapper">
+                                        <ul id='wp-admin-bar-my-account-activity-default' class="ab-submenu">
+                                            <li id='wp-admin-bar-my-account-activity-following'>
+                                                <a class='ab-item' href='#'>Following</a>
+                                            </li>
+                                            <li id='wp-admin-bar-my-account-activity-just-me'>
+                                                <a class='ab-item' href='#'>Bacheca</a>
+                                            </li>
+                                            <li id='wp-admin-bar-my-account-activity-news-feed'>
+                                                <a class='ab-item' href='#'>Nuove notizie</a>
+                                            </li>
+                                            <li id='wp-admin-bar-my-account-activity-favorites'>
+                                                <a class='ab-item' href='#'>I miei Mi Piace</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id='wp-admin-bar-my-account-xprofile' class="menupop">
+                                    <a class='ab-item' aria-haspopup="true" href='{% url "profile" request.user.username %}'>
+                                        <span class="wp-admin-bar-arrow" aria-hidden="true"></span>Profilo</a>
+                                        <div class="ab-sub-wrapper">
+                                            <ul id='wp-admin-bar-my-account-xprofile-default' class="ab-submenu">
+                                                <li id='wp-admin-bar-my-account-xprofile-public'>
+                                                    <a class='ab-item' href='{% url "view" request.user.username %}'>Visualizza</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-xprofile-edit'>
+                                                    <a class='ab-item' href='{% url "edit" %}'>Modifica</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-xprofile-change-avatar'>
+                                                    <a class='ab-item' href='{% url "editpic" %}'>Cambia Immagine del Profilo</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-xprofile-change-cover-image'>
+                                                    <a class='ab-item' href='{% url "editcover" %}'>Cambia immagine copertina</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li id='wp-admin-bar-my-account-notifications' class="menupop">
+                                        <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Notifiche</a>
+                                        <div class="ab-sub-wrapper">
+                                            <ul id='wp-admin-bar-my-account-notifications-default' class="ab-submenu">
+                                                <li id='wp-admin-bar-my-account-notifications-unread'>
+                                                    <a class='ab-item' href='#'>Non Lette</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-notifications-read'>
+                                                    <a class='ab-item' href='#'>Leggi</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li id='wp-admin-bar-my-account-messages' class="menupop">
+                                        <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Messaggi</a>
+                                        <div class="ab-sub-wrapper">
+                                            <ul id='wp-admin-bar-my-account-messages-default' class="ab-submenu">
+                                                <li id='wp-admin-bar-my-account-messages-inbox'>
+                                                    <a class='ab-item' href='#'>Posta in Arrivo</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-messages-starred'>
+                                                    <a class='ab-item' href='#'>Preferito</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-messages-sentbox'>
+                                                    <a class='ab-item' href='#'>Inviati</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-messages-compose'>
+                                                    <a class='ab-item' href='#'>Scrivi</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li id='wp-admin-bar-my-account-follow' class="menupop">
+                                        <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Follow</a>
+                                        <div class="ab-sub-wrapper">
+                                            <ul id='wp-admin-bar-my-account-follow-default' class="ab-submenu">
+                                                <li id='wp-admin-bar-my-account-follow-following'>
+                                                    <a class='ab-item' href='#'>Following</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-follow-followers'>
+                                                    <a class='ab-item' href='#'>Followers</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li id='wp-admin-bar-my-account-blog' class="menupop">
+                                        <a class='ab-item' aria-haspopup="true" href='#'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>LibriCK</a>
+                                        <div class="ab-sub-wrapper">
+                                            <ul id='wp-admin-bar-my-account-blog-default' class="ab-submenu">
+                                                <li id='wp-admin-bar-my-account-blog-posts'>
+                                                    <a class='ab-item' href='#'>Pubblicati</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-blog-bookmarks'>
+                                                    <a class='ab-item' href='#'>Bookmarks</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-blog-pending'>
+                                                    <a class='ab-item' href='#'>In sospeso</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-blog-Bozze'>
+                                                    <a class='ab-item' href='#'>Bozze</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-blog-add-new'>
+                                                    <a class='ab-item' href='#'>Scrivi</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li id='wp-admin-bar-my-account-settings' class="menupop">
+                                        <a class='ab-item' aria-haspopup="true" href='{% url "setgeneral" %}'><span class="wp-admin-bar-arrow" aria-hidden="true"></span>Impostazioni</a>
+                                        <div class="ab-sub-wrapper">
+                                            <ul id='wp-admin-bar-my-account-settings-default' class="ab-submenu">
+                                                <li id='wp-admin-bar-my-account-settings-general'>
+                                                    <a class='ab-item' href='{% url "setgeneral" %}'>Generale</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-settings-notifications'>
+                                                    <a class='ab-item' href='{% url "setemail" %}'>Email</a>
+                                                </li>
+                                                <li id='wp-admin-bar-my-account-settings-delete-account'>
+                                                    <a class='ab-item' href='{% url "setcancel" %}'>Cancella Account</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li id='wp-admin-bar-bp-notifications' class="menupop">
+                            <a class='ab-item' aria-haspopup="true" href='#'><span id="ab-pending-notifications" class="count no-alert">0</span></a>
+                            <div class="ab-sub-wrapper">
+                                <ul id='wp-admin-bar-bp-notifications-default' class="ab-submenu">
+                                    <li id='wp-admin-bar-no-notifications'>
+                                        <a class='ab-item' href='#'>Nessuna nuova notifica</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+    </div>
+    
+    <a href="{% url 'logout' %}" class="logout-link screen-reader-shortcut">Logout</a>

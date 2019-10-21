@@ -26,10 +26,10 @@
 </li>
 </ul>
 </div>
-<div id="message" class="info">
+<div id="message">
     {% if notifi %}
     {% for i in notifi %}
-<p>{{i.notification}}</p><br>
+<a href="{% url 'view-post' i.relpost.all.0.titledisplay %}">{{i.notification}}</a><br>
 {% endfor %}
 {% else %}
 <p>Non hai notifiche non lette.</p>

@@ -558,32 +558,7 @@ margin-right: 0!important;
 
 <div id="panels" class="">
 
-<div id="left-panel" class="menu-panel">
-<div id="left-panel-inner">
-<div id="scroll-area">
-<div id="nav-menu" class="menu-buddy_panel-container"><ul id="menu-buddy_panel" class="menu"><li id="menu-item-26882" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-26882"><a href="{% url 'home' %}"><i class="fa fa-heart"></i>Home</a></li>
-<li id="menu-item-107410" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-107410"><a><i class="fas fa-book"></i>Leggi</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-163891" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-163891"><a href="#"><i class="fa-play"></i>Serie</a></li>
-<li id="menu-item-15481" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15481"><a href="#"><i class="fab fa-slack"></i>Blog</a></li>
-</ul></div>
-</li>
-<li id="menu-item-195659" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-195659"><a href="#"><i class="fas fa-flask"></i>LAB</a></li>
-<li id="menu-item-27750" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-27750"><a><i class="fas fa-bomb"></i>Servizi Gratuiti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-52040" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52040"><a href="#"><i class="fab fa-amazon"></i>Promuovi un libro</a></li>
-<li id="menu-item-27751" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27751"><a href="#"><i class="fab fa-paypal"></i>Ricevi pagamenti</a></li>
-<li id="menu-item-280486" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-280486"><a href="#"><i class="fas fa-bullhorn"></i>Promuovi la tua Serie</a></li>
-<li id="menu-item-134544" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-134544"><a href="#"><i class="fas fa-edit"></i>Revisione LibriCK</a></li>
-</ul></div>
-</li>
-<li id="menu-item-269354" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-269354"><a><i class="fas fa-money-bill-alt"></i>Sconti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li id="menu-item-220017" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-220017"><a href="#"><i class="fas fa-book-open"></i>StreetLib</a></li>
-<li id="menu-item-227249" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-227249"><a href="#"><i class="fas fa-video"></i>Booktrailer</a></li>
-</ul></div>
-</li>
-</ul></div>
+{% include 'left-panel.html' %}
 
 <div class="bp_components mobile">
 
@@ -593,33 +568,7 @@ margin-right: 0!important;
 </div>
 </div>
 </div> 
-<div id="mobile-menu" class="menu-panel">
-<div id="mobile-menu-inner" data-titlebar="none">
-<div id="nav-menu" class="menu-buddy_panel-container"><ul id="menu-buddy_panel-1" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-26882"><a href="https://edizioniopen.it"><i class="fa fa-heart"></i>Home</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-107410"><a><i class="fas fa-book"></i>Leggi</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-163891"><a href="#"><i class="fa-play"></i>Serie</a></li>
-<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15481"><a href="#"><i class="fab fa-slack"></i>Blog</a></li>
-</ul></div>
-</li>
-<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-195659"><a href="#"><i class="fas fa-flask"></i>LAB</a></li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-27750"><a><i class="fas fa-bomb"></i>Servizi Gratuiti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52040"><a href="#"><i class="fab fa-amazon"></i>Promuovi un libro</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27751"><a href="#"><i class="fab fa-paypal"></i>Ricevi pagamenti</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-280486"><a href="#/"><i class="fas fa-bullhorn"></i>Promuovi la tua Serie</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-134544"><a href="#"><i class="fas fa-edit"></i>Revisione LibriCK</a></li>
-</ul></div>
-</li>
-<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-269354"><a><i class="fas fa-money-bill-alt"></i>Sconti</a>
-<div class='sub-menu-wrap'><ul class="sub-menu">
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-220017"><a href="#"><i class="fas fa-book-open"></i>StreetLib</a></li>
-<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-227249"><a href="#"><i class="fas fa-video"></i>Booktrailer</a></li>
-</ul></div>
-</li>
-</ul></div>
-</div>
-</div> 
+{% include 'mobile-menu.html' %} 
 <div id="right-panel">
 <div id="right-panel-inner">
 <div id="main-wrap"> 
@@ -635,7 +584,7 @@ margin-right: 0!important;
 <div class="table-cell entry-meta">
 <span class="post-author"><a href="{% url 'profile' post.user.username %}" rel="bookmark"><img alt='' src="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %}" srcset="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %} 2x" class='avatar avatar-55 photo' height='55' width='55' /></a><span class="author vcard">
     <a class="url fn n" href="{% url 'profile' post.user.username %}" title="View all posts by {{post.user.first_name}} {{post.user.last_name}}" rel="author">{{post.user.first_name}} {{post.user.last_name}}</a></span></span>
-    <a href="" rel="bookmark" class="post-date fa fa-clock-o"><time class="entry-date">{{post.post_date}}</time></a> 
+    <a href="" rel="bookmark" class="post-date fa fa-clock-o"><time class="entry-date">{{post.post_date.date}}</time></a> 
 <span class="comments-link fa fa-comment-o">
 <a href="">{{cd|length}} discussioni</a> </span>
 </div>
