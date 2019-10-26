@@ -559,23 +559,7 @@ margin-right: 0!important;
 </div>
 </div>
 
-<div class="header-notifications all-notifications">
-<a class="notification-link fa fa-bell" href="{% url 'note2' %}">
-{% if notifications == 0 %}<span id="ab-pending-notifications" class="count no-alert">0</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-<a href="#">No new notifications</a> </div>
-</div>
-{% else %}<span id="ab-pending-notifications" class="count">{{notification}}</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-    {% for i in notific %}
-<a href="#">{{i.notification}}</a>
-{% endfor %} 
-</div>
-</div>
-{% endif %}
-</div>
+{% include 'header-notifications.html' %}
 
 
 <div class="header-account-login">
@@ -698,7 +682,7 @@ margin-right: 0!important;
 <h2 class="user-nicename">@{{request.user.username}}</h2>
 </div>
 {% else %}
-<img src="{% if profileurl2 == 'b' %} {{ user2.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl2 == 'c' %} /static/profile/{{infor2.profile}}.jpg {% else %} {{infor2.profile_pic}} {% endif %}" class="avatar user-1126-avatar avatar-150 photo" width="150" height="150" alt="Foto del profilo di {{user2.first_name}} {{user2.second_name}}" /> </a>
+<img src="{% if profileurl2 == 'b' %} {{ user2.socialaccount_set.all.0.get_avatar_url }} {% elif profileurl2 == 'c' %} /static/profile/{{infor2.profile}}.jpg {% else %} /media/{{infor2.profile_pic}} {% endif %}" class="avatar user-1126-avatar avatar-150 photo" width="150" height="150" alt="Foto del profilo di {{user2.first_name}} {{user2.second_name}}" /> </a>
 </div>
 <div id="item-header-content">
 <div class="basic">
@@ -782,7 +766,7 @@ margin-right: 0!important;
         </div>
         <div class="post-content">
         <div class="sap-post-title">
-        <a href="{% url 'view-post' i.titledisplay %}" rel="bookmark" title="Permanent Link to a">{{i.title|safe}}</a> </div>
+        <a href="{% url 'view-post' i.titledisplay %}" rel="bookmark" title="Permanent Link to a">{{i.title|safe}}</a><a class="post-edit-link" href="{% url 'edit-post' i.titledisplay %}">Modifica</a> </div>
         <p class="date">{{i.post_date.date}}</p>
         <div class="sap-excerpt">
         <p>Visualizzazioni: {{i.views}} &nbsp; {{i.contentdisplay}} [&hellip;]</p>
@@ -813,8 +797,7 @@ Non hai ancora pubblicato alcun LibriCK, <a class="sap-new-post-btn-inline" href
         </div>
         <div class="post-content">
         <div class="sap-post-title">
-        <a href="{% url 'view-post' i.titledisplay %}" rel="bookmark" title="Permanent Link to a">{{i.title|safe}}</a>
-        <a class="post-edit-link" href="">Modifica</a> </div>
+        <a href="{% url 'view-post' i.titledisplay %}" rel="bookmark" title="Permanent Link to a">{{i.title|safe}}</a> </div>
         <p class="date">{{i.post_date.date}}</p>
         <div class="sap-excerpt">
         <p>Visualizzazioni: {{i.views}} &nbsp; {{i.contentdisplay}} [&hellip;]</p>

@@ -653,6 +653,9 @@ margin-right: 0!important;
 Condividi o lascia un commento. Grazie!
 </div>
 {% endif %}
+{% if postinfor.amazon_code_feature %}
+    {{postinfor.amazon_code_feature|safe}}
+{% endif %}
 <span class="sl-wrapper">
     <a href="" class="sl-button sl-button-239880" title="Mi piace">
         <span class="sl-icon"><i class="fa fa-heart"></i></span>
@@ -671,7 +674,7 @@ Condividi o lascia un commento. Grazie!
                                     <div class="counter-wrap standard"><span class="counter">0</span></div></a></div> 
                                 </div>
 </article>
-{% if post.status != 'draft' %}
+{% if post.approved_by_admin %}
 <div id="comments" class="comments-area">
 <h2 class="comments-title">
 Commenti </h2>

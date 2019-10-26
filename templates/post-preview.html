@@ -545,23 +545,7 @@ margin-right: 0!important;
 </div>
 </div>
 
-<div class="header-notifications all-notifications">
-<a class="notification-link fa fa-bell" href="#">
-{% if notifications == 0 %}<span id="ab-pending-notifications" class="count no-alert">0</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-<a href="#">No new notifications</a> </div>
-</div>
-{% else %}<span id="ab-pending-notifications" class="count">{{notification}}</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-    {% for i in notific %}
-<a href="#">{{i.notification}}</a>
-{% endfor %} 
-</div>
-</div>
-{% endif %}
-</div>
+{% include 'header-notifications.html' %}
 
 
 <div class="header-account-login">

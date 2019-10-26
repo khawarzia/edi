@@ -544,23 +544,8 @@ margin-right: 0!important;
 </div>
 </div>
 
-<div class="header-notifications all-notifications">
-<a class="notification-link fa fa-bell" href="{% url 'note2' %}">
-{% if notifications == 0 %}<span id="ab-pending-notifications" class="count no-alert">0</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-<a href="#">No new notifications</a> </div>
-</div>
-{% else %}<span id="ab-pending-notifications" class="count">{{notification}}</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-    {% for i in notific %}
-<a href="#">{{i.notification}}</a>
-{% endfor %} 
-</div>
-</div>
-{% endif %}
-</div>
+{% include 'header-notifications.html' %}
+
 
 <div class="header-account-login">
 <a class="user-link" href="{% url 'profile' request.user.username %}">
@@ -640,7 +625,10 @@ margin-right: 0!important;
 <header class="page-cover table" style="background-image: url({{post.cover}}); background-position: center;background-size: cover;background-repeat: none;" data-photo="yes">
 <div class="table-cell page-header">
 <div class="cover-content">
-<h1 class="post-title main-title">{{post.title|safe}}</h1>
+<h1 class="post-title main-title">{{post.title|safe}}
+            {% if post.approved_by_admin == False and post.user == request.user %}
+    <a class="post-edit-link" href="{% url 'edit-post' post.titledisplay %}">Modify</a>{% endif %}
+</h1>
 <div class="table">
 <div class="table-cell entry-meta">
 <span class="post-author"><a href="{% url 'profile' post.user.username %}" rel="bookmark"><img alt='' src="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %}" srcset="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %} 2x" class='avatar avatar-55 photo' height='55' width='55' /></a><span class="author vcard">
@@ -662,20 +650,12 @@ margin-right: 0!important;
 <div id="primary" class="site-content">
 <div id="content" role="main">
 <article id="post-239880" class="post-239880 post type-post status-publish format-standard has-post-thumbnail hentry category-narrativa tag-cinema">
-{% if post.approved_by_admin == False %}
-<header class="entry-header">
-    <h1 class="entry-title">
-        <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">to </font>
-        </font>
-        <a class="post-edit-link" href="{% url 'edit-post' post.titledisplay %}">
-            <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">Modify</font></font></a></h1>
-    </header>
-{% endif %}
 
 <header class="entry-header">
-<h1 class="entry-title">{{post.title|safe}}</h1>
+<h1 class="entry-title">{{post.title|safe}}
+        {% if post.approved_by_admin == False and post.user == request.user %}
+    <a class="post-edit-link" href="{% url 'edit-post' post.titledisplay %}">Modify</a>{% endif %}
+</h1>
 </header>
 
 <div class="entry-content">
@@ -713,8 +693,8 @@ margin-right: 0!important;
 Condividi o lascia un commento. Grazie!
 </div>
 {% endif %}
-{% if post.amazon_code_feature %}
-    {{post.amazon_code_feature|safe}}
+{% if postinfor.amazon_code_feature %}
+    {{postinfor.amazon_code_feature|safe}}
 {% endif %}
 <span class="sl-wrapper">
     <a href="" class="sl-button sl-button-239880" title="Mi piace">

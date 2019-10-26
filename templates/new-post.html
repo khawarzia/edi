@@ -544,23 +544,7 @@ margin-right: 0!important;
 </div>
 </div>
 
-<div class="header-notifications all-notifications">
-<a class="notification-link fa fa-bell" href="#">
-{% if notifications == 0 %}<span id="ab-pending-notifications" class="count no-alert">0</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-<a href="#">No new notifications</a> </div>
-</div>
-{% else %}<span id="ab-pending-notifications" class="count">{{notification}}</span></a>
-<div class="pop pop-links">
-<div class="pop-links-inner">
-    {% for i in notific %}
-<a href="#">{{i.notification}}</a>
-{% endfor %} 
-</div>
-</div>
-{% endif %}
-</div>
+{% include 'header-notifications.html' %}
 
 
 <div class="header-account-login">
@@ -695,16 +679,16 @@ function readURL(input) {
 <a class="sap-story-review sap-action-button sap-story-review-btn button button-primary wpp-action-link" type="button" id="publish" title="PUBBLICA">PUBBLICA</a>
 <a class="sap-story-draft sap-story-draft-btn button button-secondary wpp-action-link" type="button" id="save" >Salva</a>
 <a class="sap-story-preview sap-story-preview-btn button button-secondary sap-disabled" type="button" id="preview" title="Show preview in new window">Anteprima</a>
-<div id="wswp_counter_container" style="text-align:right">
+<!--div id="wswp_counter_container" style="text-align:right">
     <input type="text" value="0" id="counter_display" style="background: white; border: 0px; font-family: Muli; color: rgba(0, 0, 0, 0.4); width: 80px; margin-right: 10px; box-shadow: none;">
-</div>
+</div-->
 </div>
 </div>
 </div>
 <div class="sap-widget-container" id="sap-widget-container">
 <div id="wpp-series-selector">
 <p class="wpp-title">Questa storia fa parte di una Serie?</p>
-<div id="serie-options" class="wpp-part-serie">
+<div style="color: blue;" id="serie-options" class="wpp-part-serie">
     <form method="POST" id="submit-form" name="submit-form" enctype="multipart/form-data">{% csrf_token %}
 <select name="post_type" id="post_type" class="wpp-selector-dropdown">
 <option value="" {% if poststatus %} {% if post.type_of_post == 'single post' %} selected {% endif %} {% endif %}>Non fa parte di una serie</option>
@@ -728,6 +712,8 @@ function readURL(input) {
 <aside class="widget sap-widget sap-tags-widget">
 <h3 class="widgettitle">TAGS</h3>
 <input type="text" class="tags-select selectized" id="input-tags-select" name="tags" tabindex="-1" value="{% if poststatus %}{{post.tags}}{% endif %}">
+{% if poststatus %}
+<a style="color: red;" href="{% url 'delete-post' post.titledisplay %}">Elimina il LibriCK</a> {% endif %}
 </aside>
 <aside class="widget sap-widget sap-featured-img-widget">
 <h3 class="widgettitle">Immagine di Copertina</h3>
@@ -737,14 +723,10 @@ function readURL(input) {
 <img id="blah" src="{% if poststatus %}{{post.cover}}{% endif %}" />
 </div>
 </aside>
-{%if post.approved_by_admin == False %}
-<a style="display:none;" class="sap-story-delete sap-story-delete-btn" href="#">Elimina il LibriCK</a> 
-{% endif %}
 </div>
 </div>
 <div class="sap-editor-area-wrapper">
-<textarea class="sap-editable-title" data-disable-toolbar="true" name="title" required>{% if poststatus %}{{post.title|safe}}{% endif %}</textarea>
-{{form.media}}
+{{form2.as_p}}
 {{form.as_p}}
 <br>
 <input type="hidden" name="action" id="action" value="">
