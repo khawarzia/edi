@@ -1,0 +1,17 @@
+<div class="header-notifications all-notifications">
+        <a class="notification-link fa fa-bell" href="{% url 'note2' %}">
+        {% if notifications == 0 %}<span id="ab-pending-notifications" class="count no-alert">0</span></a>
+        <div class="pop pop-links">
+        <div class="pop-links-inner">
+        <a href="#">No new notifications</a> </div>
+        </div>
+        {% else %}<span id="ab-pending-notifications" class="count">{{notifications}}</span></a>
+        <div class="pop pop-links">
+        <div class="pop-links-inner">
+            {% for i in notific %}
+        <a href="#">{{i.notification}}</a>
+        {% endfor %} 
+        </div>
+        </div>
+        {% endif %}
+        </div>

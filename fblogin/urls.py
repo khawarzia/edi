@@ -52,6 +52,7 @@ urlpatterns = [
     path('post/<str:title>',viewsprofile.view_post,name='view-post'),
     path('edit/<str:title>',viewsprofile.edit_post,name='edit-post'),
     path('post-preview',viewsprofile.preview_post,name='preview-post'),
+    path('delete/<str:title>',viewsprofile.deletepost,name='delete-post'),
 
     #commenting and liking
 

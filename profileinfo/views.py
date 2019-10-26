@@ -11,7 +11,7 @@ from django.core.files.storage import FileSystemStorage
 from html2text import html2text
 import operator
 from django.core.mail import EmailMessage
-from .forms import contentform
+from .forms import contentform,titleform
 
 def info(request):
     obj = infor.objects.get(user=request.user)
@@ -372,10 +372,14 @@ def new_post(request):
     context['series'] = a
     if request.method == 'POST':
         form = contentform(request.POST)
+        form2 = titleform(request.POST)
         postdata = request.POST
         a = post()
         a.user = request.user
-        a.title = postdata['title']
+        if form2.is_valid():
+            a.title = form2.cleaned_data['title']
+        else:
+            a.title = ''
         if form.is_valid():
             a.content = form.cleaned_data['content']
         else:
@@ -426,13 +430,15 @@ def new_post(request):
                         a.linked_post.add(j)
                     count += 1
             a.link_number = count
-        a.titledisplay = html2text(a.title)
+        a.titledisplay = convertit(html2text(a.title))
         a.contentdisplay = html2text(a.content)[0:250]
         a.save()
         return redirect('/membri/'+str(request.user.username))
     else:
         form = contentform()
+        form2 = titleform()
     context['form'] = form
+    context['form2'] = form2
     return render(request,template,context)
 
 def view_post(request,title):
@@ -456,36 +462,39 @@ def view_post(request,title):
     commentdata = {}
     objs = comment.objects.all()
     objs2 = comment_child.objects.all()
-    for i in objs:
-        if i.relpost.all()[0] == obj:
-            commentdata[i] = {}
-            inforobj = infor.objects.get(user=i.user)
-            if inforobj.profile_check == False:
-                try:
-                    a = i.user.socialaccount_set.all()[0].provider
-                    profileimg = "b"
-                except:
-                    profileimg = "c"
-            else:
-                profileimg = "a"
-            commentdata[i]['pf'] = profileimg
-            commentdata[i]['cominfor'] = inforobj
-            commentdata[i]['number'] = len(commentdata)
-            commentdata[i]['children'] = {}
-            for j in objs2:
-                if j.relcomment.all()[0] == i and j.relpost.all()[0] == i.relpost.all()[0]:
-                    commentdata[i]['children'][j] = {}
-                    inforobj = infor.objects.get(user=j.user)
-                    if inforobj.profile_check == False:
-                        try:
-                            a = j.user.socialaccount_set.all()[0].provider
-                            profileimg = "b"
-                        except:
-                            profileimg = "c"
-                    else:
-                        profileimg = "a"                    
-                    commentdata[i]['children'][j]['pf'] = profileimg
-                    commentdata[i]['children'][j]['cominfor'] = inforobj
+    try:
+        for i in objs:
+            if i.relpost.all()[0] == obj:
+                commentdata[i] = {}
+                inforobj = infor.objects.get(user=i.user)
+                if inforobj.profile_check == False:
+                    try:
+                        a = i.user.socialaccount_set.all()[0].provider
+                        profileimg = "b"
+                    except:
+                        profileimg = "c"
+                else:
+                    profileimg = "a"
+                commentdata[i]['pf'] = profileimg
+                commentdata[i]['cominfor'] = inforobj
+                commentdata[i]['number'] = len(commentdata)
+                commentdata[i]['children'] = {}
+                for j in objs2:
+                    if j.relcomment.all()[0] == i and j.relpost.all()[0] == i.relpost.all()[0]:
+                        commentdata[i]['children'][j] = {}
+                        inforobj = infor.objects.get(user=j.user)
+                        if inforobj.profile_check == False:
+                            try:
+                                a = j.user.socialaccount_set.all()[0].provider
+                                profileimg = "b"
+                            except:
+                                profileimg = "c"
+                        else:
+                            profileimg = "a"                    
+                        commentdata[i]['children'][j]['pf'] = profileimg
+                        commentdata[i]['children'][j]['cominfor'] = inforobj
+    except:
+        pass
     inforobj = infor.objects.get(user = obj.user)
     if inforobj.profile_check == False:
         try:
@@ -590,9 +599,10 @@ def edit_post(request,title):
     context['series'] = a
     if request.method == 'POST':
         form = contentform(request.POST)
+        from2 = titleform(request.POST)
         postdata = request.POST
         a = obj
-        a.title = postdata['title']
+        a.title = form2.cleaned_data['title']
         a.content = form.cleaned_data['content']
         a.tags = str(postdata['tags'])
         image = request.FILES['coverimg']
@@ -637,7 +647,9 @@ def edit_post(request,title):
         return redirect('/membri/'+str(request.user.username))
     else:
         form = contentform(instance=obj)
+        form2 = titleform(instance=obj)
     context['form'] = form
+    context['form2'] = form2
     return render(request,template,context)
 
 @login_required(login_url='/loggin')
@@ -656,3 +668,17 @@ def preview_post(request):
         context['main_body'] = request.POST['main-body']
         context['post'] = request.POST
     return render(request,template,context)
+
+def deletepost(request,title):
+    obj = post.objects.get(titledisplay = title)
+    obj.delete()
+    return redirect('/membri/'+str(request.user.username))
+
+def convertit(a):
+    b = ''
+    for i in a:
+        if i == ' ':
+            b = b + '-'
+        else:
+            b = b + i
+    return b
