@@ -9,7 +9,7 @@ class contentform(ModelForm):
     def __init__(self, *args, **kwargs):
         super(contentform, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'sap-editable-area'
+            visible.field.widget.attrs['class'] = 'sap-editable-area ckeditor'
 
 class titleform(ModelForm):
     class Meta:

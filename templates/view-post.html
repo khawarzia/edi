@@ -633,9 +633,9 @@ margin-right: 0!important;
 <div class="table-cell entry-meta">
 <span class="post-author"><a href="{% url 'profile' post.user.username %}" rel="bookmark"><img alt='' src="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %}" srcset="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %} 2x" class='avatar avatar-55 photo' height='55' width='55' /></a><span class="author vcard">
     <a class="url fn n" href="{% url 'profile' post.user.username %}" title="View all posts by {{post.user.first_name}} {{post.user.last_name}}" rel="author">{{post.user.first_name}} {{post.user.last_name}}</a></span></span>
-    <a href="" rel="bookmark" class="post-date fa fa-clock-o"><time class="entry-date">{{post.post_date.date}}</time></a> 
+    <a href="" rel="bookmark" class="post-date fa fa-clock-o"><time class="entry-date">{{post.post_date.day}} {{post.post_date|date:'F'}} {{post.post_date.year}}</time></a> 
 <span class="comments-link fa fa-comment-o">
-<a href="">{{cd|length}} discussioni</a> </span>
+<a href="">{{totallength}} discussioni</a> </span>
 </div>
 <div class="table-cell">
 
@@ -697,7 +697,7 @@ Condividi o lascia un commento. Grazie!
     {{postinfor.amazon_code_feature|safe}}
 {% endif %}
 <span class="sl-wrapper">
-    <a href="" class="sl-button sl-button-239880" title="Mi piace">
+    <a href="{% url 'new-like' post.titledisplay %}" title="Mi piace">
         <span class="sl-icon"><i class="fa fa-heart"></i></span>
         <span class="sl-count"><span class="recommend-title">Avete messo Mi Piace</span>
         <span class="count-num">{{post.likes.all.count}}</span> apprezzamenti</span></a></span>

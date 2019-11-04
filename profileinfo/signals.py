@@ -21,7 +21,7 @@ def email_send(sender,instance,**kwargs):
 
 @receiver(post_save, sender=infor)
 def amazon_code(sender, instance, **kwargs):
-    if len(instance.amazon_code_feature) > 2:
+    if instance.amazon_code_feature:
         objs = post.objects.all()
         for i in objs:
             if i.user == instance.user:

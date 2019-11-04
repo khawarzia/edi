@@ -652,7 +652,13 @@ function readURL(input) {
 
             reader.readAsDataURL(input.files[0]);
         }
+        a = document.getElementById('OpenImgUpload').style = 'display:none;';
+        a = document.getElementById('blah').style = 'display:inline;';
+        a = document.getElementById('blah2').style = 'display:inline;';
     }
+function asd(){
+    a = document.getElementById('coverimg').click();
+}
 </script>
 <style>
 #_new_serie {
@@ -712,27 +718,43 @@ function readURL(input) {
 <aside class="widget sap-widget sap-tags-widget">
 <h3 class="widgettitle">TAGS</h3>
 <input type="text" class="tags-select selectized" id="input-tags-select" name="tags" tabindex="-1" value="{% if poststatus %}{{post.tags}}{% endif %}">
-{% if poststatus %}
-<a style="color: red;" href="{% url 'delete-post' post.titledisplay %}">Elimina il LibriCK</a> {% endif %}
 </aside>
 <aside class="widget sap-widget sap-featured-img-widget">
 <h3 class="widgettitle">Immagine di Copertina</h3>
-<input type="hidden" id="featured-img-placeholder-id" value="" />
-<input type="file" name="coverimg" onchange="readURL(this);" required>
+<input type="file" style="display:none;" name="coverimg" id="coverimg" onchange="readURL(this)">
 <div id="feaured-img-holder-wrap">
-<img id="blah" src="{% if poststatus %}{{post.cover}}{% endif %}" />
+<button class="featured-img-placeholder" id="OpenImgUpload" onclick="asd()" style="position: relative; z-index: 1;">
+<svg class="featured-img-gridicon" height="48" width="48" viewBox="0 0 24 24">
+<g >
+<path d="M13 9.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5zM22 6v12c0 1.105-.895 2-2 2H4c-1.105 0-2-.895-2-2V6c0-1.105.895-2 2-2h16c1.105 0 2 .895 2 2zm-2 0H4v7.444L8 9l5.895 6.55 1.587-1.85c.798-.932 2.24-.932 3.037 0L20 15.426V6z"></path>
+</g>
+</svg>
+<span class="featured-img-button" >Seleziona una foto</span>
+</button>
+<img class="featured-img-preview" style="display: none;" height="225" width="300" id="blah" alt="featured-img-preview">
+<a href="#" class="sap-preview-close" onclick="sdf()" style="display: none;" id="blah2"><i class="fa fa-times"></i></a>
+<script>
+function sdf(){
+    a = document.getElementById('OpenImgUpload').style = 'position: relative; z-index: 1;';
+    a = document.getElementById('blah').style = 'display:none;';
+    a = document.getElementById('blah2').style = 'display:none;';
+    a = document.getElementById('coverimg').value = '';
+}
+</script>
 </div>
 </aside>
+{% if poststatus %}
+<a style="color: red;" href="{% url 'delete-post' post.titledisplay %}">Elimina il LibriCK</a> {% endif %}
 </div>
 </div>
 <div class="sap-editor-area-wrapper">
-{{form2.as_p}}
-{{form.as_p}}
+{{form2.title}}<br>
+{{form.content}}
 <br>
 <input type="hidden" name="action" id="action" value="">
 </form>
 </div>
-</div>  
+</div>
 </div>
 <script>
     timer = setInterval(updateDiv,1000);
@@ -918,7 +940,7 @@ var recommendPost = {"is_user_logged_in":"1","ajaxurl":"https:\/\/edizioniopen.i
 <script type='text/javascript' src='https://edizioniopen.it/wp-content/plugins/buddypress-user-blog/bower_components/medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js?ver=2.4.1'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var sap_loading_string = {"saving_string":"Salvo","saved_string":"Salva","inreview_string":"In sospeso","draft_string":"Bozza","review_string":"Grazie per aver inviato un LibriCK a Edizioni Open. Al momento la tua Opera \u00e8 in attesa di essere approvata. Questa operazione, solitamente, avviene entro uno o due giorni. Torna a trovarci presto!","failed_string":"Failed","empty_title":"Inserisci il titolo del LibriCK","editor_title":"Titolo","empty_content":"Il testo del LibriCK non pu\u00f2 essere lasciato vuoto","content_placeholder":"Testo: non oltre 1500 parole","video_placeholder":"Paste a YouTube, Vimeo, Facebook, Twitter or Instagram link and press Enter","incorrect_url_format":"Incorrect URL format specified","bold":"bold","italic":"italic","underline":"underline","anchor":"anchor","h2":"h2","h3":"h3","orderedlist":"orderedlist","unorderedlist":"unorderedlist","create_table":"create table","quote":"quote","justifyLeft":"left justify","justifyCenter":"center justify","justifyRight":"right justify","justifyFull":"full justify","add":"Add","remove":"Remove","min_words_alert":"The story should be of at least 0 words to get it Published otherwise it will be saved as Draft","max_words_alert":"The story should not be longer than 0 words to get it Published otherwise it will be save as Draft","exceed_max_files_per_batch":"You can upload a maximum of 3 photos in one","add_new_post":"true","config":{"loading_image":"https:\/\/edizioniopen.it\/wp-content\/plugins\/buddypress-user-blog\/\/assets\/images\/loading.gif","home_url":"https:\/\/edizioniopen.it\/","post_autosave":"on","max_files_per_batch":"3","min_words":"","max_words":"","max_file_size":2097152}};
+var sap_loading_string = {"saving_string":"Salvo","saved_string":"Salva","inreview_string":"In sospeso","draft_string":"Bozza","review_string":"Grazie per aver inviato un LibriCK a Edizioni Open. Al momento la tua Opera \u00e8 in attesa di essere approvata. Questa operazione, solitamente, avviene entro uno o due giorni. Torna a trovarci presto!","failed_string":"Failed","empty_title":"Inserisci il titolo del LibriCK","editor_title":"Titolo","empty_content":"Il testo del LibriCK non pu\u00f2 essere lasciato vuoto","content_placeholder":"Testo: non oltre 1500 parole","video_placeholder":"Paste a YouTube link and press Enter","incorrect_url_format":"Incorrect URL format specified","bold":"bold","italic":"italic","underline":"underline","anchor":"anchor","h2":"h2","h3":"h3","orderedlist":"orderedlist","unorderedlist":"unorderedlist","create_table":"create table","quote":"quote","justifyLeft":"left justify","justifyCenter":"center justify","justifyRight":"right justify","justifyFull":"full justify","add":"Add","remove":"Remove","min_words_alert":"The story should be of at least 0 words to get it Published otherwise it will be saved as Draft","max_words_alert":"The story should not be longer than 0 words to get it Published otherwise it will be save as Draft","exceed_max_files_per_batch":"You can upload a maximum of 3 photos in one","add_new_post":"true","config":{"loading_image":"https:\/\/edizioniopen.it\/wp-content\/plugins\/buddypress-user-blog\/\/assets\/images\/loading.gif","home_url":"https:\/\/edizioniopen.it\/","post_autosave":"on","max_files_per_batch":"3","min_words":"","max_words":"","max_file_size":2097152}};
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://edizioniopen.it/wp-content/plugins/buddypress-user-blog/assets/js/bp-user-blog.min.js?ver=1.3.3'></script>
@@ -964,7 +986,7 @@ var myCRED_Notice = {"ajaxurl":"https:\/\/edizioniopen.it\/wp-admin\/admin-ajax.
 <script type='text/javascript' src='https://edizioniopen.it/wp-content/plugins/buddyboss-wall/assets/js/jquery.tooltipster.min.js?ver=3.0.5'></script>
 <script type='text/javascript'>
 /* <![CDATA[ */
-var BuddyBoss_Wall_Appstate = {"person":"persona","people":"persone","like":"piace","likes":"piace","mark_as_fav":"Mi piace","my_favs":"I miei  Mi Piace","remove_fav":"Non mi piace pi\u00f9","enabled":"on","notices_legacy":"1","update_menus":"1","personal_tab_name":"Wall","feed_tab_name":"News Feed","fav_tab_name":"My Likes","menu_name":"Wall","inject_markup":"1","add_tpl_hooks":"1","load_css":"1","load_tooltips":"1","use_wp_cache":"1","enabled-wall-privacy":"","enabled_link_preview":"on","all-members":"on","activity-posted-text":"yes","activity-like-text":"yes","setting_default_profile_tab":"wall","excluded_oembed_hosts":["youtube.com","www.youtube.com","vimeo.com","www.vimeo.com","dailymotion.com","www.dailymotion.com","youtu.be","www.youtu.be"]};
+var BuddyBoss_Wall_Appstate = {"person":"persona","people":"persone","like":"piace","likes":"piace","mark_as_fav":"Mi piace","my_favs":"I miei  Mi Piace","remove_fav":"Non mi piace pi\u00f9","enabled":"on","notices_legacy":"1","update_menus":"1","personal_tab_name":"Wall","feed_tab_name":"News Feed","fav_tab_name":"My Likes","menu_name":"Wall","inject_markup":"1","add_tpl_hooks":"1","load_css":"1","load_tooltips":"1","use_wp_cache":"1","enabled-wall-privacy":"","enabled_link_preview":"on","all-members":"on","activity-posted-text":"yes","activity-like-text":"yes","setting_default_profile_tab":"wall","excluded_oembed_hosts":["youtube.com","www.youtube.com"]};
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://edizioniopen.it/wp-content/plugins/buddyboss-wall/assets/js/buddyboss-wall.min.js?ver=1.3.7'></script>
