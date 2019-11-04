@@ -114,6 +114,7 @@ def profile_page(request,the_slug):
             i.contentdisplay = html2text(i.content)[0:100]
             i.save()
     context['postdata'] = a
+    context['posts'] = len(a)
     return render(request,template,context)
 
 @login_required(login_url='/loggin')
@@ -379,7 +380,7 @@ def new_post(request):
         if form2.is_valid():
             a.title = form2.cleaned_data['title']
         else:
-            a.title = ''
+            return redirect('/invia-un-racconto')
         if form.is_valid():
             a.content = form.cleaned_data['content']
         else:
@@ -442,6 +443,7 @@ def new_post(request):
     return render(request,template,context)
 
 def view_post(request,title):
+    totallength = 0
     context = {}
     if request.user.is_authenticated:
         template = 'view-post.html'
@@ -466,6 +468,7 @@ def view_post(request,title):
         for i in objs:
             if i.relpost.all()[0] == obj:
                 commentdata[i] = {}
+                totallength += 1
                 inforobj = infor.objects.get(user=i.user)
                 if inforobj.profile_check == False:
                     try:
@@ -482,6 +485,7 @@ def view_post(request,title):
                 for j in objs2:
                     if j.relcomment.all()[0] == i and j.relpost.all()[0] == i.relpost.all()[0]:
                         commentdata[i]['children'][j] = {}
+                        totallength += 1
                         inforobj = infor.objects.get(user=j.user)
                         if inforobj.profile_check == False:
                             try:
@@ -521,6 +525,7 @@ def view_post(request,title):
     context['post'] = obj
     context['postinfor'] = inforobj
     context['cd'] = commentdata.items()
+    context['totallength'] = totallength
     print (commentdata.items())
     return render(request,template,context)
 
@@ -599,7 +604,7 @@ def edit_post(request,title):
     context['series'] = a
     if request.method == 'POST':
         form = contentform(request.POST)
-        from2 = titleform(request.POST)
+        form2 = titleform(request.POST)
         postdata = request.POST
         a = obj
         a.title = form2.cleaned_data['title']
@@ -677,6 +682,8 @@ def deletepost(request,title):
 def convertit(a):
     b = ''
     for i in a:
+        if i == '\n':
+            break
         if i == ' ':
             b = b + '-'
         else:
