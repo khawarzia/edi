@@ -607,6 +607,7 @@ def edit_post(request,title):
         form2 = titleform(request.POST)
         postdata = request.POST
         a = obj
+        a.approved_by_admin = False
         a.title = form2.cleaned_data['title']
         a.content = form.cleaned_data['content']
         a.tags = str(postdata['tags'])
