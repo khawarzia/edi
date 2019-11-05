@@ -685,9 +685,12 @@ function asd(){
 <a class="sap-story-review sap-action-button sap-story-review-btn button button-primary wpp-action-link" type="button" id="publish" title="PUBBLICA">PUBBLICA</a>
 {% if poststatus %} {% if post.status != 'draft' %}
 <a class="sap-story-draft sap-story-draft-btn button button-secondary wpp-action-link" type="button" id="save" >Converti in bozza 
+{% else %}
+<a class="sap-story-draft sap-story-draft-btn button button-secondary wpp-action-link" type="button" id="save" >Salva 
+    {% endif %}
 {% else %} 
 <a class="sap-story-draft sap-story-draft-btn button button-secondary wpp-action-link" type="button" id="save" >Salva 
-{% endif %} {% endif %}</a>
+    {% endif %}</a>
 <a class="sap-story-preview sap-story-preview-btn button button-secondary sap-disabled" type="button" id="preview" title="Show preview in new window">Anteprima</a>
 <!--div id="wswp_counter_container" style="text-align:right">
     <input type="text" value="0" id="counter_display" style="background: white; border: 0px; font-family: Muli; color: rgba(0, 0, 0, 0.4); width: 80px; margin-right: 10px; box-shadow: none;">
