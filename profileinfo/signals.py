@@ -9,12 +9,12 @@ from django.core.mail import EmailMessage
 def email_send(sender,instance,**kwargs):
     if instance.approved_by_admin:
         email_add = instance.user.email
-        a = EmailMessage(
-            subject='LibriCK Approved by Admin',
-            body='Your LibriCK with title : '+str(instance.titledisplay)+' has been approved by the admin.\nView your post now : https://127.0.0.1:8000/post/'+str(instance.titledisplay),
-            to = [email_add]
-        )
-        a.send()
+        #a = EmailMessage(
+            #subject='LibriCK Approved by Admin',
+            #body='Your LibriCK with title : '+str(instance.titledisplay)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.titledisplay),
+            #to = [email_add]
+        #)
+        #a.send()
     else:
         pass
     return
@@ -37,3 +37,4 @@ def amazon_code(sender, instance, **kwargs):
         except:
             pass
         return
+
