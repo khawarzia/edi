@@ -608,8 +608,8 @@ def edit_post(request,title):
         postdata = request.POST
         a = obj
         a.approved_by_admin = False
-        a.title = form2.title
-        a.content = form.content
+        a.title = form2['title']
+        a.content = form['content']
         a.tags = str(postdata['tags'])
         image = request.FILES['coverimg']
         fs = FileSystemStorage()
