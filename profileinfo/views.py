@@ -611,10 +611,13 @@ def edit_post(request,title):
         a.title = form2['title']
         a.content = form['content']
         a.tags = str(postdata['tags'])
-        image = request.FILES['coverimg']
-        fs = FileSystemStorage()
-        filename = fs.save(image.name, image)
-        a.cover = fs.url(filename)
+        try:
+            image = request.FILES['coverimg']
+            fs = FileSystemStorage()
+            filename = fs.save(image.name, image)
+            a.cover = fs.url(filename)
+        except:
+            pass
         if postdata['action'] == '':
             a.status = 'processing'
         else:
