@@ -9,7 +9,7 @@ class contentform(ModelForm):
     def __init__(self, *args, **kwargs):
         super(contentform, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs['class'] = 'sap-editable-area ckeditor'
+            visible.field.widget.attrs['class'] = 'sap-editable-area'
 
 class titleform(ModelForm):
     class Meta:
@@ -20,3 +20,4 @@ class titleform(ModelForm):
         super(titleform, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'sap-editable-title'
+            visible.field.widget.attrs['data-disable-toolbar'] = 'true'

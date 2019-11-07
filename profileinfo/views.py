@@ -434,7 +434,7 @@ def new_post(request):
         a.titledisplay = convertit(html2text(a.title))
         a.contentdisplay = html2text(a.content)[0:250]
         a.save()
-        return redirect('/membri/'+str(request.user.username))
+        return redirect('/edit/'+a.titledisplay)
     else:
         form = contentform()
         form2 = titleform()
@@ -546,12 +546,12 @@ def comment_new(request,title):
         obj2.relpost.add(obj.relpost.all()[0])
         obj2.notification = str(obj.user.username)+' ha commentato '+str(title)
         obj2.save()
-        a = EmailMessage(
-            subject='Commento',
-            body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://127.0.0.1:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
-            to=[obj2.user.email]
-        )
-        a.send()
+        #a = EmailMessage(
+            #subject='Commento',
+            #body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://127.0.0.1:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
+            #to=[obj2.user.email]
+        #)
+        #a.send()
         return redirect('/post/'+title)
     
 @login_required(login_url='/loggin')
@@ -607,6 +607,7 @@ def edit_post(request,title):
         form2 = titleform(request.POST)
         postdata = request.POST
         a = obj
+        a.approved_by_admin = False
         a.title = form2.cleaned_data['title']
         a.content = form.cleaned_data['content']
         a.tags = str(postdata['tags'])
@@ -646,10 +647,10 @@ def edit_post(request,title):
                         a.linked_post.add(j)
                     count += 1
             a.link_number = count
-        a.titledisplay = html2text(a.title)
+        a.titledisplay = convertit(html2text(a.title))
         a.contentdisplay = html2text(a.content)[0:250]
         a.save()
-        return redirect('/membri/'+str(request.user.username))
+        return redirect('/edit/'+a.titledisplay)
     else:
         form = contentform(instance=obj)
         form2 = titleform(instance=obj)
@@ -670,7 +671,10 @@ def preview_post(request):
             context['coverimg'] = fs.url(filename)
         except:
             context['coverimg'] = ''
-        context['main_body'] = request.POST['main-body']
+        try:
+            context['main_body'] = request.POST['main-body']
+        except:
+            context['main_body'] = ''
         context['post'] = request.POST
     return render(request,template,context)
 
