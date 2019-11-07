@@ -691,7 +691,7 @@ function asd(){
 {% else %} 
 <a class="sap-story-draft sap-story-draft-btn button button-secondary wpp-action-link" type="button" id="save" >Salva 
     {% endif %}</a>
-<a class="sap-story-preview sap-story-preview-btn button button-secondary sap-disabled" type="button" id="preview" title="Show preview in new window">Anteprima</a>
+<a class="sap-story-preview sap-story-preview-btn button button-secondary" type="button" id="preview" title="Show preview in new window">Anteprima</a>
 <!--div id="wswp_counter_container" style="text-align:right">
     <input type="text" value="0" id="counter_display" style="background: white; border: 0px; font-family: Muli; color: rgba(0, 0, 0, 0.4); width: 80px; margin-right: 10px; box-shadow: none;">
 </div-->
@@ -728,9 +728,9 @@ function asd(){
 </aside>
 <aside class="widget sap-widget sap-featured-img-widget">
 <h3 class="widgettitle">Immagine di Copertina</h3>
-<input type="file" style="display:none;" name="coverimg" id="coverimg" onchange="readURL(this)">
+<input type="file" {% if poststatus %} value="{{post.cover}}"{% endif %} style="display:none;" name="coverimg" id="coverimg" onchange="readURL(this)">
 <div id="feaured-img-holder-wrap">
-<button type="button" class="featured-img-placeholder" id="OpenImgUpload" onclick="asd()" style="position: relative; z-index: 1;">
+<button type="button" class="featured-img-placeholder" id="OpenImgUpload" onclick="asd()" {% if poststatus %} {% if post.cover %} style="display: none;"{% else %} style="position: relative; z-index: 1;" {% endif %} {% else %} style="position: relative; z-index: 1;" {% endif %} >
 <svg class="featured-img-gridicon" height="48" width="48" viewBox="0 0 24 24">
 <g >
 <path d="M13 9.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5zM22 6v12c0 1.105-.895 2-2 2H4c-1.105 0-2-.895-2-2V6c0-1.105.895-2 2-2h16c1.105 0 2 .895 2 2zm-2 0H4v7.444L8 9l5.895 6.55 1.587-1.85c.798-.932 2.24-.932 3.037 0L20 15.426V6z"></path>
@@ -738,8 +738,8 @@ function asd(){
 </svg>
 <span class="featured-img-button" >Seleziona una foto</span>
 </button>
-<img class="featured-img-preview" style="display: none;" height="225" width="300" id="blah" alt="featured-img-preview">
-<a href="#" class="sap-preview-close" onclick="sdf()" style="display: none;" id="blah2"><i class="fa fa-times"></i></a>
+<img class="featured-img-preview" {% if poststatus %} {% if post.cover %} src="{{post.cover}}" style="display: inline;" {% else %} style="display: none;" {% endif %} {% else %} style="display: none;" {% endif %} height="225" width="300" id="blah" alt="featured-img-preview">
+<a href="#" class="sap-preview-close" onclick="sdf()" {% if poststatus %} {% if post.cover %} style="display: inline;" {% else %} style="display: none;" {% endif %} {% else %} style="display: none;" {% endif %} id="blah2"><i class="fa fa-times"></i></a>
 <script>
 function sdf(){
     a = document.getElementById('OpenImgUpload').style = 'position: relative; z-index: 1;';
