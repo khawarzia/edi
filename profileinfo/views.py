@@ -655,7 +655,6 @@ def edit_post(request,title):
         a.titledisplay = convertit(html2text(a.title))
         a.contentdisplay = html2text(a.content)[0:250]
         a.save()
-        return redirect('/edit/'+a.titledisplay)
     else:
         form = contentform(instance=obj)
         form2 = titleform(instance=obj)
