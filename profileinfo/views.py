@@ -608,8 +608,10 @@ def edit_post(request,title):
         postdata = request.POST
         a = obj
         a.approved_by_admin = False
-        a.title = form2['title']
-        a.content = form['content']
+        form2.is_valid()
+        form.is_valid()
+        a.title = form2.cleaned_data['title']
+        a.content = form.cleaned_data['content']
         a.tags = str(postdata['tags'])
         try:
             image = request.FILES['coverimg']
