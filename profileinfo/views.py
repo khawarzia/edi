@@ -110,9 +110,6 @@ def profile_page(request,the_slug):
     for i in objs:
         if i.user.username == the_slug and i.approved_by_admin == True:
             a.append(i)
-            i.titledisplay = html2text(i.title)
-            i.contentdisplay = html2text(i.content)[0:100]
-            i.save()
     context['postdata'] = a
     context['posts'] = len(a)
     return render(request,template,context)
@@ -608,13 +605,24 @@ def edit_post(request,title):
         postdata = request.POST
         a = obj
         a.approved_by_admin = False
-        a.title = form2.cleaned_data['title']
-        a.content = form.cleaned_data['content']
+        try:
+            form2.is_valid()
+            a.title = form2.cleaned_data['title']
+        except:
+            pass
+        try:
+            form.is_valid()
+            a.content = form.cleaned_data['content']
+        except:
+            pass
         a.tags = str(postdata['tags'])
-        image = request.FILES['coverimg']
-        fs = FileSystemStorage()
-        filename = fs.save(image.name, image)
-        a.cover = fs.url(filename)
+        try:
+            image = request.FILES['coverimg']
+            fs = FileSystemStorage()
+            filename = fs.save(image.name, image)
+            a.cover = fs.url(filename)
+        except:
+            pass
         if postdata['action'] == '':
             a.status = 'processing'
         else:
@@ -676,6 +684,7 @@ def preview_post(request):
         except:
             context['main_body'] = ''
         context['post'] = request.POST
+        print (context)
     return render(request,template,context)
 
 def deletepost(request,title):
