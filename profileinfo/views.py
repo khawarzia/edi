@@ -608,10 +608,16 @@ def edit_post(request,title):
         postdata = request.POST
         a = obj
         a.approved_by_admin = False
-        form2.is_valid()
-        a.title = form2.cleaned_data['title']
-        form.is_valid()
-        a.content = form.cleaned_data['content']
+        try:
+            form2.is_valid()
+            a.title = form2.cleaned_data['title']
+        except:
+            pass
+        try:
+            form.is_valid()
+            a.content = form.cleaned_data['content']
+        except:
+            pass
         a.tags = str(postdata['tags'])
         try:
             image = request.FILES['coverimg']
