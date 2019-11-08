@@ -609,8 +609,8 @@ def edit_post(request,title):
         a = obj
         a.approved_by_admin = False
         form2.is_valid()
-        form.is_valid()
         a.title = form2.cleaned_data['title']
+        form.is_valid()
         a.content = form.cleaned_data['content']
         a.tags = str(postdata['tags'])
         try:
