@@ -705,17 +705,17 @@ function asd(){
     <form method="POST" id="submit-form" name="submit-form" enctype="multipart/form-data">{% csrf_token %}
 <select name="post_type" id="post_type" class="wpp-selector-dropdown">
 <option value="" {% if poststatus %} {% if post.type_of_post == 'single post' %} selected {% endif %} {% endif %}>Non fa parte di una serie</option>
-<option value="new-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_title == '' %} selected {% endif %} {% endif %}>Fa parte di una nuova serie</option>
-<option value="existing-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_title != '' %} selected {% endif %} {% endif %}>Fa parte di una serie esistente</option>
+<option value="new-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_number == 1 %} selected {% endif %} {% endif %}>Fa parte di una nuova serie</option>
+<option value="existing-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_number != 1 %} selected {% endif %} {% endif %}>Fa parte di una serie esistente</option>
 </select>
 </div>
-<div id="_new_serie">
+<div id="_new_serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_number == 1 %} style="display: block;" {% endif %} {% endif %}>
 <p class="wpp-title">Crea una nuova Serie:</p>
 <input type="text" class="wpp-input-control" placeholder="Inserisci il titolo" name="_new_serie" {% if poststatus %}value="{{post.link_title}}"{% endif %}>
 </div>
-<div id="wpp-avail-serie">
+<div id="wpp-avail-serie" {% if poststatus %} {% if post.type_of_post == 'post part of series' and post.link_number != 1 %} style="display: block;" {% endif %} {% endif %}>
 <p class="wpp-title" >Scegli una Serie esistente</p>
-<select name="post_serie">
+<select name="post_serie" id="post_serie" form="submit-form">
     {% for i in series %}
     <option value="{{i}}" {% if poststatus %} {% if post.link_title == i %} selected {% endif %} {% endif %}>{{i}}</option>
     {% endfor %}
@@ -751,7 +751,7 @@ function sdf(){
 </div>
 </aside>
 {% if poststatus %}
-<a style="color: red;" href="{% url 'delete-post' post.titledisplay %}">Elimina il LibriCK</a> {% endif %}
+<a style="color: red;" href="{% url 'delete-post' post.permalink %}">Elimina il LibriCK</a> {% endif %}
 </div>
 </div>
 <div class="sap-editor-area-wrapper">

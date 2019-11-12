@@ -29,7 +29,7 @@
 <div id="message" class="info">
     {% if notifi %}
     {% for i in notifi %}
-<a href="{% url 'view-post' i.relpost.all.0.titledisplay %}">{{i.notification}}</a><br>
+<a href="{% url 'view-post' i.relpost.all.0.permalink %}">{{i.notification}}</a><br>
 {% endfor %}
 {% else %}
 <p>Non hai notifiche non lette.</p>

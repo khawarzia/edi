@@ -8,10 +8,10 @@ from django.core.files.storage import FileSystemStorage
 from fblogin.settings import DEBUG
 from login.forms import PhotoForm1,PhotoForm2
 from django.core.files.storage import FileSystemStorage
-from html2text import html2text
 import operator
 from django.core.mail import EmailMessage
 from .forms import contentform,titleform
+from html2text import html2text
 
 def info(request):
     obj = infor.objects.get(user=request.user)
@@ -110,9 +110,6 @@ def profile_page(request,the_slug):
     for i in objs:
         if i.user.username == the_slug and i.approved_by_admin == True:
             a.append(i)
-            i.titledisplay = html2text(i.title)
-            i.contentdisplay = html2text(i.content)[0:100]
-            i.save()
     context['postdata'] = a
     context['posts'] = len(a)
     return render(request,template,context)
@@ -366,7 +363,7 @@ def new_post(request):
         posts = post.objects.all()
         for i in posts:
             if i.type_of_post == 'post part of series' and i.user == request.user:
-                if i.link_number == 1 and i.linked_post.all().count() < 9:
+                if i.link_number == 1 and i.linked_post.count() < 11:
                     a.append(i.link_title)
     except:
         pass
@@ -378,7 +375,9 @@ def new_post(request):
         a = post()
         a.user = request.user
         if form2.is_valid():
-            a.title = form2.cleaned_data['title']
+            a.title = html2text(form2.cleaned_data['title'])
+            if a.title == '':
+                return redirect('/invia-un-racconto')
         else:
             return redirect('/invia-un-racconto')
         if form.is_valid():
@@ -431,10 +430,9 @@ def new_post(request):
                         a.linked_post.add(j)
                     count += 1
             a.link_number = count
-        a.titledisplay = convertit(html2text(a.title))
-        a.contentdisplay = html2text(a.content)[0:250]
+        a.permalink = convertit(a.title)
         a.save()
-        return redirect('/edit/'+a.titledisplay)
+        return redirect('/edit/'+a.permalink)
     else:
         form = contentform()
         form2 = titleform()
@@ -452,7 +450,7 @@ def view_post(request,title):
         template = 'view-post-no.html'
     objs = post.objects.all()
     for i in objs:
-        if i.titledisplay == title:
+        if i.permalink == title:
             obj = i
             i.views += 1
             i.save()
@@ -508,11 +506,13 @@ def view_post(request,title):
             profileimg = "c"
     else:
         profileimg = "a"
-    episodes = []
+    tempvar = getfirstepi(obj)
+    episodes = [tempvar]
     for i in obj.linked_post.all():
         a = {}
         a['number'] = i.link_number
-        a['titled'] = i.titledisplay
+        a['titled'] = i.title
+        a['perma'] = i.permalink
         if obj.link_number != i.link_number:
             a['check'] = False
         else:
@@ -536,9 +536,8 @@ def comment_new(request,title):
         obj = comment()
         obj.user = request.user
         obj.commentbody = a
-        obj.commentbodydisplay = html2text(a)
         obj.save()
-        obj.relpost.add(post.objects.get(titledisplay = title)) 
+        obj.relpost.add(post.objects.get(permalink = title)) 
         obj.save()
         obj2 = notifications()
         obj2.user = obj.relpost.all()[0].user
@@ -548,7 +547,7 @@ def comment_new(request,title):
         obj2.save()
         #a = EmailMessage(
             #subject='Commento',
-            #body=str(title)+' e stato commentato : '+str(obj.commentbodydisplay)+' https://127.0.0.1:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
+            #body=str(title)+' e stato commentato : '+str(html2text(obj.commentbody))+' https://127.0.0.1:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
             #to=[obj2.user.email]
         #)
         #a.send()
@@ -561,16 +560,15 @@ def new_child(request,title,body):
         obj = comment_child()
         obj.user = request.user
         obj.commentbody = a
-        obj.commentbodydisplay = html2text(a)
         obj.save()
-        obj.relpost.add(post.objects.get(titledisplay = title))
-        obj.relcomment.add(comment.objects.get(commentbodydisplay = body))
+        obj.relpost.add(post.objects.get(permalink = title))
+        obj.relcomment.add(comment.objects.get(commentbody = body))
         obj.save()
         return redirect('/post/'+title)
 
 @login_required(login_url='/loggin')
 def like_post(request,title):
-    obj = post.objects.get(titledisplay = title)
+    obj = post.objects.get(permalink = title)
     objs = obj.likes.all()
     if request.user in objs:
         obj.likes.remove(request.user)
@@ -579,13 +577,19 @@ def like_post(request,title):
     else:
         obj.likes.add(request.user)
         obj.save()
+        obj2 = notifications()
+        obj2.user = obj.user
+        obj2.notification = request.user.username+' liked your post '+obj.title
+        obj2.save()
+        obj2.relpost.add(obj)
+        obj2.save()
         return redirect('/post/'+title)
 
 @login_required(login_url='/loggin')
 def edit_post(request,title):
     template = 'new-post.html'
     context = info(request)
-    obj = post.objects.get(titledisplay = title)
+    obj = post.objects.get(permalink = title)
     if obj.user == request.user:
         pass
     else:
@@ -609,13 +613,13 @@ def edit_post(request,title):
         a = obj
         a.approved_by_admin = False
         try:
-            form2.is_valid()
-            a.title = form2.cleaned_data['title']
+            if form2.is_valid():
+                a.title = html2text(form2.cleaned_data['title'])
         except:
             pass
         try:
-            form.is_valid()
-            a.content = form.cleaned_data['content']
+            if form.is_valid():
+                a.content = form.cleaned_data['content']
         except:
             pass
         a.tags = str(postdata['tags'])
@@ -658,9 +662,9 @@ def edit_post(request,title):
                         a.linked_post.add(j)
                     count += 1
             a.link_number = count
-        a.titledisplay = convertit(html2text(a.title))
-        a.contentdisplay = html2text(a.content)[0:250]
+        a.permalink = convertit(a.title)
         a.save()
+        return redirect('/edit/'+a.permalink)
     else:
         form = contentform(instance=obj)
         form2 = titleform(instance=obj)
@@ -686,10 +690,11 @@ def preview_post(request):
         except:
             context['main_body'] = ''
         context['post'] = request.POST
+        print (context)
     return render(request,template,context)
 
 def deletepost(request,title):
-    obj = post.objects.get(titledisplay = title)
+    obj = post.objects.get(permalink = title)
     obj.delete()
     return redirect('/membri/'+str(request.user.username))
 
@@ -703,3 +708,12 @@ def convertit(a):
         else:
             b = b + i
     return b
+
+def getfirstepi(a):
+    objs = post.objects.all()
+    for i in objs:
+        if i.user == a.user and (i.link_title == a.link_title and i.link_number == 1):
+            if i == a:
+                return {'number':1,'titled':i.title,'check':True,'perma':i.permalink}
+            else:
+                return {'number':1,'titled':i.title,'check':False,'perma':i.permalink}

@@ -625,9 +625,9 @@ margin-right: 0!important;
 <header class="page-cover table" style="background-image: url({{post.cover}}); background-position: center;background-size: cover;background-repeat: none;" data-photo="yes">
 <div class="table-cell page-header">
 <div class="cover-content">
-<h1 class="post-title main-title">{{post.title|safe}}
+<h1 class="post-title main-title">{{post.title}}
             {% if post.approved_by_admin == False and post.user == request.user %}
-    <a class="post-edit-link" href="{% url 'edit-post' post.titledisplay %}">Modify</a>{% endif %}
+    <a class="post-edit-link" href="{% url 'edit-post' post.permalink %}">Modify</a>{% endif %}
 </h1>
 <div class="table">
 <div class="table-cell entry-meta">
@@ -652,9 +652,9 @@ margin-right: 0!important;
 <article id="post-239880" class="post-239880 post type-post status-publish format-standard has-post-thumbnail hentry category-narrativa tag-cinema">
 
 <header class="entry-header">
-<h1 class="entry-title">{{post.title|safe}}
+<h1 class="entry-title"><div class="text-inline">{{post.title}}
         {% if post.approved_by_admin == False and post.user == request.user %}
-    <a class="post-edit-link" href="{% url 'edit-post' post.titledisplay %}">Modify</a>{% endif %}
+    <span><a class="post-edit-link" href="{% url 'edit-post' post.permalink %}">Modify</a></span>{% endif %}</div>
 </h1>
 </header>
 
@@ -666,9 +666,9 @@ margin-right: 0!important;
         {% for i in epilist %}
         <li class="{% if i.check %}serieslist-li-current{% else %}serieslist-li{% endif %}">
             {% if i.check %} <span style="color: #4baed0;">Episodio {{i.number}}: 
-            <a href="{% url 'view-post' i.titled %}">{{i.titled}}</a></span>
+            <a href="{% url 'view-post' i.perma %}">{{i.titled}}</a></span>
             {% else %}
-            Episodio {{i.number}}:<a href="{% url 'view-post' i.titled %}"> {{i.titled}}</a>
+            Episodio {{i.number}}:<a href="{% url 'view-post' i.perma %}"> {{i.titled}}</a>
             {% endif %}
         </li>
         {% endfor %}
@@ -696,8 +696,27 @@ Condividi o lascia un commento. Grazie!
 {% if postinfor.amazon_code_feature %}
     {{postinfor.amazon_code_feature|safe}}
 {% endif %}
-<span class="sl-wrapper">
-    <a href="{% url 'new-like' post.titledisplay %}" title="Mi piace">
+
+<div class="entry-content">
+        {% if post.linked_checked %}
+            Serie: <span style="color: #4baed0;"> {{post.link_title}} </span>
+        {% if post.link_number >= 1 %}
+        <ul class="serieslist-ul"> 
+            {% for i in epilist %}
+            <li class="{% if i.check %}serieslist-li-current{% else %}serieslist-li{% endif %}">
+                {% if i.check %} <span style="color: #4baed0;">Episodio {{i.number}}: 
+                <a href="{% url 'view-post' i.perma %}">{{i.titled}}</a></span>
+                {% else %}
+                Episodio {{i.number}}:<a href="{% url 'view-post' i.perma %}"> {{i.titled}}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endif %}
+
+        <span class="sl-wrapper">
+    <a href="{% url 'new-like' post.permalink %}" title="Mi piace">
         <span class="sl-icon"><i class="fa fa-heart"></i></span>
         <span class="sl-count"><span class="recommend-title">Avete messo Mi Piace</span>
         <span class="count-num">{{post.likes.all.count}}</span> apprezzamenti</span></a></span>
@@ -741,7 +760,7 @@ Commenti </h2>
         <a rel="nofollow" onclick="showrep({{j.number}})">Annulla risposta</a>
     </small>
 </h3>
-<form action="{% url 'new-child' post.titledisplay i.commentbodydisplay %}" method="post" class="comment-form">{% csrf_token %}
+<form action="{% url 'new-child' post.permalink i.commentbody %}" method="post" class="comment-form">{% csrf_token %}
 <p class="comment-form-comment">
     <label for="comment">Commento</label><br>
      <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Discussione" /> <input type='hidden' name='comment_post_ID' value='239880' id='comment_post_ID' />
@@ -774,7 +793,7 @@ Commenti </h2>
 </ol>
 {% endfor %}
 <div class="comment-respond">
-<form action="{% url 'new-comment' post.titledisplay %}" method="post" id="commentform" class="comment-form">{% csrf_token %}
+<form action="{% url 'new-comment' post.permalink %}" method="post" id="commentform" class="comment-form">{% csrf_token %}
 <p class="comment-form-comment">
     <label for="comment">Commento</label><br>
      <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Discussione" /> <input type='hidden' name='comment_post_ID' value='239880' id='comment_post_ID' />

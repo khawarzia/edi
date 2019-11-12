@@ -22,10 +22,9 @@ class follow(models.Model):
 
 class post(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE , blank = True)
-    title = RichTextField(unique=True,config_name = 'special')
-    titledisplay = models.CharField(max_length=100,blank=True)
+    title = models.TextField(max_length=200 , blank = True)
+    permalink = models.CharField(max_length=100,blank=True)
     content = RichTextUploadingField(blank=True)
-    contentdisplay = models.CharField(max_length=250,blank=True)
     tags = models.CharField(max_length=200,blank=True)
     cover = models.ImageField(blank=True)
     views = models.IntegerField(default=0)
@@ -49,7 +48,6 @@ class post(models.Model):
 class comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     commentbody = RichTextField(blank = True)
-    commentbodydisplay = models.CharField(max_length=500,blank=True)
     relpost = models.ManyToManyField(post,blank=True)
     date = models.DateTimeField(auto_now_add=True)
     
@@ -59,7 +57,6 @@ class comment(models.Model):
 class comment_child(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     commentbody = RichTextField(blank=True)
-    commentbodydisplay = models.CharField(max_length=500,blank=True)
     relcomment = models.ManyToManyField(comment,blank=True)
     relpost = models.ManyToManyField(post,blank=True)
     date = models.DateTimeField(auto_now_add=True)
