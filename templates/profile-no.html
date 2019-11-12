@@ -683,12 +683,12 @@ margin-right: 0!important;
     {% for i in postdata %}
     <article id="post-306377" class="post sap-post sap-member-post">
         <div class="post-featured-image">
-        <a href="{% url 'view-post' i.titledisplay %}" rel="bookmark" title="Permanent Link to {{i.titledisplay}}">
+        <a href="{% url 'view-post' i.permalink %}" rel="bookmark" title="Permanent Link to {{i.permalink}}">
         <img width="201" height="201" src="{{i.cover}}" class="avatar wp-post-image" alt="" srcset="{{i.cover}} 201w, {{i.cover}} 300w, {{i.cover}} 400w, {{i.cover}} 200w" sizes="(max-width: 201px) 100vw, 201px" /> </a>
         </div>
         <div class="post-content">
         <div class="sap-post-title">
-        <a href="{% url 'view-post' i.titledisplay %}" rel="bookmark" title="Permanent Link to a">{{i.title|safe}}</a> </div>
+        <a href="{% url 'view-post' i.permalink %}" rel="bookmark" title="Permanent Link to a">{{i.title|safe}}</a> </div>
         <p class="date">{{i.post_date.date}}</p>
         <div class="sap-excerpt">
         <p>Visualizzazioni: {{i.views}} &nbsp; {{i.contentdisplay}} </p>

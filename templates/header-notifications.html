@@ -9,7 +9,7 @@
         <div class="pop pop-links">
         <div class="pop-links-inner">
             {% for i in notific %}
-        <a href="#">{{i.notification}}</a>
+        <a href="{% url 'view-post' i.relpost.all.0.permalink %}">{{i.notification}}</a>
         {% endfor %} 
         </div>
         </div>

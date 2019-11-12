@@ -579,7 +579,7 @@ margin-right: 0!important;
 <header class="page-cover table" style="background-image: url({{post.cover}}); background-position: center;background-size: cover;background-repeat: none;" data-photo="yes">
 <div class="table-cell page-header">
 <div class="cover-content">
-<h1 class="post-title main-title">{{post.title|safe}}</h1>
+<h1 class="post-title main-title">{{post.title}}</h1>
 <div class="table">
 <div class="table-cell entry-meta">
 <span class="post-author"><a href="{% url 'profile' post.user.username %}" rel="bookmark"><img alt='' src="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %}" srcset="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %} 2x" class='avatar avatar-55 photo' height='55' width='55' /></a><span class="author vcard">
@@ -601,20 +601,9 @@ margin-right: 0!important;
 <div id="primary" class="site-content">
 <div id="content" role="main">
 <article id="post-239880" class="post-239880 post type-post status-publish format-standard has-post-thumbnail hentry category-narrativa tag-cinema">
-{% if post.status == 'draft' %}
-<header class="entry-header">
-    <h1 class="entry-title">
-        <font style="vertical-align: inherit;">
-            <font style="vertical-align: inherit;">to </font>
-        </font>
-        <a class="post-edit-link" href="">
-            <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">Modify</font></font></a></h1>
-    </header>
-{% endif %}
 
 <header class="entry-header">
-<h1 class="entry-title">{{post.title|safe}}</h1>
+<h1 class="entry-title">{{post.title}}</h1>
 </header>
 
 <div class="entry-content">
