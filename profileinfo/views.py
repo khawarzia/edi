@@ -613,13 +613,13 @@ def edit_post(request,title):
         a = obj
         a.approved_by_admin = False
         try:
-            form2.is_valid()
-            a.title = html2text(form2.cleaned_data['title'])
+            if form2.is_valid():
+                a.title = html2text(form2.cleaned_data['title'])
         except:
             pass
         try:
-            form.is_valid()
-            a.content = form.cleaned_data['content']
+            if form.is_valid():
+                a.content = form.cleaned_data['content']
         except:
             pass
         a.tags = str(postdata['tags'])
