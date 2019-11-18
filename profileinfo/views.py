@@ -52,7 +52,7 @@ def info(request):
         if i.user == request.user and i.status == False:
             notifi += 1
             notific.append(i)
-    context = {'infor':obj,'user_check':True,'coverurl':coverimg,'profileurl':profileimg,'notific':notific,'notifications':notifi,'followers':followers,'following':following,'posts':posts,'messages':messages,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
+    context = {'infor':obj,'user_check':True,'coverurl':coverimg,'profileurl':profileimg,'notific':notific.reverse(),'notifications':notifi,'followers':followers,'following':following,'posts':posts,'messages':messages,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
     return context
 
 def profile_page(request,the_slug):
@@ -364,7 +364,8 @@ def new_post(request):
         for i in posts:
             if i.type_of_post == 'post part of series' and i.user == request.user:
                 if i.link_number == 1 and i.linked_post.count() < 11:
-                    a.append(i.link_title)
+                    if i.link_title not in a:
+                        a.append(i.link_title)
     except:
         pass
     context['series'] = a
@@ -414,24 +415,25 @@ def new_post(request):
             a.type_of_post = 'post part of series'
             a.link_title = seriname
             a.linked_checked = True
+            a.link_number = 1
         else:
             a.type_of_post = 'post part of series'
             a.link_title = seri
             a.linked_checked = True            
             objs = post.objects.all()
-            count = 1
+            count = 0
             for i in objs:
                 if i.user == request.user and i.link_title == seri:
                     a.save()
                     i.linked_post.add(a)
                     i.save()
-                    epi = i.linked_post.all()
-                    for j in epi:
-                        a.linked_post.add(j)
+                    for k in i.linked_post.all():
+                        a.linked_post.add(k)
                     count += 1
             a.link_number = count
         a.permalink = convertit(a.title)
         a.save()
+        objs = post.objects.all()
         return redirect('/edit/'+a.permalink)
     else:
         form = contentform()
@@ -457,6 +459,14 @@ def view_post(request,title):
             break
     try:
         print(obj.title)
+        try:
+            a = notifications.objects.all()
+            for i in a:
+                if obj in i.relpost.all() and i.status == False:
+                    i.status = True
+                    i.save()
+        except:
+            pass
     except:
         return redirect('/')
     commentdata = {}
@@ -545,12 +555,12 @@ def comment_new(request,title):
         obj2.relpost.add(obj.relpost.all()[0])
         obj2.notification = str(obj.user.username)+' ha commentato '+str(title)
         obj2.save()
-        #a = EmailMessage(
-            #subject='Commento',
-            #body=str(title)+' e stato commentato : '+str(html2text(obj.commentbody))+' https://127.0.0.1:8000/post/'+title+ ' https://127.0.0.1:8000/notifications-unread',
-            #to=[obj2.user.email]
-        #)
-        #a.send()
+        a = EmailMessage(
+            subject='Commento',
+            body=str(title)+' e stato commentato : '+str(html2text(obj.commentbody))+' https://67.207.92.234:8000/post/'+title+ ' https://67.207.92.234:8000/notifications-unread',
+            to=[obj2.user.email]
+        )
+        a.send()
         return redirect('/post/'+title)
     
 @login_required(login_url='/loggin')
@@ -586,6 +596,15 @@ def like_post(request,title):
         return redirect('/post/'+title)
 
 @login_required(login_url='/loggin')
+def notificationdel(request,id,sel):
+    obj = notifications.objects.get(pk=id)
+    obj.delete()
+    if sel == 1:
+        return redirect('/notifications')
+    else:
+        return redirect('/notifications-unread')
+
+@login_required(login_url='/loggin')
 def edit_post(request,title):
     template = 'new-post.html'
     context = info(request)
@@ -601,11 +620,16 @@ def edit_post(request,title):
         posts = post.objects.all()
         for i in posts:
             if i.type_of_post == 'post part of series' and i.user == request.user:
-                if i.link_number == 1 and i.linked_post.all().count() < 9:
-                    a.append(i.link_title)
+                if i.link_number == 1 and i.linked_post.all().count() < 11:
+                    if i.link_title not in a:
+                        a.append(i.link_title)
     except:
         pass
     context['series'] = a
+    if obj.linked_checked:
+        prevseri = obj.link_title
+    else:
+        prevseri = ''
     if request.method == 'POST':
         form = contentform(request.POST)
         form2 = titleform(request.POST)
@@ -644,14 +668,30 @@ def edit_post(request,title):
             seri = ''
         if typ == '':
             a.type_of_post = 'single post'
+            a.linked_checked = False
+            for i in post.objects.all():
+                if i.link_title == a.link_title:
+                    i.linked_post.remove(a)
+                    if i.link_number > a.link_number:
+                        i.link_number = i.link_number - 1
         elif typ == 'new-serie':
             a.type_of_post = 'post part of series'
             a.link_title = seriname
+            a.linked_checked = True
+            if prevseri != '' and prevseri != seriname:
+                objspost = post.objects.all()
+                for i in objspost:
+                    if i.linked_checked and i.link_title == prevseri:
+                        if a.link_number < i.link_number:
+                            i.link_number = i.link_number - 1
+                            i.relpost.remove(a)
+                            i.save()
+                a.relpost.clear()
         else:
             a.type_of_post = 'post part of series'
-            a.link_title = seri            
+            a.link_title = seri   
             objs = post.objects.all()
-            count = 1
+            count = 0
             for i in objs:
                 if i.user == request.user and i.link_title == seri:
                     a.save()
@@ -661,7 +701,16 @@ def edit_post(request,title):
                     for j in epi:
                         a.linked_post.add(j)
                     count += 1
-            a.link_number = count
+            if seri != prevseri:
+                a.link_number = count
+            a.linked_checked = True
+            if prevseri != '' and prevseri != seri:
+                objspost = post.objects.all()
+                for i in objspost:
+                    if i.linked_checked and i.link_title == prevseri:
+                        if obj.link_number < i.link_number:
+                            i.link_number = i.link_number - 1
+                            i.save()
         a.permalink = convertit(a.title)
         a.save()
         return redirect('/edit/'+a.permalink)

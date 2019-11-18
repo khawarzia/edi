@@ -626,7 +626,7 @@ margin-right: 0!important;
 <div class="table-cell page-header">
 <div class="cover-content">
 <h1 class="post-title main-title">{{post.title}}
-            {% if post.approved_by_admin == False and post.user == request.user %}
+            {% if post.user == request.user %}
     <a class="post-edit-link" href="{% url 'edit-post' post.permalink %}">Modify</a>{% endif %}
 </h1>
 <div class="table">
@@ -653,7 +653,7 @@ margin-right: 0!important;
 
 <header class="entry-header">
 <h1 class="entry-title"><div class="text-inline">{{post.title}}
-        {% if post.approved_by_admin == False and post.user == request.user %}
+        {% if post.user == request.user %}
     <span><a class="post-edit-link" href="{% url 'edit-post' post.permalink %}">Modify</a></span>{% endif %}</div>
 </h1>
 </header>
