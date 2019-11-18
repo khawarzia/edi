@@ -8,13 +8,13 @@ from django.core.mail import EmailMessage
 @receiver(post_save,sender=post)
 def email_send(sender,instance,**kwargs):
     if instance.approved_by_admin:
-        #email_add = instance.user.email
-        #a = EmailMessage(
-        #    subject='LibriCK Approved by Admin',
-        #    body='Your LibriCK with title : '+str(instance.titledisplay)+' has been approved by the admin.\nView your post now : https://127.0.0.1:8000/post/'+str(instance.titledisplay),
-        #    to = [email_add]
-        #)
-        #a.send()
+        email_add = instance.user.email
+        a = EmailMessage(
+            subject='LibriCK Approved by Admin',
+            body='Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.permalink),
+            to = [email_add]
+        )
+        a.send()
         a = 'Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.permalink)
         objs = notifications.objects.all()
         for i in objs:
@@ -46,6 +46,12 @@ def amazon_code(sender, instance, **kwargs):
         a.user = instance.user
         a.notification = 'Congratulazioni, la copertina del tuo Libro è stata aggiunta ai tuo LibriCK!'
         a.save()
+        em = EmailMessage(
+            subject='Amazon code added',
+            body='Congratulazioni, la copertina del tuo Libro è stata aggiunta ai tuo LibriCK!',
+            to=[a.user.email]
+        )
+        em.send()
         try:
             a.relpost.add(linked)
             a.save()

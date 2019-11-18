@@ -45,6 +45,7 @@ urlpatterns = [
 
     path('notifications',viewsprofile.notification_read,name='note'),
     path('notifications-unread',viewsprofile.notification_unread,name='note2'),
+    path('deletenotification/<int:id>/<int:sel>',viewsprofile.notificationdel,name='delnote'),
 
     #posts urls
 
