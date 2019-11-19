@@ -15,7 +15,6 @@ def status(request):
     else:
         template = 'afterlogin.html'
         context = info(request)
-    print (context)
     return render(request,template,context)
 
 def login(request):
