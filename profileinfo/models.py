@@ -13,6 +13,11 @@ type_choice = (
     ('post part of series','post part of series'),
 )
 
+selection_notification = (
+    ('post','post'),
+    ('comment','comment'),
+)
+
 class follow(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE , blank = True)
     follower = models.CharField(max_length = 50 , blank = True)
@@ -77,6 +82,8 @@ class message(models.Model):
 class notifications(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     relpost = models.ManyToManyField(post)
+    relcom = models.ManyToManyField(comment)
+    sel = models.CharField(blank=True,max_length=20,choices=selection_notification)
     notification = models.CharField(max_length=100,blank=True)
     status = models.BooleanField(default=False)
 

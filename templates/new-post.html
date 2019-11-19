@@ -682,15 +682,17 @@ function asd(){
 </a>
 <div class="sap-editor-publish-wrapper clearfix">
 <div class="sap-publish-popup">
-<a class="sap-story-review sap-action-button sap-story-review-btn button button-primary" type="button" id="publish" title="PUBBLICA">PUBBLICA</a>
 {% if poststatus %} {% if post.status != 'draft' %}
-<a class="sap-story-draft sap-story-draft-btn button button-secondary" type="button" id="save" >Converti in bozza 
+<a class="sap-story-review button button-secondary btn-disabled" type="button" id="publish" title="PUBBLICA">In Sospeso</a>
+<a class="sap-story-draft sap-story-preview-btn button button-secondary" type="button" id="save" >Converti in bozza </a>
 {% else %}
-<a class="sap-story-draft sap-story-draft-btn button button-secondary" type="button" id="save" >Salva 
+<a class="sap-story-review button button-primary" type="button" id="publish" title="PUBBLICA">PUBBLICA</a>
+<a class="sap-story-draft sap-story-preview-btn button button-secondary" type="button" id="save" >Salva </a>
     {% endif %}
 {% else %} 
-<a class="sap-story-draft sap-story-draft-btn button button-secondary" type="button" id="save" >Salva 
-    {% endif %}</a>
+<a class="sap-story-review button button-primary" type="button" id="publish" title="PUBBLICA">PUBBLICA</a>
+<a class="sap-story-draft sap-story-preview-btn button button-secondary" type="button" id="save" >Salva</a> 
+    {% endif %}
 <a class="sap-story-preview sap-story-preview-btn button button-secondary" type="button" id="preview" title="Show preview in new window">Anteprima</a>
 <!--div id="wswp_counter_container" style="text-align:right">
     <input type="text" value="0" id="counter_display" style="background: white; border: 0px; font-family: Muli; color: rgba(0, 0, 0, 0.4); width: 80px; margin-right: 10px; box-shadow: none;">

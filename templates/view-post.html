@@ -747,7 +747,7 @@ Commenti </h2>
 <header class="comment-meta comment-author vcard">
 <cite class="fn"><a href='{% url "profile" i.user.username %}' rel='external nofollow' class='url'>{{i.user.first_name}} {{i.user.last_name}}</a> </cite> </header>
 <section class="comment-content comment">
-<p>{{i.commentbody|safe}}</p>
+<p id="{{i.id}}">{{i.commentbody|safe}}</p>
 </section>
 <footer class="comment-meta"  id="rep" style="display: ;">
 <a href=""><time>{{i.date}}</time></a> <span class="entry-actions">
