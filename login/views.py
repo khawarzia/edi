@@ -10,6 +10,7 @@ from django.forms.models import model_to_dict
 from profileinfo.views import info
 
 def status(request):
+    context = {}
     if not (request.user.is_authenticated):
         template = 'index.html'
     else:
