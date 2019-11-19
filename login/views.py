@@ -14,9 +14,8 @@ def status(request):
         template = 'index.html'
     else:
         template = 'afterlogin.html'
-    context = {'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
-    if request.user.is_authenticated:
         context = info(request)
+    print (context)
     return render(request,template,context)
 
 def login(request):

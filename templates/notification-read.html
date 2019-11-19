@@ -29,7 +29,11 @@
 <div id="message">
     {% if notifi %}
     {% for i in notifi %}
-<a href="{% url 'view-post' i.relpost.all.0.permalink %}">{{i.notification}}</a>&ensp;&ensp;&ensp;&ensp;
+    {% if i.sel == 'post' %}
+    <a href="{% url 'view-post' i.relpost.all.0.permalink %}">{{i.notification}}</a>
+        {% else %}
+    <a href="{% url 'view-post' i.relpost.all.0.permalink %}#{{i.relcom.all.0.id}}">{{i.notification}}</a>
+        {% endif %}&ensp;&ensp;&ensp;&ensp;
 <a href="{% url 'delnote' i.id 1 %}"><span class="fa fa-trash"></span></a><br>
 {% endfor %}
 {% else %}

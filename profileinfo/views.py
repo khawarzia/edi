@@ -52,7 +52,8 @@ def info(request):
         if i.user == request.user and i.status == False:
             notifi += 1
             notific.append(i)
-    context = {'infor':obj,'user_check':True,'coverurl':coverimg,'profileurl':profileimg,'notific':notific.reverse(),'notifications':notifi,'followers':followers,'following':following,'posts':posts,'messages':messages,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
+    notific.reverse()
+    context = {'infor':obj,'user_check':True,'coverurl':coverimg,'profileurl':profileimg,'notific':notific,'notifications':notifi,'followers':followers,'following':following,'posts':posts,'messages':messages,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
     return context
 
 def profile_page(request,the_slug):
@@ -335,8 +336,9 @@ def notification_read(request):
     objs = notifications.objects.all()
     a = []
     for i in objs:
-        if i.status:
+        if i.status and i.user == request.user:
             a.append(i)
+    a.reverse()
     context['notifi'] = a
     return render(request,template,context)
 
@@ -347,10 +349,11 @@ def notification_unread(request):
     objs = notifications.objects.all()
     a = []
     for i in objs:
-        if not i.status:
+        if not i.status and i.user == request.user:
             a.append(i)
             i.status = True
             i.save()
+    a.reverse()
     context['notifi'] = a
     return render(request,template,context)
 
@@ -447,7 +450,6 @@ def view_post(request,title):
     context = {}
     if request.user.is_authenticated:
         template = 'view-post.html'
-        context = info(request)
     else:
         template = 'view-post-no.html'
     objs = post.objects.all()
@@ -469,6 +471,8 @@ def view_post(request,title):
             pass
     except:
         return redirect('/')
+    if request.user.is_authenticated:
+        context = info(request)
     commentdata = {}
     objs = comment.objects.all()
     objs2 = comment_child.objects.all()
@@ -535,6 +539,7 @@ def view_post(request,title):
     context['post'] = obj
     context['postinfor'] = inforobj
     context['cd'] = commentdata.items()
+    print (commentdata.items())
     context['totallength'] = totallength
     print (commentdata.items())
     return render(request,template,context)
@@ -551,8 +556,10 @@ def comment_new(request,title):
         obj.save()
         obj2 = notifications()
         obj2.user = obj.relpost.all()[0].user
+        obj2.sel = 'comment'
         obj2.save()
         obj2.relpost.add(obj.relpost.all()[0])
+        obj2.relcom.add(obj)
         obj2.notification = str(obj.user.username)+' ha commentato '+str(title)
         obj2.save()
         a = EmailMessage(
@@ -740,6 +747,7 @@ def preview_post(request):
             context['main_body'] = ''
         context['post'] = request.POST
         print (context)
+        context['title'] = html2text(context['post']['title'])
     return render(request,template,context)
 
 def deletepost(request,title):
