@@ -419,6 +419,8 @@ def new_post(request):
             a.link_title = seriname
             a.linked_checked = True
             a.link_number = 1
+            a.save()
+            a.linked_post.add(a)
         else:
             a.type_of_post = 'post part of series'
             a.link_title = seri
@@ -694,6 +696,8 @@ def edit_post(request,title):
                             i.relpost.remove(a)
                             i.save()
                 a.relpost.clear()
+            a.link_number = 1
+            a.linked_post.add(a)
         else:
             a.type_of_post = 'post part of series'
             a.link_title = seri   
