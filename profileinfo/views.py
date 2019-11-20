@@ -533,7 +533,8 @@ def view_post(request,title):
             a['check'] = False
         else:
             a['check'] = True
-        episodes.append(a)
+        if a not in episodes:
+            episodes.append(a)
     episodes.sort(key=operator.itemgetter('number'))
     print (episodes)
     context['epilist'] = episodes
