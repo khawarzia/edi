@@ -669,11 +669,15 @@ def edit_post(request,title):
             a.status = 'draft'
         try:
             typ = postdata['post_type']
-            seriname = postdata['_new_serie']
-            seri = postdata['post_serie']
         except:
             typ = ''
+        try:
+            seriname = postdata['_new_serie']
+        except:
             seriname = ''
+        try:
+            seri = postdata['post_serie']
+        except:
             seri = ''
         if typ == '':
             a.type_of_post = 'single post'
