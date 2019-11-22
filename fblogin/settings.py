@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gw-j72sl#jpt80)r3a9*ely$i8xsax_4k!b@ue1@i@5cvq1(+3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['67.207.92.234','127.0.0.1']
 
@@ -151,5 +151,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'testingdjango4@gmail.com'
-EMAIL_HOST_PASSWORD = 'djangotest111'
+EMAIL_HOST_USER = 'futuresoftcode@gmail.com'
+EMAIL_HOST_PASSWORD = 'Sul03314307703'
