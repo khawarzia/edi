@@ -12,10 +12,10 @@ from profileinfo.views import info
 def status(request):
     if not (request.user.is_authenticated):
         template = 'index.html'
+        context = {}
     else:
         template = 'afterlogin.html'
         context = info(request)
-    print (context)
     return render(request,template,context)
 
 def login(request):
