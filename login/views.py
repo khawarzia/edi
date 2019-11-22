@@ -13,6 +13,7 @@ def status(request):
     context = {}
     if not (request.user.is_authenticated):
         template = 'index.html'
+        context = {}
     else:
         template = 'afterlogin.html'
         context = info(request)
