@@ -8,15 +8,75 @@ from django.core.mail import EmailMessage
 import random
 from django.forms.models import model_to_dict
 from profileinfo.views import info
+from profileinfo.models import post,comment,comment_child
 
 def status(request):
     context = {}
     if not (request.user.is_authenticated):
         template = 'index.html'
-        context = {}
     else:
         template = 'afterlogin.html'
         context = info(request)
+    objp = post.objects.all()
+    objs = comment.objects.all()
+    objs2 = comment_child.objects.all()
+    a = {}
+    data = {}
+    totallength = 0
+    for obj in objp:
+        if obj.approved_by_admin == False:
+            continue
+        commentdata = {}
+        data[obj] = {}
+        for i in objs:
+            if i.relpost.all()[0] == obj:
+                commentdata[i] = {}
+                totallength += 1
+                inforobj = infor.objects.get(user=i.user)
+                if inforobj.profile_check == False:
+                    try:
+                        a = i.user.socialaccount_set.all()[0].provider
+                        profileimg = "b"
+                    except:
+                        profileimg = "c"
+                else:
+                    profileimg = "a"
+                commentdata[i]['pf'] = profileimg
+                commentdata[i]['cominfor'] = inforobj
+                commentdata[i]['length'] = totallength
+                commentdata[i]['children'] = {}
+                for j in objs2:
+                    if j.relcomment.all()[0] == i and j.relpost.all()[0] == i.relpost.all()[0]:
+                        commentdata[i]['children'][j] = {}
+                        totallength += 1
+                        inforobj = infor.objects.get(user=j.user)
+                        if inforobj.profile_check == False:
+                            try:
+                                a = j.user.socialaccount_set.all()[0].provider
+                                profileimg = "b"
+                            except:
+                                profileimg = "c"
+                        else:
+                            profileimg = "a"                    
+                        commentdata[i]['children'][j]['pf'] = profileimg
+                        commentdata[i]['children'][j]['cominfor'] = inforobj
+                        commentdata[i]['children'][j]['length'] = totallength
+        inforobj = infor.objects.get(user=obj.user)
+        if inforobj.profile_check == False:
+            try:
+                a = i.user.socialaccount_set.all()[0].provider
+                profileimg = "b"
+            except:
+                profileimg = "c"
+        else:
+            profileimg = "a"
+        data[obj]['pf'] = profileimg
+        data[obj]['cominfor'] = inforobj
+        data[obj]['comments'] = totallength
+        totallength = 0
+        a[obj] = commentdata
+    context['data'] = zip(a.items(),data.items())
+    print(data)
     return render(request,template,context)
 
 def login(request):
