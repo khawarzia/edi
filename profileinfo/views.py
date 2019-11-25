@@ -449,6 +449,7 @@ def view_post(request,title):
     if request.user.is_authenticated:
         template = 'view-post.html'
     else:
+        print('no')
         template = 'view-post-no.html'
     objs = post.objects.all()
     for i in objs:
@@ -518,8 +519,7 @@ def view_post(request,title):
             profileimg = "c"
     else:
         profileimg = "a"
-    tempvar = getfirstepi(obj)
-    episodes = [tempvar]
+    episodes = []
     for i in obj.linked_post.all():
         a = {}
         a['number'] = i.link_number
@@ -761,12 +761,3 @@ def convertit(a):
         else:
             b = b + i
     return b
-
-def getfirstepi(a):
-    objs = post.objects.all()
-    for i in objs:
-        if i.user == a.user and (i.link_title == a.link_title and i.link_number == 1):
-            if i == a:
-                return {'number':1,'titled':i.title,'check':True,'perma':i.permalink}
-            else:
-                return {'number':1,'titled':i.title,'check':False,'perma':i.permalink}

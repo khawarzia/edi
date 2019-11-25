@@ -669,8 +669,100 @@ margin-right: 0!important;
 <style type="text/css">.esg-grid .mainul li.eg-monroe-2-wrapper{background:#ffffff; padding:0px 0px 0px 0px; border-width:0px 0px 0px 0px; border-radius:0px 0px 0px 0px; border-color:transparent; border-style:none}</style>
 <style type="text/css">.esg-grid .mainul li.eg-monroe-2-wrapper .esg-media-poster{background-size:cover; background-position:center center; background-repeat:no-repeat}</style>
 <style type="text/css"></style>
-
-
+<br>
+<script>
+    function showfunc(a){
+        var doc1 = document.getElementsByName(a);
+        var i = 0;
+        for (i=0 ; i<doc1.length ; i++){
+            doc1[i].style.display = '';
+        }
+        document.getElementById(a+'a').style.display = 'none';
+    }
+</script>
+<div class="vc_row wpb_row vc_row-fluid">
+    <div class="wpb_column vc_column_container vc_col-sm-12 vc_col-lg-offset-3 vc_col-lg-6">
+        <div class="vc_column-inner">
+            <div class="wpb_wrapper">
+                <div class="wpb_text_column wpb_content_element ">
+                    <div class="wpb_wrapper">
+                        <p style="text-align: center;"><a class="btn default default" style="margin-bottom:5pxpx" href="https://edizioniopen.it/novita/"> NOVITÀ</a></p>
+                    </div>
+                </div>
+                <div class="wpb_text_column wpb_content_element ">
+                    <div class="wpb_wrapper">
+                        <p style="text-align: center;">
+                        </p>
+                        <div id="buddypress">
+                            <div class="bpas-shortcode-activities activity  shortcode-activity-stream">
+                                <ul id="activity-stream" class="activity-list item-list  ">
+                                        {% for i,j in data %}
+                                    <li class="blogs new_blog_post activity-item has-comments" id="activity-24875">
+                                        <div class="activity-avatar">
+                                            <a href="{% url 'profile' i.0.user.username %}">
+                                                <img src="{% if j.1.pf == 'b' %} {{ i.0.user.socialaccount_set.all.0.get_avatar_url }} {% elif j.1.pf == 'c' %} /static/profile/{{j.1.cominfor.profile}}.jpg {% else %} /media/{{j.1.cominfor.profile_pic}} {% endif %}" class="avatar user-1199-avatar avatar-60 photo" width="60" height="60" alt="Foto del profilo di Linda Minati">
+                                            </a>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-header">
+                                                <p><a href="{% url 'profile' i.0.user.username %}">{{i.0.user.first_name}} {{i.0.user.last_name}}</a> ha pubblicato: <a href="{% url 'view-post' i.0.permalink %}">{{i.0.title}}</a> <a href="{% url 'view-post' i.0.permalink %}" class="view activity-time-since bp-tooltip" data-bp-tooltip="Vedi Discussione"><span class="time-since" data-livestamp="2019-11-18T19:36:50+0000">{{i.0.post_date.day}} {{i.0.post_date|date:'F'}} {{i.0.post_date.year}}</span></a></p>
+                                            </div>
+                                            <div class="activity-inner">
+                                                <p>{{i.0.content|safe|slice:'200'}}<img src="{{i.0.cover}}"></p>
+                                            </div>
+                                            <div class="activity-meta">
+                                            </div>
+                                        </div>
+                                        <div class="activity-comments">
+                                            <ul>
+                                                {% if j.1.comments > 10 %}
+                                                    <a onclick="showfunc('{{i.0.title}}')" id="{{i.0.title}}a">Mostra tutti i commenti({{j.1.comments}})</a><br><br>
+                                                {% endif %}
+                                                {% for k,l in i.1.items %}
+                                                <li name="{{i.0.title}}" style="{% if l.length > 10 %} display:none; {% endif %}">
+                                                    <div class="acomment-avatar">
+                                                        <a href="{% url 'profile' k.user.username %}">
+                                                            <img src="{% if l.pf == 'b' %} {{ k.user.socialaccount_set.all.0.get_avatar_url }} {% elif l.pf == 'c' %} /static/profile/{{l.cominfor.profile}}.jpg {% else %} /media/{{l.cominfor.profile_pic}} {% endif %}" class="avatar user-309-avatar avatar-50 photo" width="50" height="50" alt="Foto del profilo di Micol Fusca"> </a>
+                                                    </div>
+                                                    <div class="acomment-meta">
+                                                        <a href="{% url 'profile' k.user.username %}">{{k.user.first_name}} {{k.user.last_name}}</a> replied <a href="{% url 'view-post' i.0.permalink %}#{{k.id}}" class="activity-time-since"><span class="time-since">{{k.date.day}} {{k.date|date:'F'}} {{k.date.year}}</span></a> </div>
+                                                    <div class="acomment-content">
+                                                        {{k.commentbody|safe}}
+                                                    </div>
+                                                    <div class="acomment-options">
+                                                    </div>
+                                                    <ul>
+                                                        {% for m,n in l.children.items %}
+                                                        <li name="{{i.0.title}}" style="{% if n.length > 10 %} display:none; {% endif %}">
+                                                            <div class="acomment-avatar">
+                                                                <a href="{% url 'profile' m.user.username %}">
+                                                                    <img src="{% if n.pf == 'b' %} {{ m.user.socialaccount_set.all.0.get_avatar_url }} {% elif n.pf == 'c' %} /static/profile/{{n.cominfor.profile}}.jpg {% else %} /media/{{n.cominfor.profile_pic}} {% endif %}" class="avatar user-1199-avatar avatar-50 photo" width="50" height="50" alt="Foto del profilo di Linda Minati"> </a>
+                                                            </div>
+                                                            <div class="acomment-meta">
+                                                                <a href="{% url 'profile' m.user.username %}">{{m.user.first_name}} {{m.user.last_name}}</a> replied <a href="{% url 'view-post' i.0.permalink %}#{{m.id}}" class="activity-time-since"><span class="time-since">{{k.date.day}} {{k.date|date:'F'}} {{k.date.year}}</span></a> </div>
+                                                            <div class="acomment-content">
+                                                                {{m.commentbody|safe}}
+                                                            </div>
+                                                            <div class="acomment-options">
+                                                            </div>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <footer class="entry-meta">
 </footer>
 </article>
