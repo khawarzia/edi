@@ -146,7 +146,7 @@ def reset1(request):
             if a == i.username or a == i.email:
                 message = EmailMessage(
                     subject='Reset your password for Edizioniopen.it',
-                    body='Go to the following link : \n https://67.207.92.234:8000/new/'+(infor.objects.get(user=i).passwordkey),
+                    body='Go to the following link : \n https://165.227.48.28:8000/new/'+(infor.objects.get(user=i).passwordkey),
                     to=[i.email]
                 )
                 message.send()
