@@ -45,10 +45,9 @@ class post(models.Model):
 
     def __str__(self):
         if self.approved_by_admin == False:
-            return (self.status)
-        if self.approved_by_admin:
-            return ('Approved')
-        return (self.titledisplay)
+            return (self.status+' | Titled : '+self.title)
+        else:
+            return ('Approved'+' | Titled : '+self.title)
 
 class comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)

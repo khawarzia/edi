@@ -705,10 +705,10 @@ margin-right: 0!important;
                                         </div>
                                         <div class="activity-content">
                                             <div class="activity-header">
-                                                <p><a href="{% url 'profile' i.0.user.username %}">{{i.0.user.first_name}} {{i.0.user.last_name}}</a> ha pubblicato: <a href="{% url 'view-post' i.0.permalink %}">{{i.0.title}}</a> <a href="{% url 'view-post' i.0.permalink %}" class="view activity-time-since bp-tooltip" data-bp-tooltip="Vedi Discussione"><span class="time-since" data-livestamp="2019-11-18T19:36:50+0000">{{i.0.post_date.day}} {{i.0.post_date|date:'F'}} {{i.0.post_date.year}}</span></a></p>
+                                                <p><a href="{% url 'profile' i.0.user.username %}">{{i.0.user.first_name}} {{i.0.user.last_name}}</a> ha pubblicato: <a href="{% url 'view-post' i.0.permalink %}">{{i.0.title}}</a> <a class="view activity-time-since bp-tooltip" data-bp-tooltip="Vedi Discussione"><span class="time-since" data-livestamp="2019-11-18T19:36:50+0000"><i lang="it">{{i.0.post_date|timesince}}</i></span></a></p>
                                             </div>
                                             <div class="activity-inner">
-                                                <p>{{i.0.content|safe|slice:'200'}}<img src="{{i.0.cover}}"></p>
+                                                <p>{{i.0.content|safe|slice:'200'}}<a href="{% url 'view-post' i.0.permalink %}"><img src="{{i.0.cover}}"></a></p>
                                             </div>
                                             <div class="activity-meta">
                                             </div>

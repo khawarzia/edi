@@ -17,7 +17,7 @@ def status(request):
     else:
         template = 'afterlogin.html'
         context = info(request)
-    objp = post.objects.all()
+    objp = post.objects.all().order_by('-post_date')
     objs = comment.objects.all()
     objs2 = comment_child.objects.all()
     a = {}
