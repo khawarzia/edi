@@ -20,7 +20,7 @@ def status(request):
     objp = post.objects.all().order_by('-post_date')
     objs = comment.objects.all()
     objs2 = comment_child.objects.all()
-    a = {}
+    aa = {}
     data = {}
     totallength = 0
     for obj in objp:
@@ -74,8 +74,8 @@ def status(request):
         data[obj]['cominfor'] = inforobj
         data[obj]['comments'] = totallength
         totallength = 0
-        a[obj] = commentdata
-    context['data'] = zip(a.items(),data.items())
+        aa[obj] = commentdata
+    context['data'] = zip(aa.items(),data.items())
     print(data)
     return render(request,template,context)
 
