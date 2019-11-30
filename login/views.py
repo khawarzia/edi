@@ -64,7 +64,7 @@ def status(request):
         inforobj = infor.objects.get(user=obj.user)
         if inforobj.profile_check == False:
             try:
-                a = i.user.socialaccount_set.all()[0].provider
+                a = obj.user.socialaccount_set.all()[0].provider
                 profileimg = "b"
             except:
                 profileimg = "c"
