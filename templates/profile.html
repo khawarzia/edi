@@ -707,10 +707,40 @@ margin-right: 0!important;
 <p>Followers</p>
 </span>
 </div>
+{% if user_check == False %}
 <div id="item-buttons" class="profile">
-<div id="main-button" class="">
+        <div id="main-button" class="primary-btn">
+        <div class="follow-button generic-button following" id="follow-button-1136" style="display: block;">
+            <a href="{% url 'folunfol' user2.username %}" class="unfollow" id="unfollow-1136">
+                <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">{% if followcheck %}Stop{% endif %} follow{% if followcheck %}ing{% endif %}</font>
+                </font>
+            </a>
+        </div> 
+    </div>
+    <span class="single-member-more-actions">
+    <button class="more-items-btn btn"><i class="fa fa-ellipsis-h"></i></button>    
+    <div class="pop">
+    <div class="inner">
+    <div id="post-mention" class="generic-button">
+        <a href="#" class="activity-button mention">
+            <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Public message</font>
+            </font>
+        </a>
+    </div>
+    <div id="send-private-message" class="generic-button">
+        <a href="#" class="send-message">
+            <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Private message</font>
+            </font>
+        </a>
+    </div> 
 </div>
 </div>
+</span>
+</div>
+{% endif %}
 </div>
 </div>
 </div>

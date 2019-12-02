@@ -32,7 +32,11 @@
     {% if i.sel == 'post' %}
     <a href="{% url 'view-post' i.relpost.all.0.permalink %}">{{i.notification}}</a>
         {% else %}
+        {% if i.sel == 'comment' %}
     <a href="{% url 'view-post' i.relpost.all.0.permalink %}#{{i.relcom.all.0.id}}">{{i.notification}}</a>
+    {% else %}
+    <a href="{% url 'profile' i.reluser.all.0.username %}">{{i.notification}}</a>
+    {% endif %}
         {% endif %}&ensp;&ensp;&ensp;&ensp;
 <a href="{% url 'delnote' i.id 2 %}"><span class="fa fa-trash"></span></a><br>
 {% endfor %}

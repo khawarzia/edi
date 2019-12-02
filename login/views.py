@@ -87,7 +87,10 @@ def login(request):
         a = authenticate(username=request.POST['log'],password=request.POST['pwd'])
         if a is not None:
             auth.login(request,a)
-            return redirect(('/membri/'+str(a.username)))
+            try:
+                return redirect(request.GET['next'])
+            except:
+                return redirect(('/membri/'+str(a.username)))
     return render(request,template)
 
 def logout(request):

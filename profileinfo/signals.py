@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
-from profileinfo.models import post,notifications
-from login.models import infor
+from profileinfo.models import post,notifications,follow,comment
+from login.models import infor,userpreferance
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
@@ -15,7 +15,24 @@ def email_send(sender,instance,**kwargs):
             to = [email_add]
         )
         a.send()
-        a = 'Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://165.227.48.28:8000/post/'+str(instance.permalink)
+        objs = follow.objects.filter(user=instance.user)
+        for i in objs:
+            if userpreferance.objects.get(user=i.follower).new_librick:
+                email = EmailMessage(
+                    subject='New Librick',
+                    body=instance.user.username+' ha pubblicato '+instance.title,
+                    to=[instance.user.email]
+                )
+                email.send()
+            obj = notifications()
+            obj.user = i.follower
+            obj.sel = 'post'
+            obj.notification = instance.user.username+' ha pubblicato '+instance.title
+            obj.save()
+            obj.relpost.add(instance)
+            obj.reluser.add(instance.user)
+            obj.save()
+        a = 'Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.permalink)
         objs = notifications.objects.all()
         for i in objs:
             if i.notification == a:
@@ -25,6 +42,7 @@ def email_send(sender,instance,**kwargs):
         obj.notification = a
         obj.save()
         obj.relpost.add(instance)
+        obj.reluser.add(instance.user)
         obj.save()
     else:
         pass
@@ -54,6 +72,7 @@ def amazon_code(sender, instance, **kwargs):
         em.send()
         try:
             a.relpost.add(linked)
+            a.reluser.add(linked)
             a.save()
         except:
             pass
