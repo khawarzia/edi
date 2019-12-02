@@ -16,14 +16,15 @@ type_choice = (
 selection_notification = (
     ('post','post'),
     ('comment','comment'),
+    ('follow','follow'),
 )
 
 class follow(models.Model):
-    user = models.ForeignKey(User , on_delete=models.CASCADE , blank = True)
-    follower = models.CharField(max_length = 50 , blank = True)
+    user = models.ForeignKey(User , on_delete=models.CASCADE , blank = True , related_name='user')
+    follower = models.ForeignKey(User , on_delete=models.CASCADE , blank = True , related_name='follower')
 
     def __str__(self):
-        return (str(self.user)+' is followed by '+self.follower)
+        return (str(self.user.username)+' is followed by '+self.follower.username)
 
 class post(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE , blank = True)
@@ -82,6 +83,7 @@ class notifications(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     relpost = models.ManyToManyField(post)
     relcom = models.ManyToManyField(comment)
+    reluser = models.ManyToManyField(User,related_name='reluser')
     sel = models.CharField(blank=True,max_length=20,choices=selection_notification)
     notification = models.CharField(max_length=100,blank=True)
     status = models.BooleanField(default=False)

@@ -61,6 +61,10 @@ urlpatterns = [
     path('commentchild/<str:title>/<str:body>',viewsprofile.new_child,name='new-child'),
     path('like/<str:title>',viewsprofile.like_post,name='new-like'),
 
+    #follow and unfollow 
+
+    path('followunfollow/<str:user>',viewsprofile.followunfollow,name='folunfol'),
+
     #allauth urls for facebook login
 
     path('account/', include('allauth.urls')),

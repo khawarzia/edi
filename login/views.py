@@ -20,7 +20,7 @@ def status(request):
     objp = post.objects.all().order_by('-post_date')
     objs = comment.objects.all()
     objs2 = comment_child.objects.all()
-    a = {}
+    aa = {}
     data = {}
     totallength = 0
     for obj in objp:
@@ -64,7 +64,7 @@ def status(request):
         inforobj = infor.objects.get(user=obj.user)
         if inforobj.profile_check == False:
             try:
-                a = i.user.socialaccount_set.all()[0].provider
+                a = obj.user.socialaccount_set.all()[0].provider
                 profileimg = "b"
             except:
                 profileimg = "c"
@@ -74,8 +74,8 @@ def status(request):
         data[obj]['cominfor'] = inforobj
         data[obj]['comments'] = totallength
         totallength = 0
-        a[obj] = commentdata
-    context['data'] = zip(a.items(),data.items())
+        aa[obj] = commentdata
+    context['data'] = zip(aa.items(),data.items())
     print(data)
     return render(request,template,context)
 
@@ -87,7 +87,10 @@ def login(request):
         a = authenticate(username=request.POST['log'],password=request.POST['pwd'])
         if a is not None:
             auth.login(request,a)
-            return redirect(('/membri/'+str(a.username)))
+            try:
+                return redirect(request.GET['next'])
+            except:
+                return redirect(('/membri/'+str(a.username)))
     return render(request,template)
 
 def logout(request):

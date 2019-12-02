@@ -83,6 +83,21 @@ def profile_page(request,the_slug):
                 profileimg = "a"
             context['coverurl2'] = coverimg
             context['profileurl2'] = profileimg
+            context['followcheck'] = False
+            objs = follow.objects.all()
+            for i in objs:
+                if i.follower == request.user and i.user == context['user2']:
+                    context['followcheck'] = True
+                    break
+            followers = 0
+            following = 0
+            for i in objs:
+                if i.user == context['user2']:
+                    followers += 1
+                if i.follower == context['user2']:
+                    following += 1
+            context['followers'] = followers
+            context['following'] = following
     else:
         template = 'profile-no.html'
         context['user_check'] = False
@@ -761,3 +776,31 @@ def convertit(a):
         else:
             b = b + i
     return b
+
+def followunfollow(request,user):
+    for i in follow.objects.all():
+        if i.user == User.objects.get(username = user) and i.follower == request.user:
+            i.delete()
+            return redirect('/membri/'+user)
+    obj1 = follow()
+    obj1.user = User.objects.get(username = user)
+    obj1.follower = request.user
+    obj1.save()
+    obj2 = notifications()
+    obj2.user = obj1.user
+    obj2.notification = request.user.username + ' ora ti segue'
+    obj2.sel = 'follow'
+    obj2.save()
+    obj2.reluser.add(request.user)
+    obj2.save()
+    obj3 = userpreferance.objects.get(user = obj1.user)
+    if obj3.followed:
+        a1 = request.user.username + ' ha cominciato a seguirti \n Per visitare il profilo di '+request.user.username+' clicca qui: https://127.0.0.1:8000/membri/'+request.user.username
+        a2 = '\n\n______________\n\nPer disabilitare queste notifiche effettua il login e modifica le impostazioni: https://127.0.0.1:8000/settingsemail'
+        email = EmailMessage(
+            subject=request.user.username + ' ora ti segue',
+            body=a1+a2,
+            to = [obj1.user.email]
+        )
+        email.send()
+    return redirect('/membri/'+user)
