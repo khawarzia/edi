@@ -891,7 +891,7 @@ def followings(request,the_slug):
                 profileimg = "a"
             c[obj] = profileimg
     context['postdata'] = c.items()
-    context['posts'] = len(a)
+    context['posts'] = len(c)
     return render(request,template,context)
 
 def followers(request,the_slug):
@@ -974,5 +974,5 @@ def followers(request,the_slug):
                 profileimg = "a"
             c[obj] = profileimg
     context['postdata'] = c.items()
-    context['posts'] = len(a)
+    context['posts'] = len(c)
     return render(request,template,context)
