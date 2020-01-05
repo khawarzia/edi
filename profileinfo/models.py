@@ -69,16 +69,6 @@ class comment_child(models.Model):
     def __str__(self):
         return (str(self.user)+' on '+str(self.relcomment))
 
-class message(models.Model):
-    sender = models.ForeignKey(User , on_delete=models.CASCADE ,related_name='sender', blank = True)
-    reciever = models.ManyToManyField(User ,related_name='reciever', blank = True)
-    message = models.CharField(max_length = 500 , blank = True)
-    sentdate = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length = 10, blank = True)
-
-    def __str__(self):
-        return ()
-
 class notifications(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
     relpost = models.ManyToManyField(post)

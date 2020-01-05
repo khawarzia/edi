@@ -8,8 +8,8 @@
  <li id="blog-personal-li"><a id="user-blog" href="{% url 'profile' user2.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
  <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
  <li id="xprofile-personal-li" class="current selected"><a id="user-xprofile" href="{% url 'view' user2.username %}">Profilo</a></li>
- <li id="members-following-personal-li"><a id="user-members-following" href="#">Following <span>{{following}}</span></a></li>
- <li id="members-followers-personal-li"><a id="user-members-followers" href="#">Followers <span>{{followers}}</span></a></li>
+ <li id="members-following-personal-li"><a id="user-members-following" href="{% url 'followings' user2.username %}">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="{% url 'followers' user2.username %}">Followers <span>{{followers}}</span></a></li>
 </ul>
 </div>
 </div>

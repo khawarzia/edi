@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import follow,post,message,comment,comment_child,notifications
+from .models import follow,post,comment,comment_child,notifications
+from chat.models import Message as message
 from login.models import infor,privacy_policy_and_terms_of_service,userpreferance
 from django.contrib.auth.decorators import login_required
 from random import randint
@@ -30,10 +31,12 @@ def info(request):
     objs = follow.objects.all()
     followers = 0
     following = 0
+    followinglist = []
     for i in objs:
         if i.user == request.user:
             followers += 1
         if i.follower == request.user:
+            followinglist.append(i.user)
             following += 1
     objs = post.objects.all()
     posts = 0
@@ -43,7 +46,7 @@ def info(request):
     objs = message.objects.all()
     messages = 0
     for i in objs:
-        if i.reciever == request.user:
+        if i.receiver == request.user:
             messages += 1
     notifi = 0
     notific = []
@@ -53,7 +56,10 @@ def info(request):
             notifi += 1
             notific.append(i)
     notific.reverse()
-    context = {'infor':obj,'user_check':True,'coverurl':coverimg,'profileurl':profileimg,'notific':notific,'notifications':notifi,'followers':followers,'following':following,'posts':posts,'messages':messages,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
+    context = {'infor':obj,'user_check':True,'coverurl':coverimg,'profileurl':profileimg,'notific':notific,
+                'notifications':notifi,'followers':followers,'following':following,'posts':posts,'messages':messages,
+                'followinglist':followinglist,
+                'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
     return context
 
 def profile_page(request,the_slug):
@@ -804,3 +810,169 @@ def followunfollow(request,user):
         )
         email.send()
     return redirect('/membri/'+user)
+
+def followings(request,the_slug):
+    context = {'followers':0,'following':0,'posts':0,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
+    if request.user.is_authenticated:
+        template = 'following.html'
+        context = info(request)
+        if request.user != infor.objects.get(slug = the_slug).user:
+            context['user_check'] = False
+            context['infor2'] = infor.objects.get(slug = the_slug)
+            a = User.objects.all()
+            for i in a:
+                if i == context['infor2'].user:
+                    context['user2'] = i
+            obj = context['infor2']
+            if obj.cover_check:
+                coverimg = "a"
+            else:
+                coverimg = "b"
+            if obj.profile_check == False:
+                try:
+                    a = context['user2'].socialaccount_set.all()[0].provider
+                    profileimg = "b"
+                except:
+                    profileimg = "c"
+            else:
+                profileimg = "a"
+            context['coverurl2'] = coverimg
+            context['profileurl2'] = profileimg
+            context['followcheck'] = False
+            objs = follow.objects.all()
+            for i in objs:
+                if i.follower == request.user and i.user == context['user2']:
+                    context['followcheck'] = True
+                    break
+            followers = 0
+            following = 0
+            for i in objs:
+                if i.user == context['user2']:
+                    followers += 1
+                if i.follower == context['user2']:
+                    following += 1
+            context['followers'] = followers
+            context['following'] = following
+    else:
+        template = 'following-no.html'
+        context['user_check'] = False
+        context['infor2'] = infor.objects.get(slug = the_slug)
+        a = User.objects.all()
+        for i in a:
+            if i == context['infor2'].user:
+                context['user2'] = i
+        obj = context['infor2']
+        if obj.cover_check:
+            coverimg = "a"
+        else:
+            coverimg = "b"
+        if obj.profile_check == False:
+            try:
+                a = context['user2'].socialaccount_set.all()[0].provider
+                profileimg = "b"
+            except:
+                profileimg = "c"
+        else:
+            profileimg = "a"
+        context['coverurl2'] = coverimg
+        context['profileurl2'] = profileimg
+    objs = follow.objects.all()
+    c = {}
+    for i in objs:
+        if i.follower.username == the_slug:
+            obj = infor.objects.get(user=i.user)
+            if obj.profile_check == False:
+                try:
+                    a = obj.user.socialaccount_set.all()[0].provider
+                    profileimg = "b"
+                except:
+                    profileimg = "c"
+            else:
+                profileimg = "a"
+            c[obj] = profileimg
+    context['postdata'] = c.items()
+    context['posts'] = len(a)
+    return render(request,template,context)
+
+def followers(request,the_slug):
+    context = {'followers':0,'following':0,'posts':0,'pt':privacy_policy_and_terms_of_service.objects.get(pk=1)}
+    if request.user.is_authenticated:
+        template = 'followers.html'
+        context = info(request)
+        if request.user != infor.objects.get(slug = the_slug).user:
+            context['user_check'] = False
+            context['infor2'] = infor.objects.get(slug = the_slug)
+            a = User.objects.all()
+            for i in a:
+                if i == context['infor2'].user:
+                    context['user2'] = i
+            obj = context['infor2']
+            if obj.cover_check:
+                coverimg = "a"
+            else:
+                coverimg = "b"
+            if obj.profile_check == False:
+                try:
+                    a = context['user2'].socialaccount_set.all()[0].provider
+                    profileimg = "b"
+                except:
+                    profileimg = "c"
+            else:
+                profileimg = "a"
+            context['coverurl2'] = coverimg
+            context['profileurl2'] = profileimg
+            context['followcheck'] = False
+            objs = follow.objects.all()
+            for i in objs:
+                if i.follower == request.user and i.user == context['user2']:
+                    context['followcheck'] = True
+                    break
+            followers = 0
+            following = 0
+            for i in objs:
+                if i.user == context['user2']:
+                    followers += 1
+                if i.follower == context['user2']:
+                    following += 1
+            context['followers'] = followers
+            context['following'] = following
+    else:
+        template = 'followers-no.html'
+        context['user_check'] = False
+        context['infor2'] = infor.objects.get(slug = the_slug)
+        a = User.objects.all()
+        for i in a:
+            if i == context['infor2'].user:
+                context['user2'] = i
+        obj = context['infor2']
+        if obj.cover_check:
+            coverimg = "a"
+        else:
+            coverimg = "b"
+        if obj.profile_check == False:
+            try:
+                a = context['user2'].socialaccount_set.all()[0].provider
+                profileimg = "b"
+            except:
+                profileimg = "c"
+        else:
+            profileimg = "a"
+        context['coverurl2'] = coverimg
+        context['profileurl2'] = profileimg
+    objs = follow.objects.all()
+    c = {}
+    for i in objs:
+        if i.user.username == the_slug:
+            obj = infor.objects.get(user=i.follower)
+            if obj.profile_check == False:
+                try:
+                    a = obj.user.socialaccount_set.all()[0].provider
+                    profileimg = "b"
+                except:
+                    profileimg = "c"
+            else:
+                profileimg = "a"
+            c[obj] = profileimg
+    context['postdata'] = c.items()
+    context['posts'] = len(a)
+    return render(request,template,context)

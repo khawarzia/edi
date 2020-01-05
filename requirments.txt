@@ -4,3 +4,5 @@ django-sslserver
 pillow
 django-ckeditor
 html2text
+django-widget-tweaks
+django-rest-framework

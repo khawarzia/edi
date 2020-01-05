@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from login import views as viewslogin
 from profileinfo import views as viewsprofile
+from chat import views as chatviews
 from django.conf.urls import handler500,url,include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -64,7 +65,18 @@ urlpatterns = [
     #follow and unfollow 
 
     path('followunfollow/<str:user>',viewsprofile.followunfollow,name='folunfol'),
+    path('membri/<str:the_slug>/following',viewsprofile.followings,name='followings'),
+    path('membri/<str:the_slug>/followers',viewsprofile.followers,name='followers'),
 
+    #chaturls
+
+    path('chat', chatviews.chat_view, name='chats'),
+    path('chat/<int:sender>/<int:receiver>', chatviews.message_view, name='chat'),
+    path('api/messages/<int:sender>/<int:receiver>', chatviews.message_list, name='message-detail'),
+    path('api/messages', chatviews.message_list, name='message-list'),
+    path('api/users/<int:pk>', chatviews.user_list, name='user-detail'),
+    path('api/users', chatviews.user_list, name='user-list'),
+    
     #allauth urls for facebook login
 
     path('account/', include('allauth.urls')),

@@ -72,7 +72,7 @@ def amazon_code(sender, instance, **kwargs):
         em.send()
         try:
             a.relpost.add(linked)
-            a.reluser.add(linked)
+            a.reluser.add(linked.user)
             a.save()
         except:
             pass

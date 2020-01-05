@@ -5,15 +5,14 @@
 <div id="item-nav">
 <div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
 <ul id="nav-bar-filter">
-
  <li id="blog-personal-li" class="current selected"><a id="user-blog" href="{% url 'profile' request.user.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
  <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
  <li id="notifications-personal-li"><a id="user-notifications" href="{% url 'note' %}">Notifiche {% if notifications != 0 %}<span class="no-count">{{notifications}}</span>{% endif %}</a></li>
  <li id="messages-personal-li"><a id="user-messages" href="#">Messaggi <span class="no-count">{{messages}}</span></a></li>
  <li id="xprofile-personal-li"><a id="user-xprofile" href="{% url 'view' request.user.username %}">Profilo</a></li>
  <li id="settings-personal-li"><a id="user-settings" href="{% url 'setgeneral' %}">Impostazioni</a></li>
- <li id="members-following-personal-li"><a id="user-members-following" href="#">Following <span>{{following}}</span></a></li>
- <li id="members-followers-personal-li"><a id="user-members-followers" href="#">Followers <span>{{followers}}</span></a></li>
+ <li id="members-following-personal-li"><a id="user-members-following" href="{% url 'followings' request.user.username %}">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="{% url 'followers' request.user.username %}">Followers <span>{{followers}}</span></a></li>
  <li id="mycred-history-personal-li"><a id="user-mycred-history" href="#">Punti</a></li>
 
 </ul>
