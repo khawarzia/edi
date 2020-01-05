@@ -584,7 +584,7 @@ def comment_new(request,title):
         obj2.save()
         a = EmailMessage(
             subject='Commento',
-            body=str(title)+' e stato commentato : '+str(html2text(obj.commentbody))+' https://167.71.113.243:8000/post/'+title+ ' https://167.71.113.243:8000/notifications-unread',
+            body=str(title)+' e stato commentato : '+str(html2text(obj.commentbody))+' https://192.241.159.133:8000/post/'+title+ ' https://192.241.159.133:8000/notifications-unread',
             to=[obj2.user.email]
         )
         a.send()
@@ -801,8 +801,8 @@ def followunfollow(request,user):
     obj2.save()
     obj3 = userpreferance.objects.get(user = obj1.user)
     if obj3.followed:
-        a1 = request.user.username + ' ha cominciato a seguirti \n Per visitare il profilo di '+request.user.username+' clicca qui: https://167.71.113.243:8000/membri/'+request.user.username
-        a2 = '\n\n______________\n\nPer disabilitare queste notifiche effettua il login e modifica le impostazioni: https://167.71.113.243:8000/settingsemail'
+        a1 = request.user.username + ' ha cominciato a seguirti \n Per visitare il profilo di '+request.user.username+' clicca qui: https://192.241.159.133:8000/membri/'+request.user.username
+        a2 = '\n\n______________\n\nPer disabilitare queste notifiche effettua il login e modifica le impostazioni: https://192.241.159.133:8000/settingsemail'
         email = EmailMessage(
             subject=request.user.username + ' ora ti segue',
             body=a1+a2,
