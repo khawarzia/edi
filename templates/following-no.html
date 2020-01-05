@@ -1,0 +1,44 @@
+{% extends 'profile-no.html' %}
+{% block body %}
+<div class="full-width">
+<div id="item-main-content">
+<div id="item-nav">
+<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+<ul id="nav-bar-filter">
+ <li id="blog-personal-li"><a id="user-blog" href="{% url 'profile' user2.username %}">LibriCK <span class=“count”>{{posts}}</span></a></li>
+ <li id="activity-personal-li"><a id="user-activity" href="#">Attività</a></li>
+ <li id="xprofile-personal-li"><a id="user-xprofile" href="{% url 'view' user2.username %}">Profilo</a></li>
+ <li id="members-following-personal-li" class="current selected"><a id="user-members-following" href="{% url 'followings' user2.username %}">Following <span>{{following}}</span></a></li>
+ <li id="members-followers-personal-li"><a id="user-members-followers" href="{% url 'followers' user2.username %}">Followers <span>{{followers}}</span></a></li>
+</ul>
+</div>
+</div>
+<div id="item-body" role="main" class="clearfix">
+<div id="members-dir-list" class="dir-list members follow following">
+<ul id="members-list" class="item-list" role="main">
+<!--start of loop-->
+{% for i,j in postdata %}
+<li>
+<div class="item-avatar">
+<a href="{% url 'view' i.user.username %}">
+    <img src="{% if j == 'b' %} {{ i.user.socialaccount_set.all.0.get_avatar_url }} {% elif j == 'c' %} /static/profile/{{i.profile}}.jpg {% else %} /media/{{i.profile_pic}} {% endif %}" class="avatar user-1160-avatar avatar-70 photo" width="70" height="70" alt="Foto del profilo di {{i.user.first_name}} {{i.user.last_name}}" /></a>
+</div>
+<div class="item">
+<div class="item-title">
+<a href="{% url 'view' i.user.username %}">{{i.user.first_name}} {{i.user.last_name}}</a>
+</div>
+<div class="item-desc">
+<p>
+</p>
+</div>
+</div>
+<div class="clear"></div>
+</li>
+<!--end of loop-->
+{% endfor %}
+</ul>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

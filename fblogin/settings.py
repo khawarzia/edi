@@ -33,8 +33,11 @@ INSTALLED_APPS = [
     'sslserver',
     'ckeditor',
     'ckeditor_uploader',
+    'widget_tweaks',
+    'rest_framework',
     'login',
     'profileinfo',
+    'chat',
 ]
 
 CKEDITOR_UPLOAD_PATH = 'post-uploads/'
@@ -153,3 +156,17 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'testingdjango4@gmail.com'
 EMAIL_HOST_PASSWORD = 'djangotest111'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+# Number of seconds of inactivity before a user is marked offline
+USER_ONLINE_TIMEOUT = 300
+
+# Number of seconds that we will keep track of inactive users for before
+# their last seen is removed from the cache
+USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
