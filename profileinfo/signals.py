@@ -58,7 +58,7 @@ def amazon_code(sender, instance, **kwargs):
                 break
         objs = notifications.objects.all()
         for i in objs:
-            if i.user == instance.user and a.notification == 'Congratulazioni, la copertina del tuo Libro è stata aggiunta ai tuo LibriCK!':
+            if i.user == instance.user and i.notification == 'Congratulazioni, la copertina del tuo Libro è stata aggiunta ai tuo LibriCK!':
                 return
         a = notifications()
         a.user = instance.user

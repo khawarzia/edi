@@ -14,7 +14,7 @@
  <li id="settings-personal-li"><a id="user-settings" href="{% url 'setgeneral' %}">Impostazioni</a></li>
  <li id="members-following-personal-li"><a id="user-members-following" href="{% url 'followings' request.user.username %}">Following <span>{{following}}</span></a></li>
  <li id="members-followers-personal-li"><a id="user-members-followers" href="{% url 'followers' request.user.username %}">Followers <span>{{followers}}</span></a></li>
- <li id="mycred-history-personal-li"><a id="user-mycred-history" href="#">Punti</a></li>
+ <li id="mycred-history-personal-li"><a id="user-mycred-history" href="{% url 'punti' %}">Punti</a></li>
 </ul>
 </div>
 </div>
@@ -28,7 +28,24 @@
 </ul>
 </div>
 <div class="profile">
-<div class="bp-widget mycred"><h4>Punti</h4><table class="profile-fields"><tr class="field_1 field_current_balance_mycred_default"><td class="label">Current balance</td><td class="data">0</td></tr></table></div><div class="bp-widget mycred"><h4>Crediti</h4><table class="profile-fields"><tr class="field_1 field_current_balance_crediti"><td class="label">Current balance</td><td class="data">0</td></tr></table></div><div class="bp-widget mycred-field">
+<div class="bp-widget mycred"><h4>Punti</h4>
+    <table class="profile-fields">
+        <tr class="field_1 field_current_balance_mycred_default">
+            <td class="label">Current balance</td>
+            <td class="data">{{infor.points}}</td>
+        </tr>
+    </table>
+</div>
+<div class="bp-widget mycred"><h4>
+    Crediti</h4>
+    <table class="profile-fields">
+        <tr class="field_1 field_current_balance_crediti">
+            <td class="label">Current balance</td>
+            <td class="data">0</td>
+        </tr>
+    </table>
+</div>
+<div class="bp-widget mycred-field">
 <table class="profile-fields">
 <tr id="mycred-users-rank">
 <td class="label">Rank</td>

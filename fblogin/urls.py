@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from login import views as viewslogin
 from profileinfo import views as viewsprofile
-from chat import views as chatviews
+from chat import views as viewschat
 from django.conf.urls import handler500,url,include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -38,6 +38,7 @@ urlpatterns = [
     path('editprofilecover',viewsprofile.editprofilecover,name='editcover'),
     path('deletecoverpic',viewsprofile.deletecoverpic,name='deletecoverpic'),
     path('randomcover',viewsprofile.randomcover,name='randomcover'),
+    path('punti',viewsprofile.points,name='punti'),
 
     path('settingsgeneral',viewsprofile.settingsgeneral,name='setgeneral'),
     path('settingsemail',viewsprofile.settingsemail,name='setemail'),
@@ -70,12 +71,17 @@ urlpatterns = [
 
     #chaturls
 
-    path('chat', chatviews.chat_view, name='chats'),
-    path('chat/<int:sender>/<int:receiver>', chatviews.message_view, name='chat'),
-    path('api/messages/<int:sender>/<int:receiver>', chatviews.message_list, name='message-detail'),
-    path('api/messages', chatviews.message_list, name='message-list'),
-    path('api/users/<int:pk>', chatviews.user_list, name='user-detail'),
-    path('api/users', chatviews.user_list, name='user-list'),
+    path('chat', viewschat.chat_view, name='chats'),
+    path('chat/<int:sender>/<int:receiver>', viewschat.message_view, name='chat'),
+    path('api/messages/<int:sender>/<int:receiver>', viewschat.message_list, name='message-detail'),
+    path('api/messages', viewschat.message_list, name='message-list'),
+    path('api/users/<int:pk>', viewschat.user_list, name='user-detail'),
+    path('api/users', viewschat.user_list, name='user-list'),
+
+    #searching
+
+    path('search', viewsprofile.search, name='search'),
+    path('search/<str:q>', viewsprofile.searchapi, name='searchapi'),
     
     #allauth urls for facebook login
 

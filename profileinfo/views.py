@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import follow,post,comment,comment_child,notifications
+from .models import follow,post,comment,comment_child,notifications,pointhistory
 from chat.models import Message as message
 from login.models import infor,privacy_policy_and_terms_of_service,userpreferance
 from django.contrib.auth.decorators import login_required
@@ -13,6 +13,7 @@ import operator
 from django.core.mail import EmailMessage
 from .forms import contentform,titleform
 from html2text import html2text
+from django.http.response import JsonResponse
 
 def info(request):
     obj = infor.objects.get(user=request.user)
@@ -574,6 +575,25 @@ def comment_new(request,title):
         obj.save()
         obj.relpost.add(post.objects.get(permalink = title)) 
         obj.save()
+        if request.user != obj.relpost.all()[0].user:
+            check = 0
+            pobj = pointhistory.objects.filter(user = request.user)
+            for i in pobj:
+                if i.relpost.all()[0] == obj.relpost.all()[0]:
+                    check = 1
+                    break
+                else:
+                    check = 0
+            if check == 0:
+                pobj = pointhistory()
+                pobj.user = request.user
+                pobj.note = 'Points earned from comment on the post : '+obj.relpost.all()[0].title+'.'
+                pobj.save()
+                pobj.relpost.add(obj.relpost.all()[0])
+                pobj.save()
+                inforobj = infor.objects.get(user=request.user)
+                inforobj.points += 3
+                inforobj.save()
         obj2 = notifications()
         obj2.user = obj.relpost.all()[0].user
         obj2.sel = 'comment'
@@ -601,6 +621,24 @@ def new_child(request,title,body):
         obj.relpost.add(post.objects.get(permalink = title))
         obj.relcomment.add(comment.objects.get(commentbody = body))
         obj.save()
+        check = 0
+        pobj = pointhistory.objects.filter(user = request.user)
+        for i in pobj:
+            if i.relpost.all()[0] == obj.relpost.all()[0]:
+                check = 1
+                break
+            else:
+                check = 0
+        if check == 0:
+            pobj = pointhistory()
+            pobj.user = request.user
+            pobj.note = 'Points earned from comment on the post : '+obj.relpost.all()[0].title+'.'
+            pobj.save()
+            pobj.relpost.add(obj.relpost.all()[0])
+            pobj.save()
+            inforobj = infor.objects.get(user=request.user)
+            inforobj.points += 3
+            inforobj.save()
         return redirect('/post/'+title)
 
 @login_required(login_url='/loggin')
@@ -891,7 +929,7 @@ def followings(request,the_slug):
                 profileimg = "a"
             c[obj] = profileimg
     context['postdata'] = c.items()
-    context['posts'] = len(a)
+    context['posts'] = len(c)
     return render(request,template,context)
 
 def followers(request,the_slug):
@@ -974,5 +1012,89 @@ def followers(request,the_slug):
                 profileimg = "a"
             c[obj] = profileimg
     context['postdata'] = c.items()
-    context['posts'] = len(a)
+    context['posts'] = len(c)
+    return render(request,template,context)
+
+@login_required(login_url='/loggin')
+def search(request):
+    template = 'search.html'
+    context = info(request)
+    try:
+        q = request.GET['s']
+    except:
+        return redirect('/')
+    data1 = []
+    for i in post.objects.all():
+        if q in i.title and i.approved_by_admin:
+            data = {}
+            data['posttitle'] = i.title
+            data['posturl'] = "post/"+i.permalink
+            data['postpic'] = i.cover
+            data1.append(data)
+    context['postdata'] = data1
+    data1 = []
+    for i in post.objects.all():
+        if q in i.link_title and i.link_number == 1 and i.approved_by_admin:
+            data = {}
+            data['seriname'] = i.link_title
+            data['seriurl'] = "post/"+i.permalink
+            data['seripic'] = i.cover
+            data1.append(data)
+    context['seridata'] = data1
+    data1 = []
+    for i in infor.objects.all():
+        if q in i.user.username:
+            data = {}
+            data['username'] = i.user.username
+            data['userurl'] = "membri/"+i.user.username
+            if i.profile_check == False:
+                try:
+                    profileimg = i.user.socialaccount_set.all()[0].provider
+                    profileimg = i.user.socialaccount_set.all()[0].get_avatar_url
+                except:
+                    profileimg = "/static/profile/"+str(i.profile)+".jpg"
+            else:
+                profileimg = "/media/"+str(i.profile_pic)
+            data['userpic'] = profileimg
+            data['user'] = i.user 
+            data1.append(data)
+    context['userdata'] = data1
+    context['lengthofsearch'] = len(context['userdata']) + len(context['postdata']) + len(context['seridata'])
+    print(context)
+    return render(request,template,context)
+
+def searchapi(request,q):
+    data = {}
+    for i in post.objects.all():
+        if q in i.title and i.approved_by_admin:
+            data['posttitle'] = i.title
+            data['posturl'] = "{% url 'view-post' "+i.permalink+" %}"
+            data['postpic'] = i.cover
+            break
+    for i in post.objects.all():
+        if q in i.link_title and i.link_number == 1 and i.approved_by_admin:
+            data['seriname'] = i.link_title
+            data['seriurl'] = "{% url 'view-post' "+i.permalink+" %}"
+            data['seripic'] = i.cover
+            break
+    for i in infor.objects.all():
+        if q in i.user.username:
+            data['username'] = i.user.username
+            data['userurl'] = "{% url 'view' "+i.user.username+" %}"
+            if i.profile_check == False:
+                try:
+                    profileimg = i.user.socialaccount_set.all()[0].provider
+                    profileimg = i.user.socialaccount_set.all()[0].get_avatar_url
+                except:
+                    profileimg = "/static/profile/"+str(i.profile)+".jpg"
+            else:
+                profileimg = "/media/"+str(i.profile_pic)
+            data['userpic'] = profileimg
+            break
+    return JsonResponse(data)
+
+def points(request):
+    template = 'punti.html'
+    context = info(request)
+    context['pointhist'] = pointhistory.objects.filter(user=request.user)
     return render(request,template,context)
