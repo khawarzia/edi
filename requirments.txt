@@ -1,4 +1,4 @@
-django
+django==2.2
 django-allauth
 django-sslserver
 pillow

@@ -16,6 +16,7 @@ class infor(models.Model):
     profile_check = models.BooleanField(default = False)
     profile_pic = models.ImageField(blank = True)
     amazon_code_feature = RichTextField(blank=True)
+    points = models.IntegerField(default=0)
 
     def __str__(self):
         return (str(self.user))
