@@ -13,7 +13,7 @@ SECRET_KEY = 'gw-j72sl#jpt80)r3a9*ely$i8xsax_4k!b@ue1@i@5cvq1(+3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['157.245.229.249','127.0.0.1']
+ALLOWED_HOSTS = ['165.227.194.38','127.0.0.1']
 
 
 # Application definition
@@ -154,9 +154,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'testingdjango4@gmail.com'
-EMAIL_HOST_PASSWORD = 'djangotest111'
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -170,3 +167,5 @@ USER_ONLINE_TIMEOUT = 300
 # Number of seconds that we will keep track of inactive users for before
 # their last seen is removed from the cache
 USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
+EMAIL_HOST_USER = 'futuresoftcode@gmail.com'
+EMAIL_HOST_PASSWORD = 'Sul03314307703'
