@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import follow,post,comment,comment_child,notifications,pointhistory
+from .models import follow,post,comment,comment_child,notifications,pointhistory,post_by_points
 from chat.models import Message as message
 from login.models import infor,privacy_policy_and_terms_of_service,userpreferance
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,7 @@ from django.core.mail import EmailMessage
 from .forms import contentform,titleform
 from html2text import html2text
 from django.http.response import JsonResponse
+import time
 
 def info(request):
     obj = infor.objects.get(user=request.user)
@@ -471,12 +472,30 @@ def view_post(request,title):
     if request.user.is_authenticated:
         template = 'view-post.html'
     else:
-        print('no')
         template = 'view-post-no.html'
+    checkp = 1
     objs = post.objects.all()
     for i in objs:
         if i.permalink == title:
             obj = i
+            if obj.check_for_points:
+                if request.user.is_authenticated:
+                    pointobjs = post_by_points.objects.filter(user=request.user)
+                    for j in pointobjs:
+                        if j.post == obj:
+                            if (time.time() - j.timestamp) <= 86400:
+                                checkp = 0
+                                break
+                            else:
+                                checkp = 1
+                                j.delete()
+                                continue
+                        else:
+                            checkp = 1
+                    if checkp == 1:
+                        return redirect('/locked/'+title)
+                else:
+                    return redirect('/locked/'+title)
             i.views += 1
             i.save()
             break
@@ -1098,3 +1117,25 @@ def points(request):
     context = info(request)
     context['pointhist'] = pointhistory.objects.filter(user=request.user)
     return render(request,template,context)
+
+def lockedpost(request,title):
+    if request.user.is_authenticated:
+        template = 'unlock-with-points.html'
+        context = info(request)
+    else:
+        template = 'unlock-with-points-no.html'
+        context = {}
+    context['title'] = title
+    return render(request,template,context)
+
+@login_required(login_url='/loggin')
+def unlockpost(request,title):
+    obj = post_by_points()
+    obj.user = request.user
+    obj.post = post.objects.get(permalink=title)
+    obj.timestamp = time.time()
+    obj.save()
+    obj = infor.objects.get(user=request.user)
+    obj.points = obj.points - 150
+    obj.save()
+    return redirect('/post/'+title)

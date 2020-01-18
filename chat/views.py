@@ -39,7 +39,7 @@ def user_list(request, pk=None):
             if i.profile_check == False:
                 try:
                     profileimg = i.user.socialaccount_set.all()[0].provider
-                    profileimg = i.user.socialaccount_set.all()[0].get_avatar_url
+                    profileimg = i.user.socialaccount_set.all()[0].get_avatar_url()
                 except:
                     profileimg = "/static/profile/"+str(i.profile)+".jpg"
             else:

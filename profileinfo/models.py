@@ -43,12 +43,22 @@ class post(models.Model):
     link_number = models.IntegerField(default=1)
     link_title = models.CharField(blank=True,max_length=100)
     approved_by_admin = models.BooleanField(default=False)
+    approved_by_admin_check_dont_change = models.BooleanField(default=False)
+    check_for_points = models.BooleanField(default=False)
 
     def __str__(self):
         if self.approved_by_admin == False:
             return (self.status+' | Titled : '+self.title)
         else:
             return ('Approved'+' | Titled : '+self.title)
+
+class post_by_points(models.Model):
+    user = models.ForeignKey(User , on_delete=models.CASCADE, blank=True)
+    post = models.ForeignKey(post , on_delete=models.CASCADE , blank=True)
+    timestamp = models.IntegerField(default=0)
+
+    def __str__(self):
+        return (self.user.username)
 
 class comment(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=True)
