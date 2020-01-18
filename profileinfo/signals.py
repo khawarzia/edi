@@ -7,7 +7,9 @@ from django.core.mail import EmailMessage
 
 @receiver(post_save,sender=post)
 def email_send(sender,instance,**kwargs):
-    if instance.approved_by_admin:
+    if instance.approved_by_admin_check_dont_change == False and instance.approved_by_admin == True:
+        instance.approved_by_admin_check_dont_change = True
+        instance.save()
         email_add = instance.user.email
         a = EmailMessage(
             subject='LibriCK Approved by Admin',
@@ -44,8 +46,6 @@ def email_send(sender,instance,**kwargs):
         obj.relpost.add(instance)
         obj.reluser.add(instance.user)
         obj.save()
-    else:
-        pass
     return
 
 @receiver(post_save, sender=infor)
@@ -76,5 +76,4 @@ def amazon_code(sender, instance, **kwargs):
             a.save()
         except:
             pass
-        return
-
+    return
