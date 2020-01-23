@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from random import randint
 from ckeditor.fields import RichTextField
+from profileinfo.models import follow
 
 class infor(models.Model):
     user = models.ForeignKey(User , on_delete = models.CASCADE , blank = True)
@@ -20,6 +21,10 @@ class infor(models.Model):
 
     def __str__(self):
         return (str(self.user))
+    
+    def get_followers(self):
+        a = follow.objects.filter(user=self.user)
+        return (len(a))
 
 class temppic(models.Model):
     file = models.ImageField(blank = True)

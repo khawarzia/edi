@@ -38,6 +38,11 @@
 <div class="item-title">
 <a href="{% url 'view' i.user.username %}">{{i.user.first_name}} {{i.user.last_name}}</a>
 </div>
+<div class="item-meta">
+    <div class="activity"></div>
+<span class="count">{{i.get_followers}}</span>
+<span>Followers</span>
+</div>
 <div class="item-desc">
 <p>
 </p>
@@ -46,10 +51,12 @@
 <div class="action">
 <div class="action-wrap">
 <div class="follow-button following generic-button" id="follow-button-1160">
+    {% if i.user != request.user %}
     {% if i.user in followinglist %}
     <a href="{% url 'folunfol' i.user.username %}" class="unfollow" id="unfollow-1160">Smetti di seguire</a></div> </div>
     {% else %}
     <a href="{% url 'folunfol' i.user.username %}" class="follow" id="follow-1160">Segui</a></div> </div>
+    {% endif %}
     {% endif %}
 </div>
 <div class="clear"></div>
