@@ -27,6 +27,11 @@
 <div class="item-title">
 <a href="{% url 'view' i.user.username %}">{{i.user.first_name}} {{i.user.last_name}}</a>
 </div>
+<div class="item-meta">
+    <div class="activity"></div>
+<span class="count">{{i.get_followers}}</span>
+<span>Followers</span>
+</div>
 <div class="item-desc">
 <p>
 </p>

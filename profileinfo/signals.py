@@ -23,7 +23,7 @@ def email_send(sender,instance,**kwargs):
                 email = EmailMessage(
                     subject='New Librick',
                     body=instance.user.username+' ha pubblicato '+instance.title,
-                    to=[instance.user.email]
+                    to=[i.follower.email]
                 )
                 email.send()
             obj = notifications()
