@@ -3,7 +3,10 @@ from profileinfo.models import post,notifications,follow,comment
 from login.models import infor,userpreferance
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
+from django.core.mail import send_mail,EmailMessage
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from fblogin.settings import EMAIL_HOST_USER,ALLOWED_HOSTS
 
 @receiver(post_save,sender=post)
 def email_send(sender,instance,**kwargs):
@@ -20,12 +23,16 @@ def email_send(sender,instance,**kwargs):
         objs = follow.objects.filter(user=instance.user)
         for i in objs:
             if userpreferance.objects.get(user=i.follower).new_librick:
-                email = EmailMessage(
-                    subject='New Librick',
-                    body=instance.user.username+' ha pubblicato '+instance.title,
-                    to=[i.follower.email]
+                subject = instance.user.username + 'ha appena pubblicato un LibriCK'
+                body = render_to_string('email-message.html',{'post':instance,'host':ALLOWED_HOSTS[0]})
+                to = i.follower.email
+                send_mail(
+                    subject=subject,
+                    html_message=body,
+                    message=strip_tags(body),
+                    from_email=EMAIL_HOST_USER,
+                    recipient_list = [to]
                 )
-                email.send()
             obj = notifications()
             obj.user = i.follower
             obj.sel = 'post'
