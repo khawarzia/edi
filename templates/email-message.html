@@ -1,0 +1,13 @@
+<a href="https://{{host}}:8000{% url 'view-post' post.permalink %}">
+    <img src="https://{{host}}:8000{{post.cover}}">
+</a>
+<br>
+<a href="https://{{host}}:8000{% url 'view-post' post.permalink %}">
+    <h4>
+        {{post.title}}        
+    </h4>
+</a>
+<hr>
+<h6>Ricevi questa email perché hai scelto di seguire <a href="https://{{host}}:8000{% url 'profile' post.user.username %}">{{post.user.username}}</a></h6>
+<h6>Se non vuoi più ricevere i suoi aggiornamenti clicca su <a href="https://{{host}}:8000{% url 'profile' post.user.username %}">Smetti di seguire</a></h6>
+<h6>Se non vuoi più ricevere email di questo tipo, <a href="https://{{host}}:8000{% url 'setemail' %}">Modifica le tue impostazioni.</a></h6>
