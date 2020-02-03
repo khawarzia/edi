@@ -16,7 +16,7 @@ def email_send(sender,instance,**kwargs):
         email_add = instance.user.email
         a = EmailMessage(
             subject='LibriCK Approved by Admin',
-            body='Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.permalink),
+            body='Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://165.227.194.38:8000/post/'+str(instance.permalink),
             to = [email_add]
         )
         a.send()
@@ -41,7 +41,7 @@ def email_send(sender,instance,**kwargs):
             obj.relpost.add(instance)
             obj.reluser.add(instance.user)
             obj.save()
-        a = 'Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://67.207.92.234:8000/post/'+str(instance.permalink)
+        a = 'Your LibriCK with title : '+str(instance.title)+' has been approved by the admin.\nView your post now : https://165.227.194.38:8000/post/'+str(instance.permalink)
         objs = notifications.objects.all()
         for i in objs:
             if i.notification == a:
