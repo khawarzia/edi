@@ -1083,23 +1083,30 @@ def search(request):
     return render(request,template,context)
 
 def searchapi(request,q):
-    data = {}
+    data = {'posttitle':'','serititle':'','username':''}
     for i in post.objects.all():
         if q in i.title and i.approved_by_admin:
             data['posttitle'] = i.title
-            data['posturl'] = "{% url 'view-post' "+i.permalink+" %}"
-            data['postpic'] = i.cover
+            data['posturl'] = "/post/"+i.permalink
+            try:
+                data['postpic'] = str(i.cover)
+            except:
+                data['postpic'] = ''
             break
     for i in post.objects.all():
         if q in i.link_title and i.link_number == 1 and i.approved_by_admin:
             data['seriname'] = i.link_title
-            data['seriurl'] = "{% url 'view-post' "+i.permalink+" %}"
-            data['seripic'] = i.cover
+            data['seriurl'] = "/post/"+i.permalink
+            try:
+                data['seripic'] = str(i.cover)
+            except:
+                data['seripic'] = ''
             break
+        print(i.cover)
     for i in infor.objects.all():
         if q in i.user.username:
             data['username'] = i.user.username
-            data['userurl'] = "{% url 'view' "+i.user.username+" %}"
+            data['userurl'] = "/membri/"+i.user.username
             if i.profile_check == False:
                 try:
                     profileimg = i.user.socialaccount_set.all()[0].provider

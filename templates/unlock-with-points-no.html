@@ -496,7 +496,7 @@ margin-right: 0!important;
 <form role="search" method="get" class="searchform" action="{% url 'search' %}">
 <div class="search-wrap">
 <label class="screen-reader-text" for="s">Search for:</label>
-<input type="text" value="" name="s" />
+<input type="text" value="" name="s" oninput="autocompletesearch()" id="searchinput"/>
 <button type="submit" class="searchsubmit"><i class="fa fa-search"></i></button>
 </div>
 </form>
@@ -1152,6 +1152,108 @@ window._nsl.push(function ($) {
     }
 });})();</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107253347-1"></script>
+<script>
+    function autocompletesearch(){
+        var b = document.getElementById('searchinput').value;
+        console.log(b.length);
+        if(b.length > 1){
+            document.getElementById('dropdown').style = 'top: 61px; left: 137px; width: 358px;'
+            document.getElementById('totalsearch').href = '/search?s='+b;
+            document.getElementById('totalsearch').innerHTML = "Vedi tutti i risultati per '"+b+"'";
+            $.get('/search/'+b,function(data){
+                if (data.posttitle != ''){
+                    document.getElementById('postsearch').style = '';
+                    document.getElementById('posturl').href = data.posturl;
+                    document.getElementById('postimg').src = data.postpic;
+                    document.getElementById('postimg').alt = data.posttitle;
+                    document.getElementById('postname').innerHTML = data.posttitle;
+                }
+                else{
+                    document.getElementById('postsearch').style = 'display:none;';
+                }
+                if (data.serititle != ''){
+                    document.getElementById('serisearch').style = '';
+                    document.getElementById('seriurl').href = data.seriurl;
+                    document.getElementById('seriimg').src = data.seripic;
+                    document.getElementById('seriimg').alt = data.serititle;
+                    document.getElementById('seriname').innerHTML = data.serititle;
+                }
+                else{
+                    document.getElementById('serisearch').style = 'display:none;';
+                }
+                if (data.username != ''){
+                    document.getElementById('membrisearch').style = '';
+                    document.getElementById('membriurl').href = data.userurl;
+                    document.getElementById('membriimg').src = data.userpic;
+                    document.getElementById('membriimg').alt = data.username;
+                    document.getElementById('membriname').innerHTML = data.username;
+                }
+                else{
+                    document.getElementById('membrisearch').style = 'display:none;';
+                }
+            });
+        }
+        else{
+            document.getElementById('dropdown').style = 'display: none; top: 61px; left: 137px; width: 358px;'
+        }
+    }
+</script>
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content bb-global-search-ac" id="dropdown" tabindex="0" style="display: none; top: 61px; left: 137px; width: 358px;">
+
+    <li class="bbls-members-type bbls-sub-item ui-menu-item" id="postsearch" tabindex="-1">
+        <a class="x"></a>
+        <div class="bboss_ajax_search_item bboss_ajax_search_member">
+            <a class="x">
+            </a>
+            <a href="http://edizioniopen.it/membri/jakematthews/" id="posturl">
+                <div class="item-avatar">
+                    <img id="postimg" src="https://edizioniopen.it/wp-content/uploads/avatars/813/avatar-bpthumb.jpg" class="avatar user-813-avatar avatar-60 photo" width="60" height="60"> </div>
+
+                <div class="item">
+                    <div class="item-title" id="postname">Jake Matthews</div>
+                </div>
+            </a>
+        </div>
+    </li>
+    
+    <li class="bbls-members-type bbls-sub-item ui-menu-item" id="serisearch" tabindex="-1">
+        <a class="x"></a>
+        <div class="bboss_ajax_search_item bboss_ajax_search_member">
+            <a class="x">
+            </a>
+            <a href="http://edizioniopen.it/membri/jakematthews/" id="seriurl">
+                <div class="item-avatar">
+                    <img id="seriimg" src="https://edizioniopen.it/wp-content/uploads/avatars/813/avatar-bpthumb.jpg" class="avatar user-813-avatar avatar-60 photo" width="60" height="60" alt="Foto del profilo di Jake Matthews"> </div>
+
+                <div class="item">
+                    <div class="item-title" id="seriname">Jake Matthews</div>
+                </div>
+            </a>
+        </div>
+    </li>
+    
+    <li class="bbls-members-type bbls-sub-item ui-menu-item" id="membrisearch" tabindex="-1">
+        <a class="x"></a>
+        <div class="bboss_ajax_search_item bboss_ajax_search_member">
+            <a class="x">
+            </a>
+            <a href="http://edizioniopen.it/membri/jakematthews/" id="membriurl">
+                <div class="item-avatar">
+                    <img id="membriimg" src="https://edizioniopen.it/wp-content/uploads/avatars/813/avatar-bpthumb.jpg" class="avatar user-813-avatar avatar-60 photo" width="60" height="60" alt="Foto del profilo di Jake Matthews"> </div>
+
+                <div class="item">
+                    <div class="item-title" id="membriname">Jake Matthews</div>
+                </div>
+            </a>
+        </div>
+    </li>
+    
+    <li class="bbls-view_all_type-type bbls-sub-item ui-menu-item" id="ui-id-7" tabindex="-1">
+        <a class="x"></a>
+        <div class="bboss_ajax_search_item allresults">
+            <a class="x"></a><a href="http://edizioniopen.it/?s=ak" id="totalsearch">Vedi tutti i risultati per 'ak'</a></div>
+    </li>
+</ul>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments)};
