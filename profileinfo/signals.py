@@ -23,7 +23,7 @@ def email_send(sender,instance,**kwargs):
         objs = follow.objects.filter(user=instance.user)
         for i in objs:
             if userpreferance.objects.get(user=i.follower).new_librick:
-                subject = instance.user.username + 'ha appena pubblicato un LibriCK'
+                subject = instance.user.username + ' ha appena pubblicato un LibriCK'
                 body = render_to_string('email-message.html',{'post':instance,'host':ALLOWED_HOSTS[0]})
                 to = i.follower.email
                 send_mail(
