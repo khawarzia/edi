@@ -1415,7 +1415,8 @@ window._nsl.push(function ($) {
     if (googleLoginButton.length && checkWebView()) {
         googleLoginButton.remove();
     }
-});})();</script><div id="mistape_dialog" data-mode="comment" data-dry-run="0">
+});})();</script>
+<div id="mistape_dialog" data-mode="comment" data-dry-run="0">
 <div class="dialog__overlay"></div><div class="dialog__content"><div id="mistape_confirm_dialog" class="mistape_dialog_screen">
 <div class="dialog-wrap">
 <div class="dialog-wrap-top">
@@ -1426,20 +1427,22 @@ window._nsl.push(function ($) {
 </div>
 </div>
 <div class="dialog-wrap-bottom"><div class="mistape_dialog_block comment">
+    <form method="POST" id="errorform">{% csrf_token %}
+        <input type="hidden" name="errorin" id="errorin">
 <h3><label for="mistape_comment">Commento (facoltativo):</label></h3>
-<textarea id="mistape_comment" cols="60" rows="3" maxlength="1000"></textarea>
+<textarea id="mistape_comment" cols="60" rows="3" maxlength="1000" name="comment"></textarea></form>
 </div><div class="pos-relative">
 </div>
 </div>
 </div>
-<div class="mistape_dialog_block">
-<a class="mistape_action" data-action="send" data-id="239880" role="button">Invio</a>
+<div class="mistape_dialog_block" >
+<button class="mistape_action" role="button" type="button" >Invio</button>
 <a class="mistape_action" data-dialog-close role="button" style="display:none">Cancel</a>
 </div>
-<div class="mistape-letter-front letter-part">
-<div class="front-left"></div>
-<div class="front-right"></div>
-<div class="front-bottom"></div>
+<div class="mistape-letter-front letter-part" onclick="document.getElementById('errorform').submit()">
+<div class="front-left"  ></div>
+<div class="front-right"  ></div>
+<div class="front-bottom"  ></div>
 </div>
 <div class="mistape-letter-back letter-part">
 <div class="mistape-letter-back-top"></div>
@@ -1448,6 +1451,13 @@ window._nsl.push(function ($) {
 </div></div></div>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107253347-1"></script>
 <script>
+    setInterval(
+    function newfunc1(){
+        var a = document.getElementById('mistape_reported_text');
+        console.log(a.innerText);
+        console.log('a');
+        var b = document.getElementById('errorin').value = a.innerHTML;
+    },1000)
     function autocompletesearch(){
         var b = document.getElementById('searchinput').value;
         console.log(b.length);

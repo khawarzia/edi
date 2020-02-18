@@ -500,7 +500,6 @@ def view_post(request,title):
             i.save()
             break
     try:
-        print(obj.title)
         try:
             a = notifications.objects.all()
             for i in a:
@@ -513,6 +512,21 @@ def view_post(request,title):
         return redirect('/')
     if request.user.is_authenticated:
         context = info(request)
+        if request.method == 'POST' and request.user != obj.user:
+            messa = message()
+            messa.sender = request.user
+            messa.receiver = obj.user
+            #messa.message = html2text(request.POST['errorin']).replace('\n','')
+            messa.save()
+            body = request.user.username+' ti ha inviato un messaggio: Suggerimento per il tuo LibriCK\n\n'
+            body = body + 'Segnalazione relativa al LibriCK: https://165.227.194.38:8000/post/'+obj.permalink+'\n...'
+            body = body + html2text(request.POST['errorin']).replace('\n','')+'...\n______\n'+request.POST['comment']
+            messa = EmailMessage(
+                subject='Nuovo messagio da '+request.user.username,
+                body=body,
+                to=[obj.user.email],
+            )
+            messa.send()
     commentdata = {}
     objs = comment.objects.all()
     objs2 = comment_child.objects.all()
@@ -573,15 +587,12 @@ def view_post(request,title):
         if a not in episodes:
             episodes.append(a)
     episodes.sort(key=operator.itemgetter('number'))
-    print (episodes)
     context['epilist'] = episodes
     context['postprofileurl'] = profileimg
     context['post'] = obj
     context['postinfor'] = inforobj
     context['cd'] = commentdata.items()
-    print (commentdata.items())
     context['totallength'] = totallength
-    print (commentdata.items())
     return render(request,template,context)
 
 @login_required(login_url='/loggin')
