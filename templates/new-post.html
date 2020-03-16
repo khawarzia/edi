@@ -728,6 +728,21 @@ function asd(){
 <h3 class="widgettitle">TAGS</h3>
 <input type="text" class="tags-select selectized" id="input-tags-select" name="tags" tabindex="-1" value="{% if poststatus %}{{post.tags}}{% endif %}">
 </aside>
+
+<aside class="widget sap-widget sap-tags-widget">
+<h3 class="widgettitle">Category</h3>
+<input type="hidden" form="submit-form" name="category" id="id_category" value="{% if poststatus %}{{post.category}}{% endif %}">
+<input type="radio" id="sel1" name="a" onclick="document.getElementById('id_category').value = 'Narrativa';" {% if poststatus %}{% if post.category == 'Narrativa' %}checked{% endif %}{% endif %}> Narrativa<br>
+<input type="radio" id="sel2" name="a" onclick="document.getElementById('id_category').value = 'Erotico';" {% if poststatus %}{% if post.category == 'Erotico' %}checked{% endif %}{% endif %}> Erotico<br>
+<input type="radio" id="sel3" name="a" onclick="document.getElementById('id_category').value = 'Fiabe e Favole';" {% if poststatus %}{% if post.category == 'Fiabe e Favole' %}checked{% endif %}{% endif %}> Fiabe e Favole<br>
+<input type="radio" id="sel4" name="a" onclick="document.getElementById('id_category').value = 'Horror';" {% if poststatus %}{% if post.category == 'Horror' %}checked{% endif %}{% endif %}> Horror<br>
+<input type="radio" id="sel5" name="a" onclick="document.getElementById('id_category').value = 'Sci-Fi';" {% if poststatus %}{% if post.category == 'Sci-Fi' %}checked{% endif %}{% endif %}> Sci-Fi<br>
+<input type="radio" id="sel6" name="a" onclick="document.getElementById('id_category').value = 'Sentimenti';" {% if poststatus %}{% if post.category == 'Sentimenti' %}checked{% endif %}{% endif %}> Sentimenti<br>
+<input type="radio" id="sel7" name="a" onclick="document.getElementById('id_category').value = 'Fantasy';" {% if poststatus %}{% if post.category == 'Fantasy' %}checked{% endif %}{% endif %}> Fantasy<br>
+<input type="radio" id="sel8" name="a" onclick="document.getElementById('id_category').value = 'Umoristico';" {% if poststatus %}{% if post.category == 'Umoristico' %}checked{% endif %}{% endif %}> Umoristico<br>
+<input type="radio" id="sel9" name="a" onclick="document.getElementById('id_category').value = 'Young Adult';" {% if poststatus %}{% if post.category == 'Young Adult' %}checked{% endif %}{% endif %}> Young Adult<br>
+</aside>
+
 <aside class="widget sap-widget sap-featured-img-widget">
 <h3 class="widgettitle">Immagine di Copertina</h3>
 <input type="file" {% if poststatus %} value="{{post.cover}}"{% endif %} style="display:none;" name="coverimg" id="coverimg" onchange="readURL(this)">
@@ -787,6 +802,11 @@ function sdf(){
     }
 });
     $('#save').click(function(){
+        var a = document.getElementById('id_title').value;
+        if (a == '' || a == '<p><br></p>'){
+            alert('Please enter a title first');
+            return
+        }
         document.getElementById('action').value = 'save';
         document.getElementById('submit-form').submit();
     });
@@ -800,6 +820,11 @@ function sdf(){
         document.getElementById('submit-form').submit();
     })
     $("#publish").click(function(){
+    var a = document.getElementById('id_title').value;
+    if (a == '' || a == '<p><br></p>'){
+        alert('Please enter a title first');
+        return
+    }
     var n = parseInt(document.getElementById('counter_display').value);
     if(n < 300){
         alert('Per favore, scrivi almeno 300 parole');   
