@@ -8,7 +8,8 @@ from django.core.mail import EmailMessage
 import random
 from django.forms.models import model_to_dict
 from profileinfo.views import info
-from profileinfo.models import post,comment,comment_child
+from profileinfo.models import post,comment,comment_child,postgalleryhome
+from random import shuffle
 
 def status(request):
     context = {}
@@ -76,7 +77,8 @@ def status(request):
         totallength = 0
         aa[obj] = commentdata
     context['data'] = zip(aa.items(),data.items())
-    print(data)
+    context['galleryposts'] = postgalleryhome.objects.all()[len(postgalleryhome.objects.all())-1].getproperties()
+    context['gpgal'] = len(context['galleryposts'])
     return render(request,template,context)
 
 def login(request):

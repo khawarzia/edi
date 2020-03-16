@@ -456,6 +456,8 @@ def new_post(request):
                     a.linked_post.add(i)
             a.link_number = a.linked_post.count()
         a.permalink = convertit(a.title)
+        if postdata['category'] != '':
+            a.category = postdata['category']
         a.save()
         objs = post.objects.all()
         return redirect('/edit/'+a.permalink)
@@ -804,6 +806,8 @@ def edit_post(request,title):
                 a.linked_post.add(a)
                 a.link_number = a.linked_post.count()
         a.permalink = convertit(a.title)
+        if postdata['category'] != '':
+            a.category = postdata['category']
         a.save()
         return redirect('/edit/'+a.permalink)
     else:
