@@ -133,32 +133,32 @@ class pointhistory(models.Model):
         return self.note
 
 class postgallery(models.Model):
-    idtag = models.CharField(default='(([[(( idtag='+str(id)+' ))]]))',max_length=30)
+    idtag_use_after_creation = models.CharField(default='(([[((==idtag',max_length=50)
     single_row = models.BooleanField(default=False)
     infinite_scroll = models.BooleanField(default=False)
     by_tag = models.BooleanField(default=False)
     by_category = models.BooleanField(default=False)
     by_date = models.BooleanField(default=False)
-    tag1 = models.CharField(max_length=30,default='')
-    tag2 = models.CharField(max_length=30,default='')
-    tag3 = models.CharField(max_length=30,default='')
-    tag4 = models.CharField(max_length=30,default='')
-    tag5 = models.CharField(max_length=30,default='')
-    category1 = models.CharField(default='',choices=category_choice,max_length=100)
-    category2 = models.CharField(default='',choices=category_choice,max_length=100)
-    category3 = models.CharField(default='',choices=category_choice,max_length=100)
-    category4 = models.CharField(default='',choices=category_choice,max_length=100)
-    category5 = models.CharField(default='',choices=category_choice,max_length=100)
-    category6 = models.CharField(default='',choices=category_choice,max_length=100)
-    category7 = models.CharField(default='',choices=category_choice,max_length=100)
-    category8 = models.CharField(default='',choices=category_choice,max_length=100)
-    category9 = models.CharField(default='',choices=category_choice,max_length=100)
-    category10 = models.CharField(default='',choices=category_choice,max_length=100)
-    start_date = models.DateField(null=True)
-    end_date = models.DateField(null=True)
+    tag1 = models.CharField(max_length=30,default='',blank=True)
+    tag2 = models.CharField(max_length=30,default='',blank=True)
+    tag3 = models.CharField(max_length=30,default='',blank=True)
+    tag4 = models.CharField(max_length=30,default='',blank=True)
+    tag5 = models.CharField(max_length=30,default='',blank=True)
+    category1 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category2 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category3 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category4 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category5 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category6 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category7 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category8 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category9 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    category10 = models.CharField(default='',choices=category_choice,max_length=100,blank=True)
+    start_date = models.DateField(null=True,blank=True)
+    end_date = models.DateField(null=True,blank=True)
 
     def __str__(self):
-        return self.idtag
+        return (self.idtag_use_after_creation + str(self.id))
 
     def getproperties(self):
         objs = post.objects.filter(approved_by_admin=True)
@@ -252,10 +252,32 @@ class postgallery(models.Model):
             allposts = list(set(tagposts) & set(dateposts))
         elif self.by_tag and self.by_category:
             allposts = list(set(tagposts) & set(catposts))
+        elif self.by_category:
+            allposts = catposts
+        elif self.by_date:
+            allposts = dateposts
+        elif self.by_tag:
+            allposts = tagposts
         else:
             allposts = []
+        
+        allposts = shuffle(allposts)
+        
+        allpostfinal = []
+        for i in range(len(allposts)):
+            a = {}
+            a['id'] = i+1
+            if i == 3:
+                a['active'] = 'active'
+            else:
+                a['active'] = ''
+            a['cover'] = allposts[i].cover
+            a['permalink'] = allposts[i].permalink
+            a['title'] = allposts[i].title
+            a['username'] = allposts[i].user.username
+            allpostfinal.append(a)
 
-        return allposts
+        return allpostfinal
 
 class postgalleryhome(models.Model):
     by_tag = models.BooleanField(default=False)
@@ -388,16 +410,15 @@ class postgalleryhome(models.Model):
         allpostfinal = []
         for i in range(len(allposts)):
             a = {}
-            a['id'] = i
-            a['left'] = (i % 4) * 270
+            a['id'] = i+1
+            if i == 0:
+                a['active'] = 'active'
+            else:
+                a['active'] = ''
             a['cover'] = allposts[i].cover
             a['permalink'] = allposts[i].permalink
             a['title'] = allposts[i].title
             a['username'] = allposts[i].user.username
-            if i > 3:
-                a['show'] = 'none'
-            else:
-                a['show'] = 'block'
             allpostfinal.append(a)
 
         return allpostfinal

@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import follow,post,comment,comment_child,notifications,pointhistory,post_by_points
+from .models import follow,post,comment,comment_child,notifications,pointhistory,post_by_points,postgallery
 from chat.models import Message as message
 from login.models import infor,privacy_policy_and_terms_of_service,userpreferance
 from django.contrib.auth.decorators import login_required
@@ -591,11 +591,34 @@ def view_post(request,title):
     episodes.sort(key=operator.itemgetter('number'))
     context['epilist'] = episodes
     context['postprofileurl'] = profileimg
-    context['post'] = obj
+    a = checkforgal(obj)
+    if (a):
+        toreplace = '<p>'+a.__str__()+'</p>'
+        obj.content = (obj.content).replace(toreplace,'<div id="postgallery"></div>')
+        obj.save()
+        context['post'] = obj
+        context['postcontent'] = obj.content
+        obj.content = (obj.content).replace('<div id="postgallery"></div>',toreplace)
+        obj.save()
+        context['galleryposts'] = a.getproperties()
+    else:
+        context['post'] = obj
+        context['postcontent'] = obj.content
     context['postinfor'] = inforobj
     context['cd'] = commentdata.items()
     context['totallength'] = totallength
+    context['post'].content
     return render(request,template,context)
+
+def checkforgal(obj):
+    a = postgallery.objects.all()
+    names = {}
+    for i in a:
+        names[i] = i.__str__()
+    for i,j in names.items():
+        if j in obj.content:
+            return i
+    return False
 
 @login_required(login_url='/loggin')
 def comment_new(request,title):
