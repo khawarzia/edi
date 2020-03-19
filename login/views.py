@@ -11,6 +11,12 @@ from profileinfo.views import info
 from profileinfo.models import post,comment,comment_child,postgalleryhome
 from random import shuffle
 
+def testing(request):
+    template = 'test.html'
+    context = {'gp':postgalleryhome.objects.all()[0].getproperties()}
+    print(context['gp'])
+    return render(request,template,context)
+
 def status(request):
     context = {}
     if not (request.user.is_authenticated):
@@ -79,6 +85,7 @@ def status(request):
     context['data'] = zip(aa.items(),data.items())
     context['galleryposts'] = postgalleryhome.objects.all()[len(postgalleryhome.objects.all())-1].getproperties()
     context['gpgal'] = len(context['galleryposts'])
+    print(context['galleryposts'])
     return render(request,template,context)
 
 def login(request):

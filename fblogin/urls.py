@@ -13,6 +13,8 @@ handler500 = 'fblogin.views.server_error'
 urlpatterns = [
     path('admin/', admin.site.urls),
     
+    path('testing', viewslogin.testing),
+    
     #home page
     
     path('',viewslogin.status,name='home'),
