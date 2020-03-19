@@ -607,7 +607,6 @@ def view_post(request,title):
     context['postinfor'] = inforobj
     context['cd'] = commentdata.items()
     context['totallength'] = totallength
-    context['post'].content
     return render(request,template,context)
 
 def checkforgal(obj):
