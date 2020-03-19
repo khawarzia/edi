@@ -472,7 +472,103 @@ body.page-id-58153 div.nsl-container{margin:0px auto;}
 body:not(.left-menu-open) #nav-menu ul.sub-menu li.bp-following-nav a::before {
 padding-right: 14px!important;
 margin-right: 0!important;
-}</style><noscript><style type="text/css"> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript> </head>
+}</style><noscript><style type="text/css"> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript> 
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!------ Carousel ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!------ CSS CODE ---------->
+<style>
+@media (min-width: 768px) {
+
+    /* show 3 items */
+    .carousel-inner .active,
+    .carousel-inner .active + .carousel-item,
+    .carousel-inner .active + .carousel-item + .carousel-item,
+    .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
+        display: block;
+    }
+    
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+        transition: none;
+    }
+    
+    .carousel-inner .carousel-item-next,
+    .carousel-inner .carousel-item-prev {
+      position: relative;
+      transform: translate3d(0, 0, 0);
+    }
+    
+    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: absolute;
+        top: 0;
+        right: -25%;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+    
+    /* left or forward direction */
+    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+    .carousel-item-next.carousel-item-left + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+    }
+    
+    /* farthest right hidden item must be abso position for animations */
+    .carousel-inner .carousel-item-prev.carousel-item-right {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+    
+    /* right or prev direction */
+    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+    .carousel-item-prev.carousel-item-right + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(50%, 0, 0);
+        visibility: visible;
+        display: block;
+        visibility: visible;
+    }
+
+}
+
+
+ /* Bootstrap Lightbox using Modal */
+
+#profile-grid { overflow: auto; white-space: normal; } 
+#profile-grid .profile { padding-bottom: 40px; }
+#profile-grid .panel { padding: 0 }
+#profile-grid .panel-body { padding: 15px }
+#profile-grid .profile-name { font-weight: bold; }
+#profile-grid .thumbnail {margin-bottom:6px;}
+#profile-grid .panel-thumbnail { overflow: hidden;position: relative;text-align: center; }
+#profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
+
+.top-right {position: absolute;top: 8px;right: 16px;color:white;background-color:black;opacity: 0.5;font-size: 9px; }
+.centered {position: absolute;top: 20%;color:white;background-color:black;opacity: 0.5;font-size: 20px;cursor: pointer; }
+.user {position: absolute;top: 85%;right: 50%;color:white;background-color:black;opacity: 0.5;font-size: 12px;cursor: pointer; }
+
+</style>
+</head>
 <body class="bp-legacy post-template-default single single-post postid-239880 single-format-standard bp-user-blog is-desktop bp-active no-adminbar wpb-js-composer js-comp-ver-5.7 vc_responsive buddyboss-wall-active no-js" data-logo="1" data-inputs="1" data-rtl="false" data-header="1">
 
 <div id="mobile-check"></div>
@@ -580,8 +676,8 @@ margin-right: 0!important;
 <div class="table-cell page-header">
 <div class="cover-content">
 <h1 class="post-title main-title">{{post.title}}</h1>
-<div class="table">
-<div class="table-cell entry-meta">
+<div class="table" style="background-color: transparent;">
+<div class="table-cell entry-meta" style="font-weight: bold;">
 <span class="post-author"><a href="{% url 'profile' post.user.username %}" rel="bookmark"><img alt='' src="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %}" srcset="{% if postprofileurl == 'b' %} {{ post.user.socialaccount_set.all.0.get_avatar_url }} {% elif postprofileurl == 'c' %} /static/profile/{{postinfor.profile}}.jpg {% else %} /media/{{postinfor.profile_pic}} {% endif %} 2x" class='avatar avatar-55 photo' height='55' width='55' /></a><span class="author vcard">
     <a class="url fn n" href="{% url 'profile' post.user.username %}" title="View all posts by {{post.user.first_name}} {{post.user.last_name}}" rel="author">{{post.user.first_name}} {{post.user.last_name}}</a></span></span>
     <a href="" rel="bookmark" class="post-date fa fa-clock-o"><time class="entry-date">{{post.post_date.day}} {{post.post_date|date:'F'}} {{post.post_date.year}}</time></a> 
@@ -632,7 +728,7 @@ margin-right: 0!important;
 <p>Errori e suggerimenti possono essere segnalati in privato evidenziando il testo e seguendo le istruzioni</p>
 </div>
 <p>
-    {{post.content|safe}}
+    {{postcontent|safe}}
 </p>
 <p class="">
     {% if postinfor.paypal_url %}
@@ -733,6 +829,13 @@ Commenti </h2>
 </div>
 </div>
 <script>
+    setTimeout(function newfunc (){
+        console.log('in bitch');
+        var b = document.getElementById('renderedpostgallery').innerHTML;
+        document.getElementById('postgallery').innerHTML = b;
+    },2000);
+</script>
+<script>
 $('#replybutton').click(function(){
     document.getElementById('childform').style.display = '';
 });
@@ -780,6 +883,36 @@ $('#cancel-comment-reply-link').click(function(){
 </footer>
 </div>
 </div>
+</div>
+<div style="display:none;" id="renderedpostgallery">
+    <div class="container" style="height: 250px;grid-row: 1 / span 2;">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+            <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                {% for i in galleryposts %}
+                <div class="carousel-item col-md-3 {{i.active}}">
+                   <div class="panel panel-default">
+                      <div class="panel-thumbnail">
+                        <a href="#" title="image {{i.id}}" class="thumb">
+                          <img class="img-fluid mx-auto d-block" src="{{i.cover}}" alt="slide {{i.id}}">
+                          <div class="top-right">EDIZIONI OPEN</div>
+                          <div class="centered text-center" onclick="window.location.href='/post/{{i.permalink}}'">{{i.title}}</div>
+                          <div class="user" onclick="window.location.href='/membri/{{i.username}}'">{{i.username}}</div>
+                        </a>
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next text-faded" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
 </div>
 <script type='text/javascript'><!--
 			var seriesdropdown = document.getElementById("orgseries_dropdown");
@@ -1000,6 +1133,49 @@ jQuery(document).ready(function() {
 
 });
 </script>
+<script language="javascript">
+    $('#myCarousel').on('slide.bs.carousel', function (e) {
+
+    
+        var $e = $(e.relatedTarget);
+        var idx = $e.index();
+        var itemsPerSlide = 4;
+        var totalItems = $('.carousel-item').length;
+        
+        if (idx >= totalItems-(itemsPerSlide-1)) {
+            var it = itemsPerSlide - (totalItems - idx);
+            for (var i=0; i<it; i++) {
+                // append slides to end
+                if (e.direction=="left") {
+                    $('.carousel-item').eq(i).appendTo('.carousel-inner');
+                }
+                else {
+                    $('.carousel-item').eq(0).appendTo('.carousel-inner');
+                }
+            }
+        }
+    });
+
+
+    $('#myCarousel').carousel({ 
+                    interval: 2000
+            });
+
+
+    $(document).ready(function() {
+    /* show lightbox when clicking a thumbnail */
+        $('a.thumb').click(function(event){
+        event.preventDefault();
+        var content = $('.modal-body');
+        content.empty();
+            var title = $(this).attr("title");
+            $('.modal-title').html(title);        
+            content.html($(this).html());
+            $(".modal-profile").modal({show:true});
+        });
+
+    });
+    </script>
 <link rel='stylesheet' id='redux-google-fonts-boss-options-css' href='https://fonts.googleapis.com/css?family=Muli%3A400&#038;subset=latin&#038;ver=1.0' type='text/css' media='all' />
 <link rel='stylesheet' id='sss-base-css' href='https://edizioniopen.it/wp-content/plugins/social-share-buttons-by-supsystic/src/SocialSharing/Projects/assets/css/base.css' type='text/css' media='all' />
 <link rel='stylesheet' id='sss-tooltipster-main-css' href='https://edizioniopen.it/wp-content/plugins/social-share-buttons-by-supsystic/src/SocialSharing/Projects/assets/css/tooltipster.css' type='text/css' media='all' />

@@ -134,8 +134,7 @@ class pointhistory(models.Model):
 
 class postgallery(models.Model):
     idtag_use_after_creation = models.CharField(default='(([[((==idtag',max_length=50)
-    single_row = models.BooleanField(default=False)
-    infinite_scroll = models.BooleanField(default=False)
+    name = models.CharField(max_length=100,null=True,blank=True)
     by_tag = models.BooleanField(default=False)
     by_category = models.BooleanField(default=False)
     by_date = models.BooleanField(default=False)
